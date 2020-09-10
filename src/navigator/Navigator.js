@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 function Navigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator initialRouteName='Login' headerMode='none'>
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='MapScreen' component={MapScreen} />
       </Stack.Navigator>
