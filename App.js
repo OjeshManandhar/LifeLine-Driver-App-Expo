@@ -1,7 +1,7 @@
 import React from 'react';
 
 // navigator
-import Navigator from './src/navigator/Navigator';
+import Navigator from 'navigator/Navigator';
 
 function App() {
   return <Navigator />;
