@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 function MapScreen({ navigation, route }) {
   const routeParams = route.params;
+
+  // Prevent going back to Login
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => e.preventDefault());
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
