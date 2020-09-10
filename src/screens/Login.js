@@ -5,7 +5,14 @@ function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login Screen</Text>
-      <Button title='To Map' onPress={() => navigation.navigate('MapScreen')} />
+      <Button
+        title='To Map'
+        onPress={() =>
+          navigation.navigate('MapScreen', {
+            userId: 'qwertyuiop'
+          })
+        }
+      />
     </View>
   );
 }
