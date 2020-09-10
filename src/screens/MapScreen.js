@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
-function MapScreen() {
+function MapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Map Screen</Text>
-      <Button title='To Login' onPress={() => console.log('To Login')} />
+      <Button title='To Login' onPress={() => navigation.navigate('Login')} />
     </View>
   );
 }

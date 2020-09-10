@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-function Login() {
+function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Login Screen</Text>
-      <Button title='To Map' onPress={() => console.log('To Map')} />
+      <Button title='To Map' onPress={() => navigation.navigate('MapScreen')} />
     </View>
   );
 }
