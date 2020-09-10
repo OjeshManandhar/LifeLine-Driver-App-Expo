@@ -46,6 +46,7 @@ function MapScreen({ navigation, route }) {
     <View style={styles.container}>
       <Text style={styles.text}>Map Screen</Text>
       <Text style={styles.text}>{JSON.stringify(routeParams)}</Text>
+      <Text style={styles.text}>Env Var: {JSON.stringify(process.env)}</Text>
       <Button title='Log out' onPress={() => navigation.navigate('Login')} />
     </View>
   );
