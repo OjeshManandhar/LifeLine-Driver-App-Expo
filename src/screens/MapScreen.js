@@ -8,6 +8,9 @@ import {
   BackHandler
 } from 'react-native';
 
+// env
+import { TEST_KEY, EXPO_MAPBOX_API_KEY } from '@env';
+
 function MapScreen({ navigation, route }) {
   const routeParams = route.params;
 
@@ -46,6 +49,8 @@ function MapScreen({ navigation, route }) {
     <View style={styles.container}>
       <Text style={styles.text}>Map Screen</Text>
       <Text style={styles.text}>{JSON.stringify(routeParams)}</Text>
+      <Text style={styles.text}>Env Var: {TEST_KEY}</Text>
+      <Text style={styles.text}>Env Var: {EXPO_MAPBOX_API_KEY}</Text>
       <Button title='Log out' onPress={() => navigation.navigate('Login')} />
     </View>
   );
