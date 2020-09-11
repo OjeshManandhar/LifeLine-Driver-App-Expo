@@ -8,6 +8,9 @@ module.exports = function (api) {
         'module-resolver',
         {
           alias: {
+            utils: 'src/utils',
+            hooks: '/src/hooks',
+            global: 'src/global',
             assets: './src/assets',
             screens: './src/screens',
             navigator: './src/navigator',
