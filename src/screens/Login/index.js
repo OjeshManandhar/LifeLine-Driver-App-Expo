@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { View, Text, Animated, Keyboard, TextInput } from 'react-native';
+import { View, Text, Animated, Keyboard } from 'react-native';
 
 // packages
-import { Button } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 
 // styles
 import styles from './styles';
@@ -139,9 +139,11 @@ function Login({ navigation }) {
         />
 
         <TextInput
+          mode='outlined'
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
+          label='Phone number'
           keyboardType='phone-pad'
           placeholder='Phone Number'
           value={phoneNumber}
@@ -149,6 +151,7 @@ function Login({ navigation }) {
         />
 
         <TextInput
+          mode='outlined'
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}

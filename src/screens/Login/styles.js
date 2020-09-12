@@ -30,22 +30,15 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
 
-    zIndex: ZIndex.formContainer,
-
-    borderWidth: 1,
-    borderColor: 'black'
+    zIndex: ZIndex.formContainer
   },
   logo: {
     marginBottom: 15
   },
   textBox: {
     width: 275,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: 'black',
-    fontSize: 18,
-    paddingVertical: 7.5,
-    paddingHorizontal: 20,
+    height: 40,
+    fontSize: 20,
     marginBottom: 10
   },
   errorText: {
