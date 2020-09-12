@@ -37,8 +37,8 @@ export default StyleSheet.create({
   },
   textBox: {
     width: 275,
-    height: 40,
-    fontSize: 20,
+    height: 45,
+    fontSize: 18,
     marginBottom: 10
   },
   errorText: {
@@ -48,11 +48,12 @@ export default StyleSheet.create({
   },
   loginButton: {
     width: 275,
-    height: 40,
+    height: 45,
     borderRadius: 10,
     marginBottom: 10
   },
   loginButtonContent: {
+    fontSize: 18,
     width: '100%',
     height: '100%'
   },

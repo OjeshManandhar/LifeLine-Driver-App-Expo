@@ -14,7 +14,7 @@ import bottomCurve from 'assets/images/login/bottom_curve.png';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function Login({ navigation }) {
-  const LOGO_SIZE = 125;
+  const LOGO_SIZE = 120;
   const TRANSLATATION_VALUE = 120;
   const ANIMATION_DURATION = 0.5 * 1000;
 
@@ -140,10 +140,10 @@ function Login({ navigation }) {
 
         <TextInput
           mode='outlined'
+          label='Phone number'
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
-          label='Phone number'
           keyboardType='phone-pad'
           placeholder='Phone Number'
           value={phoneNumber}
@@ -152,6 +152,7 @@ function Login({ navigation }) {
 
         <TextInput
           mode='outlined'
+          label='Password'
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
@@ -170,6 +171,7 @@ function Login({ navigation }) {
           mode='contained'
           disabled={false}
           style={styles.loginButton}
+          contentStyle={styles.loginButtonContent}
           onPress={() => {
             console.log('Login');
             // navigation.navigate('MapScreen', {
@@ -177,7 +179,7 @@ function Login({ navigation }) {
             // });
           }}
         >
-          Login
+          <Text style={styles.loginButtonContent}>Login</Text>
         </Button>
 
         <View style={styles.signUpContainer}>
