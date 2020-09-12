@@ -1,31 +1,45 @@
 import { StyleSheet } from 'react-native';
 
 // global
-import ZIndex from 'global/zIndex';
+import GlobalZIndex from 'global/zIndex';
+
+const ZIndex = {
+  curve: 100,
+  formContainer: 200
+};
 
 export default StyleSheet.create({
   container: {
+    position: 'relative',
+
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
-    zIndex: ZIndex.login
+
+    zIndex: GlobalZIndex.login
   },
   topCurve: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 0
+
+    zIndex: ZIndex.curve
+  },
+  formContainer: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+
+    zIndex: ZIndex.formContainer,
+
+    borderWidth: 1,
+    borderColor: 'black'
   },
   logo: {
-    width: 125,
-    height: 125,
-    marginBottom: 20
+    marginBottom: 15
   },
   textBox: {
     width: 275,
-    // height: 40,
     borderWidth: 1,
     borderRadius: 10,
     borderColor: 'black',
@@ -39,11 +53,18 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10
   },
+  loginButton: {
+    marginBottom: 10
+  },
+  signUpContainer: {
+    flexDirection: 'row'
+  },
   bottomCurve: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    zIndex: 0
+
+    zIndex: ZIndex.curve
   }
 });
