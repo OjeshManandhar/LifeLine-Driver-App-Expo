@@ -1,15 +1,18 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
+// packages
+import { Provider as PaperProvider } from 'react-native-paper';
+
 // navigator
 import Navigator from 'navigator/Navigator';
 
 function App() {
   return (
-    <React.Fragment>
+    <PaperProvider>
       <Navigator />
       <StatusBar translucent={false} />
-    </React.Fragment>
+    </PaperProvider>
   );
 }
 

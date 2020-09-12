@@ -1,12 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  Animated,
-  Keyboard,
-  TextInput
-} from 'react-native';
+import { View, Text, Animated, Keyboard, TextInput } from 'react-native';
+
+// packages
+import { Button } from 'react-native-paper';
 
 // styles
 import styles from './styles';
@@ -166,14 +162,20 @@ function Login({ navigation }) {
         <Text style={styles.errorText}>Incorrect username or password</Text>
 
         <Button
-          title='Login'
+          icon='login'
+          color='#ff3a3a'
+          mode='contained'
+          disabled={false}
           style={styles.loginButton}
-          onPress={() =>
-            navigation.navigate('MapScreen', {
-              userId: 'qwertyuiop'
-            })
-          }
-        />
+          onPress={() => {
+            console.log('Login');
+            // navigation.navigate('MapScreen', {
+            //   userId: 'qwertyuiop'
+            // });
+          }}
+        >
+          Login
+        </Button>
 
         <View style={styles.signUpContainer}>
           <Text>Don't have an account? </Text>

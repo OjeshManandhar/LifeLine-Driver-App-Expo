@@ -54,7 +54,14 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   loginButton: {
+    width: 275,
+    height: 40,
+    borderRadius: 10,
     marginBottom: 10
+  },
+  loginButtonContent: {
+    width: '100%',
+    height: '100%'
   },
   signUpContainer: {
     flexDirection: 'row'
