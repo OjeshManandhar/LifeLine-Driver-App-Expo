@@ -189,12 +189,7 @@ function Login({ navigation }) {
           style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
           // style={styles.loginButton}
           contentStyle={styles.loginButtonContent}
-          onPress={() => {
-            console.log('Login');
-            // navigation.navigate('MapScreen', {
-            //   userId: 'qwertyuiop'
-            // });
-          }}
+          onPress={() => console.log('Login')}
         >
           <Text style={styles.loginButtonContent}>Login</Text>
         </Button>
