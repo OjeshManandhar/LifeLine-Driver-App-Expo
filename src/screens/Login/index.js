@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { View, Text, Animated, Keyboard } from 'react-native';
+import { View, Text, Alert, Animated, Keyboard } from 'react-native';
 
 // packages
 import { Button, TextInput } from 'react-native-paper';
@@ -15,6 +15,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // global
 import Colors from 'global/colors';
+import { Login as LoginText } from 'global/strings';
 
 function Login({ navigation }) {
   const LOGO_SIZE = 120;
@@ -147,12 +148,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label='Phone number'
+          label={LoginText.loginForm.phoneNumber}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           keyboardType='phone-pad'
-          placeholder='Phone Number'
+          placeholder={LoginText.loginForm.phoneNumber}
           value={phoneNumber}
           onChangeText={setPhoneNumber}
         />
@@ -160,12 +161,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label='Password'
+          label={LoginText.loginForm.password}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           autoCapitalize='none'
-          placeholder='Password'
+          placeholder={LoginText.loginForm.password}
           secureTextEntry={!showPassword}
           keyboardType={showPassword ? 'visible-password' : 'default'}
           value={password}
@@ -173,7 +174,7 @@ function Login({ navigation }) {
           right={
             <TextInput.Icon
               name={showPassword ? 'eye-off' : 'eye'}
-              onPress={() => setShowPassword(currentValue => !currentValue)}
+              onPress={() => setShowPassword(!showPassword)}
             />
           }
         />
@@ -184,7 +185,7 @@ function Login({ navigation }) {
           icon='login'
           color={Colors.primary}
           mode='contained'
-          disabled={false}
+          disabled={phoneNumber && password ? false : true}
           style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
           // style={styles.loginButton}
           contentStyle={styles.loginButtonContent}
@@ -200,7 +201,11 @@ function Login({ navigation }) {
 
         <View style={styles.signUpContainer}>
           <Text>Don't have an account? </Text>
-          <TouchableWithoutFeedback onPress={() => console.log('Sign Up')}>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              Alert.alert(LoginText.signUp.title, LoginText.signUp.detail)
+            }
+          >
             <Text style={styles.signUpLink}>Sign Up</Text>
           </TouchableWithoutFeedback>
         </View>
