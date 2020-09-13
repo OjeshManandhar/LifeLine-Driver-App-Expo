@@ -13,6 +13,9 @@ import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+// global
+import Colors from 'global/colors';
+
 function Login({ navigation }) {
   const LOGO_SIZE = 120;
   const TRANSLATATION_VALUE = 120;
@@ -20,6 +23,9 @@ function Login({ navigation }) {
 
   const [password, setPassword] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [errorText, setErrorText] = useState(null);
 
   const flexValue = useRef(new Animated.Value(0)).current;
   const curveOpacityValue = useRef(new Animated.Value(1)).current;
@@ -139,6 +145,7 @@ function Login({ navigation }) {
         />
 
         <TextInput
+          dense={true}
           mode='outlined'
           label='Phone number'
           style={styles.textBox}
@@ -151,26 +158,35 @@ function Login({ navigation }) {
         />
 
         <TextInput
+          dense={true}
           mode='outlined'
           label='Password'
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
-          keyboardType='default'
+          autoCapitalize='none'
           placeholder='Password'
-          secureTextEntry={true}
+          secureTextEntry={!showPassword}
+          keyboardType={showPassword ? 'visible-password' : 'default'}
           value={password}
           onChangeText={setPassword}
+          right={
+            <TextInput.Icon
+              name={showPassword ? 'eye-off' : 'eye'}
+              onPress={() => setShowPassword(currentValue => !currentValue)}
+            />
+          }
         />
 
-        <Text style={styles.errorText}>Incorrect username or password</Text>
+        {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
 
         <Button
           icon='login'
-          color='#ff3a3a'
+          color={Colors.primary}
           mode='contained'
           disabled={false}
-          style={styles.loginButton}
+          style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
+          // style={styles.loginButton}
           contentStyle={styles.loginButtonContent}
           onPress={() => {
             console.log('Login');
@@ -185,7 +201,7 @@ function Login({ navigation }) {
         <View style={styles.signUpContainer}>
           <Text>Don't have an account? </Text>
           <TouchableWithoutFeedback onPress={() => console.log('Sign Up')}>
-            <Text>Sign Up</Text>
+            <Text style={styles.signUpLink}>Sign Up</Text>
           </TouchableWithoutFeedback>
         </View>
       </Animated.View>

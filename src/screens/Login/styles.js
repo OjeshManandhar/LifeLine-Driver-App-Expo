@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // global
+import Colors from 'global/colors';
 import GlobalZIndex from 'global/zIndex';
 
 const ZIndex = {
@@ -37,14 +38,13 @@ export default StyleSheet.create({
   },
   textBox: {
     width: 275,
-    height: 45,
-    fontSize: 18,
-    marginBottom: 10
+    fontSize: 18
   },
   errorText: {
     fontSize: 15,
     textAlign: 'center',
-    marginBottom: 10
+    color: Colors.errorText,
+    marginTop: 10
   },
   loginButton: {
     width: 275,
@@ -59,6 +59,9 @@ export default StyleSheet.create({
   },
   signUpContainer: {
     flexDirection: 'row'
+  },
+  signUpLink: {
+    color: Colors.link
   },
   bottomCurve: {
     position: 'absolute',
