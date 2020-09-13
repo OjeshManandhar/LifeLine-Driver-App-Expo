@@ -27,6 +27,7 @@ function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const [errorText, setErrorText] = useState(null);
+  const [isLogginIn, setIsLogginIn] = useState(false);
 
   const flexValue = useRef(new Animated.Value(0)).current;
   const curveOpacityValue = useRef(new Animated.Value(1)).current;
@@ -183,13 +184,13 @@ function Login({ navigation }) {
 
         <Button
           icon='login'
-          color={Colors.primary}
           mode='contained'
+          color={Colors.primary}
+          loading={isLogginIn}
           disabled={phoneNumber && password ? false : true}
           style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
-          // style={styles.loginButton}
           contentStyle={styles.loginButtonContent}
-          onPress={() => console.log('Login')}
+          onPress={() => !isLogginIn && console.log('Login')}
         >
           <Text style={styles.loginButtonContent}>Login</Text>
         </Button>
