@@ -198,7 +198,14 @@ function Login({ navigation }) {
           mode='contained'
           color={Colors.primary}
           loading={isLogginIn}
-          disabled={phoneNumber && password ? false : true}
+          disabled={
+            phoneNumber &&
+            phoneNumber.length === 10 &&
+            password &&
+            password.length >= 8
+              ? false
+              : true
+          }
           style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
           contentStyle={styles.loginButtonContent}
           onPress={() => !isLogginIn && console.log('Login')}
