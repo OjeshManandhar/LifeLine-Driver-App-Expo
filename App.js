@@ -14,6 +14,7 @@ function App() {
   useEffect(() => {
     async function preventAutoHideSplashScreen() {
       try {
+        console.log('Show Splash Screen');
         await SplashScreen.preventAutoHideAsync();
       } catch (error) {
         console.warn('Splash Screen Error:', error);
@@ -21,6 +22,12 @@ function App() {
     }
 
     preventAutoHideSplashScreen();
+
+    // Hide Splash Screen after 5 secs
+    setTimeout(async () => {
+      console.log('Hide Splash Screen');
+      await SplashScreen.hideAsync();
+    }, 5 * 1000);
   }, []);
 
   return (

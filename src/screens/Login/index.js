@@ -1,9 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, Alert, Animated, Keyboard } from 'react-native';
 
-// Expo
-import * as SplashScreen from 'expo-splash-screen';
-
 // packages
 import { Button, TextInput } from 'react-native-paper';
 
@@ -111,14 +108,6 @@ function Login({ navigation }) {
       Keyboard.removeListener('keyboardDidShow', showKeyboardAnim);
       Keyboard.removeListener('keyboardDidHide', hideKeyboardAnim);
     };
-  }, []);
-
-  // Splash Screen
-  useEffect(() => {
-    setTimeout(async () => {
-      console.log('Hide Splash Screen');
-      await SplashScreen.hideAsync();
-    }, 5 * 1000);
   }, []);
 
   return (
