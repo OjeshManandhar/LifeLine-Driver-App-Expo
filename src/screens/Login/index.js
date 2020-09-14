@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, Alert, Animated, Keyboard } from 'react-native';
+import { View, Alert, Animated, Keyboard } from 'react-native';
 
 // packages
 import { Button, TextInput } from 'react-native-paper';
+
+// components
+import Text from 'components/Text';
 
 // styles
 import styles from './styles';
@@ -14,6 +17,7 @@ import bottomCurve from 'assets/images/login/bottom_curve.png';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // global
+import Fonts from 'global/fonts';
 import Colors from 'global/colors';
 import { Login as LoginText } from 'global/strings';
 
