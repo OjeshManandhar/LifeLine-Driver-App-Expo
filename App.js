@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { AppLoading } from 'expo';
 import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
+import * as SecureStore from 'expo-secure-store';
 
 // packages
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
@@ -17,6 +18,9 @@ import FontsList from 'global/fonts';
 // assets
 import WorkSansItalic from 'assets/fonts/WorkSans-Italic-Variable.ttf';
 import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
+
+// env
+import { USER_TOKEN_KEY } from '@env';
 
 const theme = {
   ...DefaultTheme,
@@ -36,7 +40,9 @@ function App() {
   async function loadResources() {
     await Fonts.loadAsync(customFonts);
 
-    setIsReady(true);
+    const userToken = await SecureStore.getItemAsync(USER_TOKEN_KEY);
+
+    console.log('userToken:', userToken);
   }
 
   if (isReady) {
