@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Expo
+import { AppLoading } from 'expo';
 import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
 
 // packages
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
@@ -27,39 +27,19 @@ const theme = {
 };
 
 function App() {
-  const fontsList = {};
-  fontsList[FontsList.italic] = WorkSansItalic;
-  fontsList[FontsList.regular] = WorkSansRegular;
+  const [isReady, setIsReady] = useState(false);
 
-  const [fontsLoaded] = Fonts.useFonts(fontsList);
+  const customFonts = {};
+  customFonts[FontsList.italic] = WorkSansItalic;
+  customFonts[FontsList.regular] = WorkSansRegular;
 
-  // Prevent Auto hide of Splash Screen
-  useEffect(() => {
-    (async function () {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-      } catch (error) {
-        console.warn('Splash Screen Error:', error);
-      }
-    })();
-  }, []);
+  async function loadResources() {
+    await Fonts.loadAsync(customFonts);
 
-  // Hide Splash Screen
-  useEffect(() => {
-    if (fontsLoaded) {
-      (async function () {
-        await SplashScreen.hideAsync();
-      })();
-    }
+    setIsReady(true);
+  }
 
-    // Hide Splash Screen after 5 secs
-    // setTimeout(async () => {
-    //   console.log('Hide Splash Screen');
-    //   await SplashScreen.hideAsync();
-    // }, 5 * 1000);
-  }, [fontsLoaded]);
-
-  if (fontsLoaded) {
+  if (isReady) {
     return (
       <PaperProvider theme={theme}>
         <Navigator />
@@ -68,7 +48,14 @@ function App() {
     );
   }
 
-  return null;
+  return (
+    <AppLoading
+      startAsync={loadResources}
+      onFinish={() => setIsReady(true)}
+      onError={() => console.log('App Loading ERROR')}
+      autoHideSplash={true}
+    />
+  );
 }
 
 export default App;
