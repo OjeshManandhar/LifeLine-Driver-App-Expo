@@ -1,5 +1,14 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  useCallback
+} from 'react';
 import { View, Alert, Animated, Keyboard } from 'react-native';
+
+// Expo
+import * as SecureStore from 'expo-secure-store';
 
 // packages
 import { Button, TextInput } from 'react-native-paper';
@@ -7,8 +16,15 @@ import { Button, TextInput } from 'react-native-paper';
 // components
 import Text from 'components/Text';
 
+// context
+import { UserTokenContext } from 'context/userToken';
+
 // styles
 import styles from './styles';
+
+// global
+import Colors from 'global/colors';
+import { Login as LoginText } from 'global/strings';
 
 // assets
 import logo from 'assets/images/logo.png';
@@ -16,12 +32,12 @@ import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-// global
-import Fonts from 'global/fonts';
-import Colors from 'global/colors';
-import { Login as LoginText } from 'global/strings';
+// env
+import { USER_TOKEN_KEY } from '@env';
 
 function Login({ navigation }) {
+  const { userToken, setUserToken } = useContext(UserTokenContext);
+
   const LOGO_SIZE = 120;
   const TRANSLATATION_VALUE = 120;
   const ANIMATION_DURATION = 0.5 * 1000;
@@ -31,13 +47,65 @@ function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const [errorText, setErrorText] = useState(null);
-  const [isLogginIn, setIsLogginIn] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const flexValue = useRef(new Animated.Value(0)).current;
   const curveOpacityValue = useRef(new Animated.Value(1)).current;
   const topTranslateYValue = useRef(new Animated.Value(0)).current;
   const bottomTranslateYValue = useRef(new Animated.Value(0)).current;
   const logoSizeValue = useRef(new Animated.Value(LOGO_SIZE)).current;
+
+  const handleLogin = useCallback(async () => {
+    setIsLoggingIn(true);
+
+    const checkPassword = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() < 0.5) {
+          console.log('sucess => connect to server');
+
+          if (phoneNumber === '9863198269') {
+            if (password === 'deadskull') {
+              resolve({ userToken: 'userToken' });
+            } else {
+              reject({ errorCode: 'phonePassError' });
+            }
+          } else {
+            reject({ errorCode: 'noAccount' });
+          }
+        } else {
+          console.log('failure => no connection to server');
+
+          reject({ errorCode: 'noNetwork' });
+        }
+      }, 2 * 1000);
+    });
+
+    checkPassword
+      .then(async ({ userToken }) => {
+        console.log('sucess userToken:', userToken);
+
+        setUserToken(userToken);
+        SecureStore.setItemAsync(USER_TOKEN_KEY, userToken);
+      })
+      .catch(({ errorCode }) => {
+        setErrorText(LoginText.errorText[errorCode]);
+        setIsLoggingIn(false);
+      });
+
+    /**
+     * setIsLoggingIn(true);
+     *
+     * Send phoneNumber and password to server()
+     *  .then({userToken} => {
+     *    save userToken in SecureStore
+     *    setUserToken(userToken);
+     *  })
+     *  .catch(error => {
+     *    setErrorText(get errorText using error.code);
+     *    setIsLoggingIn(false);
+     *  })
+     */
+  }, [password, phoneNumber, setErrorText, setUserToken, setIsLoggingIn]);
 
   function showKeyboardAnim() {
     Animated.timing(flexValue, {
@@ -113,6 +181,10 @@ function Login({ navigation }) {
       Keyboard.removeListener('keyboardDidHide', hideKeyboardAnim);
     };
   }, []);
+
+  if (userToken) {
+    navigation.navigate('MapScreen');
+  }
 
   return (
     <View style={styles.container}>
@@ -190,7 +262,7 @@ function Login({ navigation }) {
           icon='login'
           mode='contained'
           color={Colors.primary}
-          loading={isLogginIn}
+          loading={isLoggingIn}
           disabled={
             phoneNumber &&
             phoneNumber.length === 10 &&
@@ -201,7 +273,7 @@ function Login({ navigation }) {
           }
           style={[styles.loginButton, { marginTop: errorText ? 10 : 20 }]}
           contentStyle={styles.loginButtonContent}
-          onPress={() => !isLogginIn && console.log('Login')}
+          onPress={() => !isLoggingIn && handleLogin()}
         >
           <Text style={styles.loginButtonContent}>Login</Text>
         </Button>

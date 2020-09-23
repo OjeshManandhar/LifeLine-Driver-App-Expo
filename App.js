@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Expo
 import { AppLoading } from 'expo';
@@ -9,8 +9,14 @@ import * as SecureStore from 'expo-secure-store';
 // packages
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
+// context
+import { Provider } from 'context/userToken';
+
 // navigator
 import Navigator from 'navigator/Navigator';
+
+// dummy_api
+import { checkToken } from 'dummy_api';
 
 // global
 import FontsList from 'global/fonts';
@@ -32,6 +38,7 @@ const theme = {
 
 function App() {
   const [isReady, setIsReady] = useState(false);
+  const [userToken, setUserToken] = useState(null);
 
   const customFonts = {};
   customFonts[FontsList.italic] = WorkSansItalic;
@@ -42,25 +49,34 @@ function App() {
 
     const userToken = await SecureStore.getItemAsync(USER_TOKEN_KEY);
 
-    console.log('userToken:', userToken);
+    if (userToken) {
+      const { valid } = await checkToken(userToken);
+      if (valid) {
+        setUserToken(userToken);
+      } else {
+        await SecureStore.deleteItemAsync(USER_TOKEN_KEY);
+      }
+    }
   }
 
-  if (isReady) {
+  if (!isReady) {
     return (
-      <PaperProvider theme={theme}>
-        <Navigator />
-        <StatusBar translucent={false} />
-      </PaperProvider>
+      <AppLoading
+        startAsync={loadResources}
+        onFinish={() => setIsReady(true)}
+        onError={() => console.log('App Loading ERROR')}
+        autoHideSplash={true}
+      />
     );
   }
 
   return (
-    <AppLoading
-      startAsync={loadResources}
-      onFinish={() => setIsReady(true)}
-      onError={() => console.log('App Loading ERROR')}
-      autoHideSplash={true}
-    />
+    <Provider value={{ userToken, setUserToken }}>
+      <PaperProvider theme={theme}>
+        <Navigator />
+        <StatusBar translucent={false} />
+      </PaperProvider>
+    </Provider>
   );
 }
 
