@@ -1,3 +1,4 @@
+import login from './login';
 import checkToken from './checkToken';
 
-export { checkToken };
+export { login, checkToken };

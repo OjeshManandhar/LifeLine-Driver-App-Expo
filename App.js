@@ -4,13 +4,9 @@ import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import * as SecureStore from 'expo-secure-store';
 
 // packages
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-
-// context
-import { Provider } from 'context/userToken';
 
 // navigator
 import Navigator from 'navigator/Navigator';
@@ -25,8 +21,8 @@ import FontsList from 'global/fonts';
 import WorkSansItalic from 'assets/fonts/WorkSans-Italic-Variable.ttf';
 import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
 
-// env
-import { USER_TOKEN_KEY } from '@env';
+// utils
+import UserToken from 'utils/userToken';
 
 const theme = {
   ...DefaultTheme,
@@ -38,23 +34,22 @@ const theme = {
 
 function App() {
   const [isReady, setIsReady] = useState(false);
-  const [userToken, setUserToken] = useState(null);
 
   const customFonts = {};
   customFonts[FontsList.italic] = WorkSansItalic;
   customFonts[FontsList.regular] = WorkSansRegular;
 
   async function loadResources() {
+    await UserToken.init();
+
     await Fonts.loadAsync(customFonts);
 
-    const userToken = await SecureStore.getItemAsync(USER_TOKEN_KEY);
+    const userToken = await UserToken.get();
 
     if (userToken) {
-      const { valid } = await checkToken(userToken);
-      if (valid) {
-        setUserToken(userToken);
-      } else {
-        await SecureStore.deleteItemAsync(USER_TOKEN_KEY);
+      const { valid } = await checkToken(userToken, true);
+      if (!valid) {
+        await UserToken.delete();
       }
     }
   }
@@ -71,12 +66,10 @@ function App() {
   }
 
   return (
-    <Provider value={{ userToken, setUserToken }}>
-      <PaperProvider theme={theme}>
-        <Navigator />
-        <StatusBar translucent={false} />
-      </PaperProvider>
-    </Provider>
+    <PaperProvider theme={theme}>
+      <Navigator />
+      <StatusBar translucent={false} />
+    </PaperProvider>
   );
 }
 

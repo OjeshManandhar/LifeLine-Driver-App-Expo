@@ -16,8 +16,8 @@ import { Button, TextInput } from 'react-native-paper';
 // components
 import Text from 'components/Text';
 
-// context
-import { UserTokenContext } from 'context/userToken';
+// dummy_api
+import { login } from 'dummy_api';
 
 // styles
 import styles from './styles';
@@ -32,12 +32,13 @@ import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+// utils
+import UserToken from 'utils/userToken';
+
 // env
 import { USER_TOKEN_KEY } from '@env';
 
 function Login({ navigation }) {
-  const { userToken, setUserToken } = useContext(UserTokenContext);
-
   const LOGO_SIZE = 120;
   const TRANSLATATION_VALUE = 120;
   const ANIMATION_DURATION = 0.5 * 1000;
@@ -55,57 +56,29 @@ function Login({ navigation }) {
   const bottomTranslateYValue = useRef(new Animated.Value(0)).current;
   const logoSizeValue = useRef(new Animated.Value(LOGO_SIZE)).current;
 
+  const clearFields = useCallback(() => {
+    setPassword(null);
+    setPhoneNumber(null);
+    setShowPassword(false);
+  }, [setPassword, setPhoneNumber, setShowPassword]);
+
   const handleLogin = useCallback(async () => {
     setIsLoggingIn(true);
 
-    const checkPassword = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.5) {
-          console.log('sucess => connect to server');
-
-          if (phoneNumber === '9863198269') {
-            if (password === 'deadskull') {
-              resolve({ userToken: 'userToken' });
-            } else {
-              reject({ errorCode: 'phonePassError' });
-            }
-          } else {
-            reject({ errorCode: 'noAccount' });
-          }
-        } else {
-          console.log('failure => no connection to server');
-
-          reject({ errorCode: 'noNetwork' });
-        }
-      }, 2 * 1000);
-    });
-
-    checkPassword
+    login(phoneNumber, password, true)
       .then(async ({ userToken }) => {
-        console.log('sucess userToken:', userToken);
+        await UserToken.set(userToken);
 
-        setUserToken(userToken);
-        SecureStore.setItemAsync(USER_TOKEN_KEY, userToken);
+        clearFields();
+        setIsLoggingIn(false);
+
+        navigation.navigate('MapScreen');
       })
       .catch(({ errorCode }) => {
-        setErrorText(LoginText.errorText[errorCode]);
         setIsLoggingIn(false);
+        setErrorText(LoginText.errorText[errorCode]);
       });
-
-    /**
-     * setIsLoggingIn(true);
-     *
-     * Send phoneNumber and password to server()
-     *  .then({userToken} => {
-     *    save userToken in SecureStore
-     *    setUserToken(userToken);
-     *  })
-     *  .catch(error => {
-     *    setErrorText(get errorText using error.code);
-     *    setIsLoggingIn(false);
-     *  })
-     */
-  }, [password, phoneNumber, setErrorText, setUserToken, setIsLoggingIn]);
+  }, [password, phoneNumber, clearFields, setErrorText, setIsLoggingIn]);
 
   function showKeyboardAnim() {
     Animated.timing(flexValue, {
@@ -182,7 +155,7 @@ function Login({ navigation }) {
     };
   }, []);
 
-  if (userToken) {
+  if (UserToken.get()) {
     navigation.navigate('MapScreen');
   }
 

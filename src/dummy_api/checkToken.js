@@ -1,4 +1,4 @@
-async function checkToken(userToken, valid = null) {
+export default async function (userToken, valid = null) {
   return new Promise((resolve, reject) =>
     setTimeout(() => {
       if (valid != null) {
@@ -17,5 +17,3 @@ async function checkToken(userToken, valid = null) {
     }, 2 * 1000)
   );
 }
-
-export default checkToken;
