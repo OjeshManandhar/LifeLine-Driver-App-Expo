@@ -11,6 +11,9 @@ import {
 // utils
 import UserToken from 'utils/userToken';
 
+// global
+import Routes from 'global/routes';
+
 // env
 import { MAPBOX_API_KEY } from '@env';
 
@@ -56,7 +59,10 @@ function MapScreen({ navigation, route }) {
       <Text style={styles.text}>Map Screen</Text>
       <Text style={styles.text}>{JSON.stringify(routeParams)}</Text>
       <Text style={styles.text}>Env Var: {MAPBOX_API_KEY}</Text>
-      <Button title='Log out' onPress={() => navigation.navigate('Login')} />
+      <Button
+        title='Log out'
+        onPress={() => navigation.navigate(Routes.login)}
+      />
     </View>
   );
 }

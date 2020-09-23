@@ -8,14 +8,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from 'screens/Login';
 import MapScreen from 'screens/MapScreen';
 
+// global
+import Routes from 'global/routes';
+
 const Stack = createStackNavigator();
 
 function Navigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' headerMode='none'>
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='MapScreen' component={MapScreen} />
+        <Stack.Screen name={Routes.login} component={Login} />
+        <Stack.Screen name={Routes.map} component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
