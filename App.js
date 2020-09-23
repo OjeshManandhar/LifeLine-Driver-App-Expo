@@ -6,6 +6,7 @@ import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 
 // packages
+import MapboxGL from '@react-native-mapbox-gl/maps';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 // navigator
@@ -24,6 +25,9 @@ import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
 // utils
 import UserToken from 'utils/userToken';
 
+// env
+import { MAPBOX_API_KEY } from '@env';
+
 const theme = {
   ...DefaultTheme,
   fonts: {
@@ -31,6 +35,8 @@ const theme = {
     regular: { fontFamily: FontsList.regular }
   }
 };
+
+MapboxGL.setAccessToken(MAPBOX_API_KEY);
 
 function App() {
   const [isReady, setIsReady] = useState(false);

@@ -16,11 +16,11 @@ import { Button, TextInput } from 'react-native-paper';
 // components
 import Text from 'components/Text';
 
-// dummy_api
-import { login } from 'dummy_api';
-
 // styles
 import styles from './styles';
+
+// dummy_api
+import { login } from 'dummy_api';
 
 // global
 import Route from 'global/routes';

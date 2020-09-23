@@ -1,15 +1,14 @@
 import React, { useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  Button,
-  StyleSheet,
-  BackHandler
-} from 'react-native';
+import { View, Text, Alert, Button, BackHandler } from 'react-native';
+
+// components
+import Map from 'components/Map';
 
 // utils
 import UserToken from 'utils/userToken';
+
+// styles
+import styles from './styles';
 
 // global
 import Routes from 'global/routes';
@@ -56,27 +55,9 @@ function MapScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Map Screen</Text>
-      <Text style={styles.text}>{JSON.stringify(routeParams)}</Text>
-      <Text style={styles.text}>Env Var: {MAPBOX_API_KEY}</Text>
-      <Button
-        title='Log out'
-        onPress={() => navigation.navigate(Routes.login)}
-      />
+      <Map />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontSize: 18,
-    textAlign: 'center'
-  }
-});
 
 export default MapScreen;

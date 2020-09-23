@@ -1,4 +1,4 @@
-export const LayerIndex = {
+export const MapLayerIndex = {
   // 125 => layerIndex of the users location indicator
   // so make other below 125
 
