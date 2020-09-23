@@ -11,6 +11,7 @@ export const LayerIndex = {
 };
 
 export default {
+  login: 1,
   map: 1,
   bottomInfoBox: 101,
   searchList: 201,

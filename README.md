@@ -30,4 +30,15 @@ and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
 
 - **Environment Variable**
 
-  Use _[react-native-dotenv](https://www.npmjs.com/package/react-native-dotenv)_.
+  Use _[react-native-dotenv](https://www.npmjs.com/package/react-native-dotenv)_
+
+- **React-Native-Paper Fonts**
+
+  Pass and object in fonts like showh below, not just the font name as given in _[docs](https://callstack.github.io/react-native-paper/theming.html#customizing-all-instances-of-a-component)_
+
+  ```
+  fonts: {
+    ...DefaultTheme.fonts,
+    regular: { fontFamily: FontsList.regular }
+  }
+  ```

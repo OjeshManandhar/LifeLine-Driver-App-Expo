@@ -8,6 +8,9 @@ import {
   BackHandler
 } from 'react-native';
 
+// utils
+import UserToken from 'utils/userToken';
+
 // env
 import { MAPBOX_API_KEY } from '@env';
 
@@ -26,7 +29,10 @@ function MapScreen({ navigation, route }) {
           style: 'destructive',
           // If the user confirmed, then we dispatch the action we blocked earlier
           // This will continue the action that had triggered the removal of the screen
-          onPress: () => navigation.dispatch(e.data.action)
+          onPress: async () => {
+            await UserToken.delete();
+            navigation.dispatch(e.data.action);
+          }
         }
       ]);
     });
