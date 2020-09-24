@@ -1,14 +1,11 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  useCallback
-} from 'react';
-import { View, Alert, Animated, Keyboard } from 'react-native';
-
-// Expo
-import * as SecureStore from 'expo-secure-store';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import {
+  View,
+  Alert,
+  Animated,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native';
 
 // packages
 import { Button, TextInput } from 'react-native-paper';
@@ -31,13 +28,9 @@ import { Login as LoginText } from 'global/strings';
 import logo from 'assets/images/logo.png';
 import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // utils
 import UserToken from 'utils/userToken';
-
-// env
-import { USER_TOKEN_KEY } from '@env';
 
 function Login({ navigation }) {
   const LOGO_SIZE = 120;
