@@ -24,6 +24,7 @@ import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
 
 // utils
 import UserToken from 'utils/userToken';
+import UserLocation from 'utils/userLocation';
 
 // env
 import { MAPBOX_API_KEY } from '@env';
@@ -36,6 +37,7 @@ const theme = {
   }
 };
 
+UserLocation.init();
 MapboxGL.setAccessToken(MAPBOX_API_KEY);
 
 function App() {
