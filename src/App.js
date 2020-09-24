@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Expo
-import { AppLoading } from 'expo';
 import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 
 // packages
 import MapboxGL from '@react-native-mapbox-gl/maps';
@@ -60,16 +60,24 @@ function App() {
     }
   }
 
-  if (!isReady) {
-    return (
-      <AppLoading
-        startAsync={loadResources}
-        onFinish={() => setIsReady(true)}
-        onError={() => console.log('App Loading ERROR')}
-        autoHideSplash={true}
-      />
-    );
-  }
+  // Prevent Auto hide of Splash Screen
+  useEffect(() => {
+    (async function () {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (error) {
+        console.warn('Splash Screen Error:', error);
+      }
+
+      await loadResources();
+
+      setIsReady(true);
+
+      await SplashScreen.hideAsync();
+    })();
+  }, [setIsReady]);
+
+  if (!isReady) return null;
 
   return (
     <PaperProvider theme={theme}>

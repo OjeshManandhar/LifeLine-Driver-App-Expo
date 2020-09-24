@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { View, Text, Alert, Button, BackHandler } from 'react-native';
+import { View, Alert, BackHandler, BackAndroid } from 'react-native';
 
 // components
 import Map from 'components/Map';
@@ -41,6 +41,7 @@ function MapScreen({ navigation, route }) {
   }, [navigation]);
 
   const handleBackButton = useCallback(() => {
+    BackHandler.exitApp();
     return true;
   }, []);
 

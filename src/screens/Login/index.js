@@ -20,7 +20,7 @@ import styles from './styles';
 import { login } from 'dummy_api';
 
 // global
-import Route from 'global/routes';
+import Routes from 'global/routes';
 import Colors from 'global/colors';
 import { Login as LoginText } from 'global/strings';
 
@@ -66,7 +66,7 @@ function Login({ navigation }) {
         clearFields();
         setIsLoggingIn(false);
 
-        navigation.navigate(Route.map);
+        navigation.navigate(Routes.map);
       })
       .catch(({ errorCode }) => {
         setIsLoggingIn(false);
@@ -150,7 +150,7 @@ function Login({ navigation }) {
   }, []);
 
   if (UserToken.get()) {
-    navigation.navigate(Route.map);
+    navigation.navigate(Routes.map);
   }
 
   return (
