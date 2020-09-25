@@ -10,7 +10,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 // navigator
-import Navigator from 'navigator/Navigator';
+import Navigator from 'navigator';
 
 // dummy_api
 import { checkToken } from 'dummy_api';

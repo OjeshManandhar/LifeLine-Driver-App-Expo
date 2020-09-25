@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // global
-import ZIndex from 'global/zIndex';
+import { AccountViewIndex } from 'global/zIndex';
 
 export default StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     // height: '100%',
-    zIndex: ZIndex.account,
+    zIndex: AccountViewIndex.base,
 
     backgroundColor: 'white'
   }

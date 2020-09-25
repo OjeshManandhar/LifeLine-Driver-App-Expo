@@ -2,12 +2,7 @@ import { StyleSheet } from 'react-native';
 
 // global
 import Colors from 'global/colors';
-import GlobalZIndex from 'global/zIndex';
-
-const ZIndex = {
-  curve: 100,
-  formContainer: 200
-};
+import { LoginIndex } from 'global/zIndex';
 
 export default StyleSheet.create({
   container: {
@@ -17,7 +12,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    zIndex: GlobalZIndex.login
+    zIndex: LoginIndex.base
   },
   topCurve: {
     position: 'absolute',
@@ -25,13 +20,13 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
 
-    zIndex: ZIndex.curve
+    zIndex: LoginIndex.curve
   },
   formContainer: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
 
-    zIndex: ZIndex.formContainer
+    zIndex: LoginIndex.formContainer
   },
   logo: {
     marginBottom: 15
@@ -70,6 +65,6 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0,
 
-    zIndex: ZIndex.curve
+    zIndex: LoginIndex.curve
   }
 });

@@ -3,9 +3,13 @@ import { StyleSheet } from 'react-native';
 // global
 import { MapViewIndex } from 'global/zIndex';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
+    position: 'relative',
+
     flex: 1,
-    zIndex: MapViewIndex.map
+    flexDirection: 'column',
+
+    zIndex: MapViewIndex.base
   }
 });

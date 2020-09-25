@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Alert, Button, BackHandler } from 'react-native';
 
 // components
-import Map from 'components/Map';
+import MapView from 'components/MapView';
 import AccountView from 'components/AccountView';
 
 // utils
@@ -52,7 +52,7 @@ function MapScreen({ navigation }) {
         break;
     }
     return true;
-  }, [setMapScreenStatus]);
+  }, [mapScreenStatus, setMapScreenStatus]);
 
   // Handling the Hardware Back button
   useEffect(() => {
@@ -65,18 +65,9 @@ function MapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column'
-        }}
-      >
-        <Map />
-        <Button
-          title='Account'
-          onPress={() => setMapScreenStatus(EMapScreenStatus.accountView)}
-        />
-      </View>
+      <MapView
+        toAccount={() => setMapScreenStatus(EMapScreenStatus.accountView)}
+      />
 
       <AccountView
         in={mapScreenStatus === EMapScreenStatus.accountView}
