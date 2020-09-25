@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 // global
-import { AnimationState as AS } from 'global/enum';
+import { EAnimationState as AS } from 'global/enum';
 
 // hooks
 import useStateWithCallback from 'hooks/useStateWithCallback';

@@ -15,5 +15,6 @@ export default {
   map: 1,
   bottomInfoBox: 101,
   searchList: 201,
-  searchBox: 301
+  searchBox: 301,
+  account: 401
 };

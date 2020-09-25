@@ -1,4 +1,4 @@
-export const MapStatus = Object.freeze({
+export const EMapStatus = Object.freeze({
   clear: 0,
   routeToDestination: 1,
   routesToPickedLocation: 2,
@@ -14,12 +14,12 @@ export const MapStatus = Object.freeze({
 //   showObstructionInfo: 5
 // });
 
-export const MapScreenStatus = Object.freeze({
+export const EMapScreenStatus = Object.freeze({
   mapView: 0,
   accountView: 1
 });
 
-export const AnimationState = Object.freeze({
+export const EAnimationState = Object.freeze({
   initialRender: 0,
   in: 1,
   out: 2

@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
-import { View, Alert, BackHandler, BackAndroid } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Alert, Button, BackHandler } from 'react-native';
 
 // components
 import Map from 'components/Map';
+import AccountView from 'components/AccountView';
 
 // utils
 import UserToken from 'utils/userToken';
@@ -12,12 +13,12 @@ import styles from './styles';
 
 // global
 import Routes from 'global/routes';
+import { EMapScreenStatus } from 'global/enum';
 
-// env
-import { MAPBOX_API_KEY } from '@env';
-
-function MapScreen({ navigation, route }) {
-  const routeParams = route.params;
+function MapScreen({ navigation }) {
+  const [mapScreenStatus, setMapScreenStatus] = useState(
+    EMapScreenStatus.mapView
+  );
 
   // Logout alert
   useEffect(() => {
@@ -31,8 +32,9 @@ function MapScreen({ navigation, route }) {
           style: 'destructive',
           // If the user confirmed, then we dispatch the action we blocked earlier
           // This will continue the action that had triggered the removal of the screen
-          onPress: async () => {
-            await UserToken.delete();
+          onPress: () => {
+            console.log('Logout');
+            UserToken.delete();
             navigation.dispatch(e.data.action);
           }
         }
@@ -41,9 +43,16 @@ function MapScreen({ navigation, route }) {
   }, [navigation]);
 
   const handleBackButton = useCallback(() => {
-    BackHandler.exitApp();
+    switch (mapScreenStatus) {
+      case EMapScreenStatus.mapView:
+        BackHandler.exitApp();
+        break;
+      case EMapScreenStatus.accountView:
+        setMapScreenStatus(EMapScreenStatus.mapView);
+        break;
+    }
     return true;
-  }, []);
+  }, [setMapScreenStatus]);
 
   // Handling the Hardware Back button
   useEffect(() => {
@@ -56,7 +65,23 @@ function MapScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Map />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column'
+        }}
+      >
+        <Map />
+        <Button
+          title='Account'
+          onPress={() => setMapScreenStatus(EMapScreenStatus.accountView)}
+        />
+      </View>
+
+      <AccountView
+        in={mapScreenStatus === EMapScreenStatus.accountView}
+        logout={() => navigation.navigate(Routes.login)}
+      />
     </View>
   );
 }
