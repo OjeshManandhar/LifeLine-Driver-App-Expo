@@ -14,6 +14,6 @@ export default async function (userToken, valid = null) {
           resolve({ valid: false });
         }
       }
-    }, 2 * 1000)
+    }, 0.05 * 1000)
   );
 }

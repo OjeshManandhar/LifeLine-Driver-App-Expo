@@ -22,6 +22,6 @@ export default async function (phoneNumber, password, valid = null) {
           reject({ errorCode: 'noNetwork' });
         }
       }
-    }, 2 * 1000);
+    }, 0.05 * 1000);
   });
 }
