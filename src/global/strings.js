@@ -1,4 +1,4 @@
-export const Login = {
+export const LoginText = {
   loginForm: {
     phoneNumber: 'Phone Number',
     password: 'Password'
@@ -11,5 +11,14 @@ export const Login = {
     noAccount: 'Phone number is not registered yet',
     noNetwork: 'Please check your internet connection',
     phonePassError: 'Phone number and Password does not match'
+  }
+};
+
+export const MapScreenText = {
+  logoutAlert: {
+    title: 'Log Out',
+    description: 'Are you sure you want to Log out?',
+    negative: 'Cancel',
+    positive: 'Log out'
   }
 };

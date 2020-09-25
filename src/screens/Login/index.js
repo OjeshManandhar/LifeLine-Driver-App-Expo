@@ -22,7 +22,7 @@ import { login } from 'dummy_api';
 // global
 import Routes from 'global/routes';
 import Colors from 'global/colors';
-import { Login as LoginText } from 'global/strings';
+import { LoginText } from 'global/strings';
 
 // assets
 import logo from 'assets/images/logo.png';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Alert, Button, BackHandler } from 'react-native';
+import { View, Alert, BackHandler } from 'react-native';
 
 // components
 import MapView from 'components/MapView';
@@ -14,6 +14,7 @@ import styles from './styles';
 // global
 import Routes from 'global/routes';
 import { EMapScreenStatus } from 'global/enum';
+import { MapScreenText } from 'global/strings';
 
 function MapScreen({ navigation }) {
   const [mapScreenStatus, setMapScreenStatus] = useState(
@@ -25,20 +26,27 @@ function MapScreen({ navigation }) {
     navigation.addListener('beforeRemove', e => {
       e.preventDefault();
 
-      Alert.alert('Log out?', 'Are you sure you want to Log out?', [
-        { text: 'No', style: 'cancel', onPress: () => {} },
-        {
-          text: 'Yes',
-          style: 'destructive',
-          // If the user confirmed, then we dispatch the action we blocked earlier
-          // This will continue the action that had triggered the removal of the screen
-          onPress: () => {
-            console.log('Logout');
-            UserToken.delete();
-            navigation.dispatch(e.data.action);
+      Alert.alert(
+        MapScreenText.logoutAlert.title,
+        MapScreenText.logoutAlert.description,
+        [
+          {
+            text: MapScreenText.logoutAlert.negative,
+            style: 'cancel',
+            onPress: () => {}
+          },
+          {
+            text: MapScreenText.logoutAlert.positive,
+            style: 'destructive',
+            // If the user confirmed, then we dispatch the action we blocked earlier
+            // This will continue the action that had triggered the removal of the screen
+            onPress: async () => {
+              await UserToken.delete();
+              navigation.dispatch(e.data.action);
+            }
           }
-        }
-      ]);
+        ]
+      );
     });
   }, [navigation]);
 
