@@ -29,7 +29,7 @@ function AccountView(props) {
   return (
     <AnimatedView
       in={props.in}
-      timeout={1 * 1000}
+      timeout={0.5 * 1000}
       viewStyles={styles.viewContainer}
       animationStyles={{
         // use the bottom here or the height in styles.container
