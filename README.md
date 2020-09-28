@@ -9,15 +9,15 @@ and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
 
 - **Running the app**
 
-  + The codes upto the commit with tag [**bare-workflow**](https://github.com/OjeshManandhar/LifeLine-Driver-App/tree/bare-workflow) will work with
+  - The codes upto the commit with tag [**bare-workflow**](https://github.com/OjeshManandhar/LifeLine-Driver-App/tree/bare-workflow) will work with
 
     `expo start`
 
-  + Code later than this point is ejected from [**Managed Workflow**](https://docs.expo.io/introduction/managed-vs-bare/#managed-workflow) to [**Bare Workflow**](https://docs.expo.io/introduction/managed-vs-bare/#bare-workflow) so to run use following commands
+  - Code later than this point is ejected from [**Managed Workflow**](https://docs.expo.io/introduction/managed-vs-bare/#managed-workflow) to [**Bare Workflow**](https://docs.expo.io/introduction/managed-vs-bare/#bare-workflow) so to run use following commands
 
     `yarn start` or `npx react-native start`
-  
-    `yarn android` or `npx react-native android`   
+
+    `yarn android` or `npx react-native android`
 
 - **Absolute Path**
 
@@ -50,7 +50,7 @@ and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
 
 - **React-Native-Paper Fonts**
 
-  Pass and object in fonts like showh below, not just the font name as given in _[docs](https://callstack.github.io/react-native-paper/theming.html#customizing-all-instances-of-a-component)_
+  Pass an object in fonts like showh below, not just the font name as given in _[docs](https://callstack.github.io/react-native-paper/theming.html#customizing-all-instances-of-a-component)_
 
   ```
   fonts: {
@@ -58,3 +58,7 @@ and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
     regular: { fontFamily: FontsList.regular }
   }
   ```
+
+## Attribution
+
+- [dead.png](src/assets/images/account/dead.png) - Icons made by [xnimrodx](https://www.flaticon.com/free-icon/dead_3538317?term=avatar&page=1&position=75) from [www.flaticon.com](https://www.flaticon.com/)
