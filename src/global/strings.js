@@ -1,5 +1,6 @@
 export const LoginText = {
-  loginForm: {
+  button: 'Log In',
+  form: {
     phoneNumber: 'Phone Number',
     password: 'Password'
   },
@@ -11,6 +12,14 @@ export const LoginText = {
     noAccount: 'Phone number is not registered yet',
     noNetwork: 'Please check your internet connection',
     phonePassError: 'Phone number and Password does not match'
+  }
+};
+
+export const AccountText = {
+  button: 'Log Out',
+  accountType: {
+    driver: 'Driver Account',
+    traffic: 'Traffic Account'
   }
 };
 

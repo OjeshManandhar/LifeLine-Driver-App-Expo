@@ -192,12 +192,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label={LoginText.loginForm.phoneNumber}
+          label={LoginText.form.phoneNumber}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           keyboardType='phone-pad'
-          placeholder={LoginText.loginForm.phoneNumber}
+          placeholder={LoginText.form.phoneNumber}
           value={phoneNumber}
           onChangeText={setPhoneNumber}
         />
@@ -205,12 +205,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label={LoginText.loginForm.password}
+          label={LoginText.form.password}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           autoCapitalize='none'
-          placeholder={LoginText.loginForm.password}
+          placeholder={LoginText.form.password}
           secureTextEntry={!showPassword}
           keyboardType={showPassword ? 'visible-password' : 'default'}
           value={password}
@@ -242,7 +242,7 @@ function Login({ navigation }) {
           contentStyle={styles.loginButtonContent}
           onPress={() => !isLoggingIn && handleLogin()}
         >
-          <Text style={styles.loginButtonContent}>Login</Text>
+          <Text style={styles.loginButtonContent}>{LoginText.button}</Text>
         </Button>
 
         <View style={styles.signUpContainer}>
