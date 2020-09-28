@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, Button } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Button, Keyboard } from 'react-native';
 
 // components
 import Map from 'components/Map';
-import Text from 'components/Text';
+import SearchBox from 'components/SearchBox';
 import AnimatedImageButton from 'components/AnimatedImageButton';
 
 // assets
@@ -16,17 +16,31 @@ import { EMapViewStatus } from 'global/enum';
 import styles from './styles';
 
 function MapView(props) {
-  const [mapViewStatus, setMapViewStatus] = useState();
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  // status
+  const [mapViewStatus, _setMapViewStatus] = useState(EMapViewStatus.clear);
+
+  const setMapViewStatus = useCallback(
+    val => {
+      if (val !== EMapViewStatus.searching) {
+        // Also blurs out of the Text Input
+        Keyboard.dismiss();
+      }
+
+      _setMapViewStatus(val);
+    },
+    [mapViewStatus, _setMapViewStatus]
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <AnimatedImageButton
-          // in={
-          //   mapViewStatus === EMapViewStatus.searching ||
-          //   mapViewStatus === EMapViewStatus.picking
-          // }
-          in
+          in={
+            mapViewStatus === EMapViewStatus.searching ||
+            mapViewStatus === EMapViewStatus.picking
+          }
           image={back}
           timeout={0.25 * 1000}
           imageStyles={styles.backIcon}
@@ -41,8 +55,14 @@ function MapView(props) {
             }
           }}
           onPress={() => {
-            console.log('Back');
+            setMapViewStatus(EMapViewStatus.clear);
           }}
+        />
+
+        <SearchBox
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+          onFocus={() => setMapViewStatus(EMapViewStatus.searching)}
         />
       </View>
 

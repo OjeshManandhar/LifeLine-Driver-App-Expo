@@ -11,7 +11,7 @@ const MapScreenIndex = {
 
 export const MapViewIndex = {
   base: MapScreenIndex.map,
-  map: 1000,
+  map: 100,
   bottomInfoBox: 101,
   searchList: 201,
   searchBox: 301

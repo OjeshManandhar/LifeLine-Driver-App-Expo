@@ -15,6 +15,15 @@ export const LoginText = {
   }
 };
 
+export const MapScreenText = {
+  logoutAlert: {
+    title: 'Log Out',
+    description: 'Are you sure you want to Log out?',
+    negative: 'Cancel',
+    positive: 'Log out'
+  }
+};
+
 export const AccountText = {
   button: 'Log Out',
   accountType: {
@@ -23,11 +32,6 @@ export const AccountText = {
   }
 };
 
-export const MapScreenText = {
-  logoutAlert: {
-    title: 'Log Out',
-    description: 'Are you sure you want to Log out?',
-    negative: 'Cancel',
-    positive: 'Log out'
-  }
+export const SearchBoxText = {
+  placeholder: 'Search here'
 };
