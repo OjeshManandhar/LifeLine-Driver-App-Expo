@@ -1,8 +1,7 @@
-export const EMapStatus = Object.freeze({
-  clear: 0,
-  routeToDestination: 1,
-  routesToPickedLocation: 2,
-  pickingLocation: 3
+export const EAnimationState = Object.freeze({
+  initialRender: 0,
+  in: 1,
+  out: 2
 });
 
 // export const MapScreenStatus = Object.freeze({
@@ -19,8 +18,17 @@ export const EMapScreenStatus = Object.freeze({
   accountView: 1
 });
 
-export const EAnimationState = Object.freeze({
-  initialRender: 0,
-  in: 1,
-  out: 2
+export const EMapViewStatus = Object.freeze({
+  clear: 0,
+  searching: 1,
+  picking: 2,
+  addRoute: 3,
+  routeInfo: 4
+});
+
+export const EMapStatus = Object.freeze({
+  clear: 0,
+  routeToDestination: 1,
+  routesToPickedLocation: 2,
+  pickingLocation: 3
 });
