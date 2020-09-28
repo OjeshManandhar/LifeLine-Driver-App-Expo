@@ -18,7 +18,7 @@ export default StyleSheet.create({
     left: 10,
     right: 10,
     height: 50,
-    zIndex: ZIndex.searchBox,
+    zIndex: MapViewIndex.searchBox,
 
     overflow: 'hidden',
 
@@ -42,5 +42,11 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 1,
     elevation: 3
+  },
+  backIcon: {
+    alignSelf: 'center',
+    width: 20,
+    height: 20,
+    marginRight: 20
   }
 });
