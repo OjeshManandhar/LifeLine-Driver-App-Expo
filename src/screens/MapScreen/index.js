@@ -18,7 +18,7 @@ import { MapScreenText } from 'global/strings';
 
 function MapScreen({ navigation }) {
   // To flag whether MapView can handle BackButton or not
-  const [allowBackHandler, setAllowBackHandler] = useState(true);
+  const [mapViewBackHandler, setMapViewBackHandler] = useState();
 
   const [mapScreenStatus, setMapScreenStatus] = useState(
     EMapScreenStatus.mapView
@@ -56,15 +56,14 @@ function MapScreen({ navigation }) {
   const handleBackButton = useCallback(() => {
     switch (mapScreenStatus) {
       case EMapScreenStatus.mapView:
-        setAllowBackHandler(true);
+        mapViewBackHandler();
         break;
       case EMapScreenStatus.accountView:
-        setAllowBackHandler(false);
         setMapScreenStatus(EMapScreenStatus.mapView);
         break;
     }
     return true;
-  }, [mapScreenStatus, setMapScreenStatus, setAllowBackHandler]);
+  }, [mapScreenStatus, setMapScreenStatus, mapViewBackHandler]);
 
   // Handling the Hardware Back button
   useEffect(() => {
@@ -78,7 +77,7 @@ function MapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <MapView
-        allowBackHandler={allowBackHandler}
+        setBackHandler={setMapViewBackHandler}
         toAccount={() => setMapScreenStatus(EMapScreenStatus.accountView)}
       />
 
