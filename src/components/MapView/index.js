@@ -68,20 +68,18 @@ function MapView(props) {
         />
 
         <AnimatedImageButton
-          in={
-            mapViewStatus === EMapViewStatus.clear && searchKeyword.length === 0
-          }
+          in={mapViewStatus === EMapViewStatus.clear}
           image={avatar}
           timeout={0.25 * 1000}
           imageStyles={styles.avatar}
           animationStyles={{
             enter: {
               opacity: [0, 1],
-              marginLeft: [20, 40]
+              marginRight: [-20, 0]
             },
             exit: {
               opacity: [1, 0],
-              marginLeft: [40, 20]
+              marginRight: [0, -20]
             }
           }}
           onPress={props.toAccount}

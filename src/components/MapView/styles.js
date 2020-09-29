@@ -35,13 +35,12 @@ export default StyleSheet.create({
     borderColor: '#555555',
     backgroundColor: '#ffffff',
 
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 1,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 1,
+    /**
+     * For shadow in Android
+     * Will be on top even though z-index of this component is lower
+     * It will not handle touch i.e. the touch input will be passed to the
+     * component below it like in z-index
+     */
     elevation: 3
   },
   backIcon: {
@@ -52,11 +51,12 @@ export default StyleSheet.create({
   },
   avatar: {
     alignSelf: 'center',
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
+    marginLeft: 15,
 
-    borderWidth: 2,
     borderRadius: 50,
+    borderWidth: 1,
     borderColor: Colors.primary
   }
 });
