@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { View, Keyboard } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Keyboard, BackHandler } from 'react-native';
 
 // components
 import Map from 'components/Map';
@@ -33,6 +33,28 @@ function MapView(props) {
     },
     [mapViewStatus, _setMapViewStatus]
   );
+
+  const handleBackButton = useCallback(() => {
+    if (props.allowBackHandler) {
+      switch (mapViewStatus) {
+        case EMapViewStatus.clear:
+          BackHandler.exitApp();
+          break;
+        case EMapViewStatus.searching:
+          setMapViewStatus(EMapViewStatus.clear);
+          break;
+      }
+    }
+  }, [mapViewStatus, setMapViewStatus, props.allowBackHandler]);
+
+  // Handling the Hardware Back button
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+    };
+  }, [handleBackButton]);
 
   return (
     <View style={styles.container}>
