@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Button, Keyboard } from 'react-native';
+import { View, Keyboard } from 'react-native';
 
 // components
 import Map from 'components/Map';
@@ -8,6 +8,7 @@ import AnimatedImageButton from 'components/AnimatedImageButton';
 
 // assets
 import back from 'assets/images/back.png';
+import avatar from 'assets/images/dead.png';
 
 // global
 import { EMapViewStatus } from 'global/enum';
@@ -60,15 +61,34 @@ function MapView(props) {
         />
 
         <SearchBox
+          toAccount={props.toAccount}
           searchKeyword={searchKeyword}
           setSearchKeyword={setSearchKeyword}
           onFocus={() => setMapViewStatus(EMapViewStatus.searching)}
         />
+
+        <AnimatedImageButton
+          in={
+            mapViewStatus === EMapViewStatus.clear && searchKeyword.length === 0
+          }
+          image={avatar}
+          timeout={0.25 * 1000}
+          imageStyles={styles.avatar}
+          animationStyles={{
+            enter: {
+              opacity: [0, 1],
+              marginLeft: [20, 40]
+            },
+            exit: {
+              opacity: [1, 0],
+              marginLeft: [40, 20]
+            }
+          }}
+          onPress={props.toAccount}
+        />
       </View>
 
       <Map />
-
-      <Button title='Account' onPress={props.toAccount} />
     </View>
   );
 }

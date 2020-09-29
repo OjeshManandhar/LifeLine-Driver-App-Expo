@@ -16,7 +16,7 @@ import AnimatedView from 'components/AnimatedView';
 
 // assets
 import back from 'assets/images/back.png';
-import avatar from 'assets/images/account/dead.png';
+import avatar from 'assets/images/dead.png';
 
 // global
 import Colors from 'global/colors';

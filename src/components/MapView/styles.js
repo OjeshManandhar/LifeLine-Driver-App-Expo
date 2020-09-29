@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // global
+import Colors from 'global/colors';
 import { MapViewIndex } from 'global/zIndex';
 
 export default StyleSheet.create({
@@ -48,5 +49,14 @@ export default StyleSheet.create({
     width: 20,
     height: 20,
     marginRight: 20
+  },
+  avatar: {
+    alignSelf: 'center',
+    width: 30,
+    height: 30,
+
+    borderWidth: 2,
+    borderRadius: 50,
+    borderColor: Colors.primary
   }
 });
