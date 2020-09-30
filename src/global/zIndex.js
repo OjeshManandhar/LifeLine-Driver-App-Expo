@@ -17,6 +17,10 @@ export const MapViewIndex = {
   searchBox: 301
 };
 
+export const SearchListIndex = {
+  base: MapViewIndex.searchList
+};
+
 export const AccountViewIndex = {
   base: MapScreenIndex.account
 };
