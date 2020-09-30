@@ -22,13 +22,7 @@ export const EMapViewStatus = Object.freeze({
   clear: 0,
   searching: 1,
   picking: 2,
-  addRoute: 3,
-  routeInfo: 4
-});
-
-export const EMapStatus = Object.freeze({
-  clear: 0,
-  routeToDestination: 1,
-  routesToPickedLocation: 2,
-  pickingLocation: 3
+  selectingRoute: 3,
+  routeInfo: 4,
+  obstructionInfo: 5
 });

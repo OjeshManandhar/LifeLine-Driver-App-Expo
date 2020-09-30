@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
 
 // components
@@ -21,7 +21,14 @@ import avatar from 'assets/images/dead.png';
 import styles from './styles';
 
 function MapView(props) {
+  const [isPicking, setIsPicking] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [pickedLocation, setPickedLocation] = useState(null);
+  const [routesToPickedLocation, setRoutesToPickedLocation] = useState(null);
+  const [
+    selectedRouteToPickedLocation,
+    setSelectedRouteToPickedLocation
+  ] = useState(0);
 
   // status
   const [mapViewStatus, _setMapViewStatus] = useState(EMapViewStatus.clear);
@@ -108,22 +115,25 @@ function MapView(props) {
         />
       </View>
 
-      <Map />
+      <Map
+        isPicking={isPicking}
+        pickedLocation={pickedLocation}
+        routesToPickedLocation={routesToPickedLocation}
+        selectedRouteToPickedLocation={selectedRouteToPickedLocation}
+      />
 
       <SearchList
         in={mapViewStatus === EMapViewStatus.searching}
         searchKeyword={searchKeyword}
         setPickedLocation={data => {
-          console.log('data:', data);
-          // setMapStatus(MapStatus.routesToPickedLocation);
-          // setMapScreenStatus(MapScreenStatus.showRouteInfo);
+          setPickedLocation(data);
 
-          // setPickedLocation(data);
+          setMapViewStatus(EMapViewStatus.selectingRoute);
+
           getRoute(data.coordinate)
             .then(routes => {
-              console.log('routes:', routes);
-              // setRoutesToPickedLocation(routes);
-              // setSelectedRouteToPickedLocation(routes[0].id);
+              setRoutesToPickedLocation(routes);
+              setSelectedRouteToPickedLocation(routes[0].id);
             })
             .catch(error => {
               console.log('No routes Found:', error);
@@ -131,6 +141,8 @@ function MapView(props) {
         }}
         switchToPicking={() => {
           console.log('Switch to Picking');
+
+          // setIsPickingLocation(true);
 
           // setPickedCoordintate(null);
           // setMapStatus(MapStatus.pickingLocation);
