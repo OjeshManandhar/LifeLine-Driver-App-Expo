@@ -7,7 +7,7 @@ import UserLocation from 'utils/userLocation';
 import getRouteDistance from 'utils/getRouteDistance';
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 const geocodingClient = mbxGeocoder({ accessToken: MAPBOX_API_KEY });
 

@@ -6,7 +6,7 @@ const mbxGeocoder = require('@mapbox/mapbox-sdk/services/geocoding');
 import UserLocation from 'utils/userLocation';
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 const geocodingClient = mbxGeocoder({ accessToken: MAPBOX_API_KEY });
 

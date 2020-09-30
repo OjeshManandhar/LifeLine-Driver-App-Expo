@@ -7,12 +7,15 @@ import SearchBox from 'components/SearchBox';
 import SearchList from 'components/SearchList';
 import AnimatedImageButton from 'components/AnimatedImageButton';
 
-// assets
-import back from 'assets/images/back.png';
-import avatar from 'assets/images/dead.png';
+// utils
+import getRoute from 'utils/getRoute';
 
 // global
 import { EMapViewStatus } from 'global/enum';
+
+// assets
+import back from 'assets/images/back.png';
+import avatar from 'assets/images/dead.png';
 
 // styles
 import styles from './styles';

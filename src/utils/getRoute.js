@@ -4,7 +4,7 @@ import { lineString as makeLineString } from '@turf/helpers';
 const mbxDirection = require('@mapbox/mapbox-sdk/services/directions');
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 // utils
 import UserLocation from 'utils/userLocation';

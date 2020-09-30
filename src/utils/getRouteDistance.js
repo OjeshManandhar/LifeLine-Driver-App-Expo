@@ -2,7 +2,7 @@
 const mbxDirection = require('@mapbox/mapbox-sdk/services/directions');
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 const directionsClient = mbxDirection({ accessToken: MAPBOX_API_KEY });
 

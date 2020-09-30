@@ -19,6 +19,9 @@ import forwardGeocoder from 'utils/forwardGeocoder';
 // assets
 import pickMap from 'assets/images/search/pickMap.png';
 
+// styles
+import styles from './styles';
+
 function SearchList(props) {
   const [response, setResponse] = useState([]);
 
