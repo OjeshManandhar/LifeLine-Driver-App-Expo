@@ -24,7 +24,7 @@ export const MapScreenText = {
   }
 };
 
-export const AccountText = {
+export const AccountViewText = {
   button: 'Log Out',
   accountType: {
     driver: 'Driver Account',
@@ -34,4 +34,9 @@ export const AccountText = {
 
 export const SearchBoxText = {
   placeholder: 'Search here'
+};
+
+export const SearchListText = {
+  noResult: 'Sorry no results',
+  pickOnMap: 'Pick a location on map'
 };

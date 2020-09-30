@@ -20,7 +20,7 @@ import avatar from 'assets/images/dead.png';
 
 // global
 import Colors from 'global/colors';
-import { AccountText } from 'global/strings';
+import { AccountViewText } from 'global/strings';
 
 // styles
 import styles from './styles';
@@ -52,7 +52,9 @@ function AccountView(props) {
           <Image source={back} style={styles.backIcon} />
         </TouchableWithoutFeedback>
 
-        <Text style={styles.accountType}>{AccountText.accountType.driver}</Text>
+        <Text style={styles.accountType}>
+          {AccountViewText.accountType.driver}
+        </Text>
 
         <Text style={styles.userName}>User Name</Text>
 
@@ -66,7 +68,9 @@ function AccountView(props) {
           contentStyle={styles.logOutButtonContent}
           onPress={props.logout}
         >
-          <Text style={styles.logOutButtonContent}>{AccountText.button}</Text>
+          <Text style={styles.logOutButtonContent}>
+            {AccountViewText.button}
+          </Text>
         </Button>
       </View>
     </AnimatedView>
