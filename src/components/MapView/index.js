@@ -4,6 +4,7 @@ import { View, Keyboard, BackHandler } from 'react-native';
 // components
 import Map from 'components/Map';
 import SearchBox from 'components/SearchBox';
+import SearchList from 'components/SearchList';
 import AnimatedImageButton from 'components/AnimatedImageButton';
 
 // assets
@@ -105,6 +106,34 @@ function MapView(props) {
       </View>
 
       <Map />
+
+      <SearchList
+        in={mapViewStatus === EMapViewStatus.searching}
+        searchKeyword={searchKeyword}
+        setPickedLocation={data => {
+          console.log('data:', data);
+          // setMapStatus(MapStatus.routesToPickedLocation);
+          // setMapScreenStatus(MapScreenStatus.showRouteInfo);
+
+          // setPickedLocation(data);
+          getRoute(data.coordinate)
+            .then(routes => {
+              console.log('routes:', routes);
+              // setRoutesToPickedLocation(routes);
+              // setSelectedRouteToPickedLocation(routes[0].id);
+            })
+            .catch(error => {
+              console.log('No routes Found:', error);
+            });
+        }}
+        switchToPicking={() => {
+          console.log('Switch to Picking');
+
+          // setPickedCoordintate(null);
+          // setMapStatus(MapStatus.pickingLocation);
+          // setMapScreenStatus(MapScreenStatus.pickingDestinaion);
+        }}
+      />
     </View>
   );
 }
