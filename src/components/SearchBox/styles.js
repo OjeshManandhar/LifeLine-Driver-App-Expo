@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
 
+// global
+import { WorkSansRegular } from 'global/styles';
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -9,7 +12,8 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 18,
     // lineHeight: 18,
-    paddingVertical: 5
+    paddingVertical: 5,
+    ...WorkSansRegular
   },
   crossIcon: {
     alignSelf: 'center',

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Text,
   View,
   Image,
   ScrollView,
@@ -10,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 
 // components
+import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 import SearchResult from 'components/SearchResult';
 

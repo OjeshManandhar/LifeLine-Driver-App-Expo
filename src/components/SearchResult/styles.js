@@ -36,6 +36,7 @@ export default StyleSheet.create({
   },
   placeName: {
     fontSize: 18,
+    color: 'black',
     lineHeight: 18,
     marginBottom: 5,
     fontWeight: '500'

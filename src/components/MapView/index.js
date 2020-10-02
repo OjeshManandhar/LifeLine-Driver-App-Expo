@@ -28,7 +28,7 @@ function MapView(props) {
   const [
     selectedRouteToPickedLocation,
     setSelectedRouteToPickedLocation
-  ] = useState(0);
+  ] = useState(null);
 
   // status
   const [mapViewStatus, _setMapViewStatus] = useState(EMapViewStatus.clear);
@@ -132,8 +132,10 @@ function MapView(props) {
 
           getRoute(data.coordinate)
             .then(routes => {
+              console.log('routes:', routes);
+
               setRoutesToPickedLocation(routes);
-              setSelectedRouteToPickedLocation(routes[0].id);
+              setSelectedRouteToPickedLocation(routes[0].properties.id);
             })
             .catch(error => {
               console.log('No routes Found:', error);
@@ -145,7 +147,6 @@ function MapView(props) {
           // setIsPickingLocation(true);
 
           // setPickedCoordintate(null);
-          // setMapStatus(MapStatus.pickingLocation);
           // setMapScreenStatus(MapScreenStatus.pickingDestinaion);
         }}
       />

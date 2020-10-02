@@ -51,6 +51,7 @@ export default StyleSheet.create({
   },
   blockText: {
     fontSize: 17,
+    color: 'black',
     lineHeight: 60,
     paddingRight: 20
   }

@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, Image, TouchableNativeFeedback } from 'react-native';
+import { View, Image, TouchableNativeFeedback } from 'react-native';
+
+// components
+import Text from 'components/Text';
 
 // assets
 import pin from 'assets/images/search/pin.png';
