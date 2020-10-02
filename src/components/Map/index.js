@@ -5,6 +5,12 @@ import { PermissionsAndroid } from 'react-native';
 import { featureCollection } from '@turf/helpers';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 
+// assets
+import startMarker from 'assets/images/map/startMarker.png';
+import destinationMarker from 'assets/images/map/destinationMarker.png';
+import obstructionMarker from 'assets/images/map/obstructionMarker.png';
+import pickedLocationMarker from 'assets/images/map/pickedLocationMarker.png';
+
 // global
 import { MapLayerIndex } from 'global/zIndex';
 
@@ -57,6 +63,22 @@ function Map({
       }
     });
   }, []);
+
+  const renderPickedLocation = useCallback(() => {
+    return (
+      <MapboxGL.ShapeSource
+        id='PickedLocationMarker-Source'
+        shape={point(pickedLocation.coordinate)}
+      >
+        <MapboxGL.SymbolLayer
+          id='PickedLocationMarker-Layer'
+          sourceID='PickedLocationMarker-Source'
+          style={layerStyles.pickedLocationMarker}
+          layerIndex={LayerIndex.pickedLocationMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [pickedLocation]);
 
   const renderRoutesToPickedLocation = useCallback(() => {
     const selected = routesToPickedLocation.find(
@@ -123,9 +145,18 @@ function Map({
         followUserMode={MapboxGL.UserTrackingModes.FollowWithHeading}
       />
 
-      {routesToPickedLocation &&
-        selectedRouteToPickedLocation &&
-        renderRoutesToPickedLocation()}
+      <MapboxGL.Images
+        images={{
+          startMarker: startMarker,
+          destinationMarker: destinationMarker,
+          obstructionMarker: obstructionMarker,
+          pickedLocationMarker: pickedLocationMarker
+        }}
+      />
+
+      {pickedLocation && renderPickedLocation()}
+
+      {routesToPickedLocation && renderRoutesToPickedLocation()}
     </MapboxGL.MapView>
   );
 }
