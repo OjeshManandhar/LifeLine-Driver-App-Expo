@@ -1,9 +1,12 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { PermissionsAndroid } from 'react-native';
 
 // packages
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { point, featureCollection } from '@turf/helpers';
+
+// utils
+import UserLocation from 'utils/userLocation';
 
 // assets
 import startMarker from 'assets/images/map/startMarker.png';
@@ -24,12 +27,13 @@ function Map({
   selectedRouteToPickedLocation
 }) {
   // console.log('Map');
-  console.log('MapLayerIndex:', MapLayerIndex);
   // console.log('isPicking:', isPicking);
   // console.log('pickedLocation:', pickedLocation);
   // console.log('routesToPickedLocation:', routesToPickedLocation);
   // console.log('selectedRouteToPickedLocation:', selectedRouteToPickedLocation);
   // console.log('------------------------------');
+
+  const cameraRef = useRef(null);
 
   async function askGPSPermissions() {
     try {
@@ -130,6 +134,55 @@ function Map({
     return shape;
   }, [routesToPickedLocation, selectedRouteToPickedLocation]);
 
+  const getBounds = useCallback(() => {
+    if (!routesToPickedLocation) return null;
+
+    const longitudes = [],
+      latitudes = [];
+
+    routesToPickedLocation.forEach(route => {
+      route.geometry.coordinates.forEach(coordinate => {
+        longitudes.push(coordinate[0]);
+        latitudes.push(coordinate[1]);
+      });
+    });
+
+    const north = Math.max(...longitudes),
+      south = Math.min(...longitudes),
+      east = Math.max(...latitudes),
+      west = Math.min(...latitudes);
+
+    // for arguments to MapboxGl.Camera
+    // return {
+    //   ne: [north, east],
+    //   sw: [south, west],
+    //   // paddingTop: 10,
+    //   // paddingLeft: 10,
+    //   // paddingBottom: 10,
+    //   // paddingRight: 10,
+    //   animationDuration: 1.5 * 1000
+    // };
+
+    // for MapboxGl.Camera.fitBounds
+    return [[north, east], [south, west], 0, 1.5 * 1000];
+  }, [routesToPickedLocation]);
+
+  const updateCamera = useCallback(() => {
+    const cam = cameraRef.current;
+
+    if (!cam) return null;
+
+    const bounds = getBounds();
+
+    if (bounds) {
+      cam.fitBounds(...bounds);
+    } else {
+      cam.setCamera({
+        centerCoordinate: UserLocation.currentLocation
+      });
+    }
+  }, [getBounds]);
+
   return (
     <MapboxGL.MapView
       // A size must be provided to the MapboxGL.MapView through style prop
@@ -137,13 +190,15 @@ function Map({
       styleURL={MapboxGL.StyleURL.Outdoors}
       compassViewMargins={{ x: 10, y: 90 }}
     >
-      <MapboxGL.UserLocation visible showsUserHeadingIndicator />
+      <MapboxGL.UserLocation visible animated showsUserHeadingIndicator />
 
       <MapboxGL.Camera
+        ref={cameraRef}
         animationMode={'easeTo'}
         animationDuration={1.5 * 1000}
-        followUserLocation={true}
-        followUserMode={MapboxGL.UserTrackingModes.FollowWithHeading}
+        followUserLocation={!routesToPickedLocation}
+        followUserMode={MapboxGL.UserTrackingModes.FollowWithCourse}
+        followZoomLevel={14}
       />
 
       <MapboxGL.Images
@@ -154,6 +209,8 @@ function Map({
           pickedLocationMarker: pickedLocationMarker
         }}
       />
+
+      {cameraRef.current && updateCamera()}
 
       {pickedLocation && renderPickedLocation()}
 
