@@ -23,6 +23,6 @@ export const EMapViewStatus = Object.freeze({
   searching: 1,
   picking: 2,
   selectingRoute: 3,
-  routeInfo: 4,
+  editRouteInfo: 4,
   obstructionInfo: 5
 });
