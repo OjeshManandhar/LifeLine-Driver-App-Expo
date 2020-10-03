@@ -40,3 +40,8 @@ export const SearchListText = {
   noResult: 'Sorry no results',
   pickOnMap: 'Pick a location on map'
 };
+
+export const RouteInfoText = {
+  use: 'Use this route',
+  finish: 'Close this route'
+};

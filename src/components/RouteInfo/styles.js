@@ -48,19 +48,13 @@ export default StyleSheet.create({
     marginBottom: 5,
     color: Colors.secondaryText
   },
-  routeInfo: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
   routeText: {
     fontSize: 18.5,
     lineHeight: 18.5
   },
   description: {},
   footer: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'

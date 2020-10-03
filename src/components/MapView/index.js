@@ -3,6 +3,7 @@ import { View, Keyboard, BackHandler } from 'react-native';
 
 // components
 import Map from 'components/Map';
+import RouteInfo from 'components/RouteInfo';
 import SearchBox from 'components/SearchBox';
 import SearchList from 'components/SearchList';
 import AnimatedImageButton from 'components/AnimatedImageButton';
@@ -12,10 +13,13 @@ import getRoute from 'utils/getRoute';
 
 // global
 import { EMapViewStatus } from 'global/enum';
+import { RouteInfoText } from 'global/strings';
 
 // assets
 import back from 'assets/images/back.png';
 import avatar from 'assets/images/dead.png';
+import use from 'assets/images/routeInfo/use.png';
+import finish from 'assets/images/routeInfo/finish.png';
 
 // styles
 import styles from './styles';
@@ -32,7 +36,6 @@ function MapView(props) {
 
   // status
   const [mapViewStatus, _setMapViewStatus] = useState(EMapViewStatus.clear);
-
   const setMapViewStatus = useCallback(
     val => {
       if (val !== EMapViewStatus.searching) {
@@ -44,6 +47,16 @@ function MapView(props) {
     },
     [mapViewStatus, _setMapViewStatus]
   );
+
+  const clearPickedLocation = useCallback(() => {
+    setPickedLocation(null);
+    setRoutesToPickedLocation(null);
+    setSelectedRouteToPickedLocation(null);
+  }, [
+    setPickedLocation,
+    setRoutesToPickedLocation,
+    setSelectedRouteToPickedLocation
+  ]);
 
   // Back handler
   const handleBackButton = useCallback(() => {
@@ -149,6 +162,46 @@ function MapView(props) {
 
           // setPickedCoordintate(null);
           // setMapScreenStatus(MapScreenStatus.pickingDestinaion);
+        }}
+      />
+
+      <RouteInfo
+        in={mapViewStatus === EMapViewStatus.selectingRoute}
+        location={pickedLocation}
+        route={
+          mapViewStatus === EMapViewStatus.selectingRoute
+            ? routesToPickedLocation.find(
+                route => route.properties.id === selectedRouteToPickedLocation
+              )
+            : mapViewStatus === EMapViewStatus.destinationInfo
+            ? null
+            : null
+        }
+        useButton={(() => {
+          if (mapViewStatus === EMapViewStatus.selectingRoute) {
+            return { image: use, text: RouteInfoText.use };
+          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
+            return { image: finish, text: RouteInfoText.finish };
+          }
+        })()}
+        onClose={() => {
+          if (mapViewStatus === EMapViewStatus.selectingRoute) {
+            clearPickedLocation();
+          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
+            // clearDestination();
+          }
+
+          setMapViewStatus(EMapViewStatus.clear);
+        }}
+        onUse={() => {
+          if (mapViewStatus === EMapViewStatus.selectingRoute) {
+            // modify routeToDestination.properties
+            // set destination
+            setMapViewStatus(EMapViewStatus.destinationInfo);
+          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
+            // close the route
+            setMapViewStatus(EMapViewStatus.clear);
+          }
         }}
       />
     </View>

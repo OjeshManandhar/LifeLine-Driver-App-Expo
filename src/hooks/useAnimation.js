@@ -97,9 +97,11 @@ function useAnimation(props) {
         (props.in === true && currentState.current === AS.in) ||
         (props.in === false && currentState.current === AS.out)
       ) {
-        // Happens on development due to fast reload
-        // Don't execute ENTER/EXIT animation
-        // No change in animation state
+        /**
+         * Happens on development due to fast reload
+         * Don't execute ENTER/EXIT animation
+         * No change in animation state
+         */
       }
 
       if (props.in === true && currentState.current === AS.out) {
