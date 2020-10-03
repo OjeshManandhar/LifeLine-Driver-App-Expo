@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
 
+// global
+import Colors from 'global/colors';
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -36,7 +39,6 @@ export default StyleSheet.create({
   },
   placeName: {
     fontSize: 18,
-    color: 'black',
     lineHeight: 18,
     marginBottom: 5,
     fontWeight: '500'
@@ -44,6 +46,6 @@ export default StyleSheet.create({
   placeLocation: {
     fontSize: 13,
     lineHeight: 13,
-    color: '#757575'
+    color: Colors.secondaryText
   }
 });
