@@ -24,7 +24,8 @@ function Map({
   isPicking,
   pickedLocation,
   routesToPickedLocation,
-  selectedRouteToPickedLocation
+  selectedRouteToPickedLocation,
+  setSelectedRouteToPickedLocation
 }) {
   // console.log('Map');
   // console.log('isPicking:', isPicking);
@@ -101,7 +102,9 @@ function Map({
           key={0}
           id='RoutesToPickedLocation-Source'
           shape={featureCollection(notSelected)}
-          onPress={data => console.log('notSelected onPress:', data)}
+          onPress={data =>
+            setSelectedRouteToPickedLocation(data.features[0].properties.id)
+          }
         >
           <MapboxGL.LineLayer
             id='RoutesToPickedLocation'

@@ -120,6 +120,7 @@ function MapView(props) {
         pickedLocation={pickedLocation}
         routesToPickedLocation={routesToPickedLocation}
         selectedRouteToPickedLocation={selectedRouteToPickedLocation}
+        setSelectedRouteToPickedLocation={setSelectedRouteToPickedLocation}
       />
 
       <SearchList
