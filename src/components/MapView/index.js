@@ -129,14 +129,14 @@ function MapView(props) {
         setPickedLocation={data => {
           setPickedLocation(data);
 
-          setMapViewStatus(EMapViewStatus.selectingRoute);
-
           getRoute(data.coordinate)
             .then(routes => {
               // console.log('routes:', routes);
 
               setRoutesToPickedLocation(routes);
               setSelectedRouteToPickedLocation(routes[0].properties.id);
+
+              setMapViewStatus(EMapViewStatus.selectingRoute);
             })
             .catch(error => {
               console.log('No routes Found:', error);
