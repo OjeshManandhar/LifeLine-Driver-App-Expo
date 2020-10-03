@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 
 // global
+import Colors from 'global/colors';
 import { MapViewIndex } from 'global/zIndex';
 
 export const styles = StyleSheet.create({
@@ -40,22 +41,22 @@ export const layerStyles = {
   routeToDestination: {
     lineWidth: 6,
     lineOpacity: 1,
-    lineColor: '#669df6',
     lineCap: MapboxGL.LineCap.Round,
-    lineJoin: MapboxGL.LineJoin.Round
+    lineJoin: MapboxGL.LineJoin.Round,
+    lineColor: Colors.routeToDestination
   },
   routesToPickedLocation: {
     lineWidth: 5,
     lineOpacity: 1,
-    lineColor: '#bbbdbf',
     lineCap: MapboxGL.LineCap.Round,
-    lineJoin: MapboxGL.LineJoin.Round
+    lineJoin: MapboxGL.LineJoin.Round,
+    lineColor: Colors.routesToPickedLocation
   },
   selectedRouteToPickedLocation: {
     lineWidth: 5,
     lineOpacity: 1,
-    lineColor: '#5fb671',
     lineCap: MapboxGL.LineCap.Round,
-    lineJoin: MapboxGL.LineJoin.Round
+    lineJoin: MapboxGL.LineJoin.Round,
+    lineColor: Colors.selectedRouteToPickedLocation
   }
 };
