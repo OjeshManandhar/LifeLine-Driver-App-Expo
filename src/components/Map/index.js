@@ -2,8 +2,8 @@ import React, { useEffect, useCallback } from 'react';
 import { PermissionsAndroid } from 'react-native';
 
 // packages
-import { featureCollection } from '@turf/helpers';
 import MapboxGL from '@react-native-mapbox-gl/maps';
+import { point, featureCollection } from '@turf/helpers';
 
 // assets
 import startMarker from 'assets/images/map/startMarker.png';
@@ -24,6 +24,7 @@ function Map({
   selectedRouteToPickedLocation
 }) {
   // console.log('Map');
+  console.log('MapLayerIndex:', MapLayerIndex);
   // console.log('isPicking:', isPicking);
   // console.log('pickedLocation:', pickedLocation);
   // console.log('routesToPickedLocation:', routesToPickedLocation);
@@ -74,7 +75,7 @@ function Map({
           id='PickedLocationMarker-Layer'
           sourceID='PickedLocationMarker-Source'
           style={layerStyles.pickedLocationMarker}
-          layerIndex={LayerIndex.pickedLocationMarker}
+          layerIndex={MapLayerIndex.pickedLocationMarker}
         />
       </MapboxGL.ShapeSource>
     );
@@ -93,7 +94,7 @@ function Map({
     if (notSelected.length > 0) {
       shape.push(
         <MapboxGL.ShapeSource
-          key={1}
+          key={0}
           id='RoutesToPickedLocation-Source'
           shape={featureCollection(notSelected)}
           onPress={data => console.log('notSelected onPress:', data)}
@@ -111,7 +112,7 @@ function Map({
     if (selected) {
       shape.push(
         <MapboxGL.ShapeSource
-          key={0}
+          key={1}
           id='SelectedRouteToPickedLocation-Source'
           shape={selected}
         >

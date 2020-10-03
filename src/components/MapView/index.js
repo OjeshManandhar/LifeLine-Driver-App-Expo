@@ -132,7 +132,7 @@ function MapView(props) {
 
           getRoute(data.coordinate)
             .then(routes => {
-              console.log('routes:', routes);
+              // console.log('routes:', routes);
 
               setRoutesToPickedLocation(routes);
               setSelectedRouteToPickedLocation(routes[0].properties.id);
