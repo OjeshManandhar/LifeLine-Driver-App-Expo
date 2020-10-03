@@ -25,6 +25,10 @@ export const AccountViewIndex = {
   base: MapScreenIndex.account
 };
 
+export const RouteInfoIndex = {
+  base: MapViewIndex.bottomInfoBox
+};
+
 export const MapLayerIndex = {
   // 125 => layerIndex of the users location indicator
   // so make other below 125
