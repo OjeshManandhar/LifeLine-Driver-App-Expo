@@ -3,19 +3,21 @@ import {
   View,
   Image,
   useWindowDimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 // packages
-import { Avatar, Button } from 'react-native-paper';
+import { Avatar, Button, Divider, IconButton } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Icons from 'react-native-vector-icons/Ionicons';
 
 // components
 import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 
 // assets
-import back from 'assets/images/back.png';
 import avatar from 'assets/images/account/dead.png';
 
 // global
@@ -46,28 +48,58 @@ function AccountView(props) {
       }}
     >
       <View style={styles.container}>
-        <Avatar.Image style={styles.avatar} source={avatar} size={150} />
+        <Avatar.Image style={styles.avatar} source={avatar} size={130} />
+
+        <Divider style={styles.divider} />
 
         <TouchableWithoutFeedback onPress={props.mapView}>
-          <Image source={back} style={styles.backIcon} />
+          <Icon
+            name='close'
+            size={35}
+            color={Colors.borderGrey}
+            style={styles.backIcon}
+          />
         </TouchableWithoutFeedback>
 
-        <Text style={styles.accountType}>{AccountText.accountType.driver}</Text>
+        <View style={styles.userInfoContainer}>
+          {/* <Text style={styles.infoTitle}>Account Information</Text> */}
+          <View style={styles.rowContainer}>
+            <Text style={styles.label}>User Name</Text>
+            <Text style={styles.userName}>ABC Dummy</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.label}>Contact Number</Text>
 
-        <Text style={styles.userName}>User Name</Text>
+            <Text style={styles.phoneNumber}>9808000111</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text style={styles.label}>Account Type</Text>
+            <Text style={styles.accountType}>
+              {AccountText.accountType.driver}
+            </Text>
+          </View>
+        </View>
 
-        <Text styles={styles.phoneNumber}>Phone number</Text>
+        <View style={styles.buttonContainer}>
+          <IconButton
+            icon='phone'
+            size={25}
+            color={Colors.primary}
+            onPress={() => console.log('call')}
+            style={styles.callButton}
+          />
 
-        <Button
-          icon='logout'
-          mode='outlined'
-          color={Colors.primary}
-          style={styles.logOutButton}
-          contentStyle={styles.logOutButtonContent}
-          onPress={props.logout}
-        >
-          <Text style={styles.logOutButtonContent}>{AccountText.button}</Text>
-        </Button>
+          <Button
+            icon='logout'
+            mode='outlined'
+            color={Colors.primary}
+            style={styles.logOutButton}
+            contentStyle={styles.logOutButtonContent}
+            onPress={props.logout}
+          >
+            <Text style={styles.logOutButtonContent}>{AccountText.button}</Text>
+          </Button>
+        </View>
       </View>
     </AnimatedView>
   );
