@@ -2,7 +2,9 @@
 import * as SecureStore from 'expo-secure-store';
 
 // env
-import { USER_TOKEN_KEY } from '@env';
+// import { USER_TOKEN_KEY } from '@env';
+
+const USER_TOKEN_KEY = 'ajsnfj';
 
 class UserToken {
   #userToken = null;
