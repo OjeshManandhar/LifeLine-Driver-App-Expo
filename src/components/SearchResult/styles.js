@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
   distanceText: {
     fontSize: 12,
-    color: '#656565',
+    color: Colors.distanceText,
     lineHeight: 12
   },
   description: {
@@ -35,7 +35,7 @@ export default StyleSheet.create({
 
     paddingRight: 20,
 
-    borderBottomColor: '#dddddd'
+    borderBottomColor: Colors.searchResultBorder
   },
   placeName: {
     fontSize: 18,

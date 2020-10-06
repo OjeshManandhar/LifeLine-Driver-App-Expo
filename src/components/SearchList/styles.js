@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // global
+import Colors from 'global/colors';
 import { SearchListIndex } from 'global/zIndex';
 
 export default StyleSheet.create({
@@ -11,7 +12,7 @@ export default StyleSheet.create({
     // height: '100%',
     zIndex: SearchListIndex.base,
 
-    backgroundColor: '#eeeeee',
+    backgroundColor: Colors.searchListBG,
 
     paddingTop: 60
   },
@@ -19,8 +20,8 @@ export default StyleSheet.create({
     margin: 10,
     borderRadius: 4,
     borderWidth: 0.25,
-    borderColor: '#555555',
-    backgroundColor: '#ffffff',
+    borderColor: Colors.searchBorder,
+    backgroundColor: Colors.normalBG,
 
     shadowColor: '#000000',
     shadowOffset: {

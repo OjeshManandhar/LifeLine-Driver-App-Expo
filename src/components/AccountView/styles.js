@@ -20,7 +20,7 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.modalBackground
+    backgroundColor: Colors.modalBG
   },
   container: {
     position: 'relative',
@@ -45,7 +45,7 @@ export default StyleSheet.create({
     marginBottom: 8,
 
     borderWidth: 1,
-    borderColor: Colors.borderGrey,
+    borderColor: Colors.greyBorder,
 
     backgroundColor: 'white',
 

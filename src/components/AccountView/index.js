@@ -53,7 +53,7 @@ function AccountView(props) {
           <Icon
             name='close'
             size={35}
-            color={Colors.borderGrey}
+            color={Colors.greyBorder}
             style={styles.backIcon}
           />
         </TouchableWithoutFeedback>

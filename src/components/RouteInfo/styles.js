@@ -14,8 +14,9 @@ export default StyleSheet.create({
     height: ContainerHeight,
     zIndex: RouteInfoIndex.base,
 
-    backgroundColor: '#ffffff',
     borderRadius: 5,
+
+    backgroundColor: Colors.normalBG,
 
     padding: 10
   },

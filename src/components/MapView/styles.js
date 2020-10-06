@@ -32,8 +32,8 @@ export default StyleSheet.create({
 
     borderRadius: 4,
     borderWidth: 0.25,
-    borderColor: '#555555',
-    backgroundColor: '#ffffff',
+    borderColor: Colors.searchBorder,
+    backgroundColor: Colors.normalBG,
 
     /**
      * For shadow in Android
