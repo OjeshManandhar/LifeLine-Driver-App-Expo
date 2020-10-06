@@ -1,17 +1,14 @@
 import React from 'react';
 import {
   View,
-  Image,
   useWindowDimensions,
-  TouchableWithoutFeedback,
-  TouchableOpacity
+  TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 // packages
-import { Avatar, Button, Divider, IconButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icons from 'react-native-vector-icons/Ionicons';
+import { Avatar, Button, Divider, IconButton } from 'react-native-paper';
 
 // components
 import Text from 'components/Text';
@@ -62,33 +59,21 @@ function AccountView(props) {
         </TouchableWithoutFeedback>
 
         <View style={styles.userInfoContainer}>
-          {/* <Text style={styles.infoTitle}>Account Information</Text> */}
           <View style={styles.rowContainer}>
             <Text style={styles.label}>User Name</Text>
-            <Text style={styles.userName}>ABC Dummy</Text>
+            <Text>ABC Dummy</Text>
           </View>
           <View style={styles.rowContainer}>
             <Text style={styles.label}>Contact Number</Text>
-
-            <Text style={styles.phoneNumber}>9808000111</Text>
+            <Text>9808000111</Text>
           </View>
           <View style={styles.rowContainer}>
             <Text style={styles.label}>Account Type</Text>
-            <Text style={styles.accountType}>
-              {AccountText.accountType.driver}
-            </Text>
+            <Text>{AccountText.accountType.driver}</Text>
           </View>
         </View>
 
         <View style={styles.buttonContainer}>
-          <IconButton
-            icon='phone'
-            size={25}
-            color={Colors.primary}
-            onPress={() => console.log('call')}
-            style={styles.callButton}
-          />
-
           <Button
             icon='logout'
             mode='outlined'
@@ -99,6 +84,14 @@ function AccountView(props) {
           >
             <Text style={styles.logOutButtonContent}>{AccountText.button}</Text>
           </Button>
+
+          <IconButton
+            icon='phone'
+            size={25}
+            color={Colors.primary}
+            onPress={() => console.log('call')}
+            style={styles.callButton}
+          />
         </View>
       </View>
     </AnimatedView>
