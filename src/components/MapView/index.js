@@ -68,7 +68,7 @@ function MapView(props) {
         setMapViewStatus(EMapViewStatus.clear);
         break;
     }
-  }, [mapViewStatus, setMapViewStatus, props.allowBackHandler]);
+  }, [mapViewStatus, setMapViewStatus]);
 
   props.setBackHandler(() => handleBackButton);
   // useEffect(() => props.setBackHandler(() => handleBackButton), [
@@ -166,7 +166,7 @@ function MapView(props) {
       />
 
       <RouteInfo
-        in={mapViewStatus === EMapViewStatus.selectingRoute}
+        show={mapViewStatus === EMapViewStatus.selectingRoute}
         location={pickedLocation}
         route={
           mapViewStatus === EMapViewStatus.selectingRoute

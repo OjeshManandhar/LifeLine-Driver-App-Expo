@@ -13,13 +13,13 @@ import cross from 'assets/images/cross.png';
 import styles, { ContainerHeight } from './styles';
 
 function RouteInfo({
-  // in, /* Doesnot work, shows problem os use it as props.in */
+  // in, /* Doesnot work, shows problem os use it as in */
+  show,
   onUse,
   route,
   onClose,
   location,
-  useButton,
-  ...props
+  useButton
 }) {
   // useEffect(() => {}, []);
 
@@ -49,7 +49,7 @@ function RouteInfo({
 
   return (
     <AnimatedView
-      in={props.in}
+      in={show}
       timeout={0.5 * 1000}
       viewStyles={styles.mainContainer}
       animationStyles={{
@@ -70,20 +70,20 @@ function RouteInfo({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.placeName} numberOfLines={1}>
-            {props.location.name}
+            {location.name}
           </Text>
-          <TouchableNativeFeedback onPress={props.onClose}>
+          <TouchableNativeFeedback onPress={onClose}>
             <Image source={cross} style={styles.cross} />
           </TouchableNativeFeedback>
         </View>
 
         <Text style={styles.placeLocation} numberOfLines={1}>
-          {props.location.location}
+          {location.location}
         </Text>
 
         <Text style={styles.routeText}>
-          {timeToString(props.routeInfo.duration)} (
-          {distanceToString(props.routeInfo.distance)})
+          {timeToString(route.properties.duration)} (
+          {distanceToString(route.properties.distance)})
         </Text>
       </View>
     </AnimatedView>
