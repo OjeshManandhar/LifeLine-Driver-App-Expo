@@ -91,7 +91,7 @@ function RouteInfo({
 }
 
 RouteInfo.propTypes = {
-  in: PropTypes.bool.isRequired
+  show: PropTypes.bool.isRequired
 };
 
 export default RouteInfo;

@@ -69,7 +69,7 @@ function AccountView(props) {
           </View>
           <View style={styles.rowContainer}>
             <Text style={styles.label}>Account Type</Text>
-            <Text>{AccountText.accountType.driver}</Text>
+            <Text>{AccountViewText.accountType.driver}</Text>
           </View>
         </View>
 
@@ -82,7 +82,9 @@ function AccountView(props) {
             contentStyle={styles.logOutButtonContent}
             onPress={props.logout}
           >
-            <Text style={styles.logOutButtonContent}>{AccountText.button}</Text>
+            <Text style={styles.logOutButtonContent}>
+              {AccountViewText.button}
+            </Text>
           </Button>
 
           <IconButton

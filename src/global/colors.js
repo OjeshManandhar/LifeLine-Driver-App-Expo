@@ -9,6 +9,9 @@ export default {
 
   borderGrey: '#a0a0a0',
 
+  modalBackground: 'rgba(0, 0, 0, 0.4)',
+  callButtonBG: 'rgba(255, 58, 58, 0.3)',
+
   useButtonText: 'white',
   useButtonBackground: '#1a73e8',
 

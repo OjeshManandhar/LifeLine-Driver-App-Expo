@@ -20,13 +20,14 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.4)'
+    backgroundColor: Colors.modalBackground
   },
   container: {
     position: 'relative',
     width: '95%',
     height: '80%',
 
+    borderRadius: 10,
     backgroundColor: 'white',
 
     flexDirection: 'column',
@@ -64,9 +65,7 @@ export default StyleSheet.create({
     fontSize: 16,
 
     borderWidth: 0,
-    borderRadius: 8,
-
-    borderColor: Colors.primary
+    borderRadius: 8
   },
   rowContainer: {
     height: 30,
@@ -78,11 +77,13 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   label: {
-    // textAlign: 'right',
     width: '48%',
+
+    // textAlign: 'right',
     fontSize: 14,
-    color: Colors.primary,
-    marginRight: 12
+
+    marginRight: 12,
+    color: Colors.primary
   },
   buttonContainer: {
     width: '70%',
@@ -98,7 +99,7 @@ export default StyleSheet.create({
     marginTop: 'auto',
     marginLeft: 'auto',
 
-    backgroundColor: 'rgba(255, 58, 58, 0.3)'
+    backgroundColor: Colors.callButtonBG
   },
   logOutButton: {
     width: 150,
