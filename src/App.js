@@ -16,6 +16,7 @@ import Navigator from 'navigator';
 import { checkToken } from 'dummy_api';
 
 // global
+import Colors from 'global/colors';
 import FontsList from 'global/fonts';
 
 // assets
@@ -31,6 +32,11 @@ import { MAPBOX_API_KEY } from '@env';
 
 const theme = {
   ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Colors.primary,
+    accent: Colors.accent
+  },
   fonts: {
     ...DefaultTheme.fonts,
     regular: { fontFamily: FontsList.regular }

@@ -56,8 +56,8 @@ export default StyleSheet.create({
   },
   divider: {
     width: '100%',
-    height: 1,
-    marginVertical: 3
+    height: 2,
+    marginVertical: 2
   },
   description: {
     fontSize: 18,

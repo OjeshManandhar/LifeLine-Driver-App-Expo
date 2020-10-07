@@ -1,4 +1,5 @@
 export default {
+  accent: 'yellow',
   primary: '#ff3a3a',
 
   link: '#ff3a3a',
