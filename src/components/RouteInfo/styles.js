@@ -88,7 +88,7 @@ export default StyleSheet.create({
     margin: 0,
     padding: 0,
 
-    color: Colors.primary
+    color: Colors.secondaryText
   },
   slider: {
     maxWidth: 250

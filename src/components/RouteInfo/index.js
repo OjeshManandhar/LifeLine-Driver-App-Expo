@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -11,6 +11,7 @@ import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 
 // global
+import Colors from 'global/colors';
 import { RouteInfoText } from 'global/strings';
 
 // assets
@@ -29,7 +30,19 @@ function RouteInfo({
   useButton
 }) {
   // useEffect(() => {}, []);
+  const [emergency, _setEmergency] = useState(1);
   const [description, setDescription] = useState('');
+  const [minimumTrackTintColor, _setMinimumTrackTintColor] = useState(
+    Colors.minTint_1
+  );
+
+  const setEmergency = useCallback(
+    emergency => {
+      _setEmergency(emergency);
+      _setMinimumTrackTintColor(Colors[`minTint_${emergency}`]);
+    },
+    [_setEmergency, _setMinimumTrackTintColor]
+  );
 
   function distanceToString(distance) {
     if (distance >= 1000) {
@@ -119,9 +132,10 @@ function RouteInfo({
               step={1}
               minimumValue={1}
               maximumValue={3}
-              thumbTintColor='blue'
-              minimumTrackTintColor='#FF0000'
-              maximumTrackTintColor='#000000'
+              onValueChange={setEmergency}
+              thumbTintColor={minimumTrackTintColor}
+              maximumTrackTintColor={Colors.maxTint}
+              minimumTrackTintColor={minimumTrackTintColor}
             />
           </View>
 
