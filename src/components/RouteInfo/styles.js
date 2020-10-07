@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import Colors from 'global/colors';
 import { RouteInfoIndex } from 'global/zIndex';
 
-export const ContainerHeight = 170;
+export const ContainerHeight = 175;
 
 export default StyleSheet.create({
   mainContainer: {
@@ -72,12 +72,27 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-
-    borderWidth: 1,
-    borderColor: 'red'
+    alignItems: 'center'
   },
-  slider: {},
+  sliderContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+
+    marginRight: 10
+  },
+  sliderText: {
+    fontSize: 12,
+
+    margin: 0,
+    padding: 0,
+
+    color: Colors.primary
+  },
+  slider: {
+    maxWidth: 250
+  },
   useButton: {
     flexDirection: 'row',
     justifyContent: 'flex-start',

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { View, Image, TouchableNativeFeedback } from 'react-native';
+import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
 // packages
+import Slider from '@react-native-community/slider';
 import { Divider, TextInput } from 'react-native-paper';
 
 // components
 import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
+
+// global
+import { RouteInfoText } from 'global/strings';
 
 // assets
 import cross from 'assets/images/cross.png';
@@ -76,9 +80,9 @@ function RouteInfo({
           <Text style={styles.placeName} numberOfLines={1}>
             {location.name}
           </Text>
-          <TouchableNativeFeedback onPress={onClose}>
+          <TouchableWithoutFeedback onPress={onClose}>
             <Image source={cross} style={styles.cross} />
-          </TouchableNativeFeedback>
+          </TouchableWithoutFeedback>
         </View>
 
         <Text style={styles.placeLocation} numberOfLines={1}>
@@ -99,14 +103,42 @@ function RouteInfo({
           numberOfLine={1}
           returnKeyType='done'
           style={styles.description}
-          label="Patient's condition"
-          placeholder="Patient's condition"
+          label={RouteInfoText.description}
+          placeholder={RouteInfoText.description}
           value={description}
           onChangeText={text => setDescription(text)}
           onBlur={() => console.log('Blur from description')}
         />
 
-        <View style={styles.footer}></View>
+        <View style={styles.footer}>
+          <View style={styles.sliderContainer}>
+            <Text style={styles.sliderText}>{RouteInfoText.slider}</Text>
+
+            <Slider
+              style={styles.slider}
+              step={1}
+              minimumValue={1}
+              maximumValue={3}
+              thumbTintColor='blue'
+              minimumTrackTintColor='#FF0000'
+              maximumTrackTintColor='#000000'
+            />
+          </View>
+
+          <TouchableWithoutFeedback
+            onPress={() => {
+              console.log('onUse');
+              // onUse();
+            }}
+          >
+            <View style={styles.useButton}>
+              <Image source={useButton.image} style={styles.useIcon} />
+              <Text style={styles.useText}>
+                {RouteInfoText[useButton.text]}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     </AnimatedView>
   );

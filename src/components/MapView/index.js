@@ -13,7 +13,6 @@ import getRoute from 'utils/getRoute';
 
 // global
 import { EMapViewStatus } from 'global/enum';
-import { RouteInfoText } from 'global/strings';
 
 // assets
 import back from 'assets/images/back.png';
@@ -179,9 +178,9 @@ function MapView(props) {
         }
         useButton={(() => {
           if (mapViewStatus === EMapViewStatus.selectingRoute) {
-            return { image: use, text: RouteInfoText.use };
+            return { image: use, text: 'use' };
           } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
-            return { image: finish, text: RouteInfoText.finish };
+            return { image: finish, text: 'finish' };
           }
         })()}
         onClose={() => {

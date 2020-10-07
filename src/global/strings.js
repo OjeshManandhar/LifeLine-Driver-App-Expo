@@ -43,5 +43,7 @@ export const SearchListText = {
 
 export const RouteInfoText = {
   use: 'Use this route',
-  finish: 'Close this route'
+  finish: 'Close this route',
+  slider: 'Emergency',
+  description: "Patient's Condition"
 };
