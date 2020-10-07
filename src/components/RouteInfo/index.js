@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -30,6 +30,8 @@ function RouteInfo({
   useButton
 }) {
   // useEffect(() => {}, []);
+  const descriptionRef = useRef(null);
+
   const [emergency, _setEmergency] = useState(1);
   const [description, setDescription] = useState('');
   const [minimumTrackTintColor, _setMinimumTrackTintColor] = useState(
@@ -39,9 +41,20 @@ function RouteInfo({
   const setEmergency = useCallback(
     emergency => {
       _setEmergency(emergency);
+      updateDestinationInfo(emergency);
       _setMinimumTrackTintColor(Colors[`minTint_${emergency}`]);
     },
-    [_setEmergency, _setMinimumTrackTintColor]
+    [_setEmergency, updateDestinationInfo, _setMinimumTrackTintColor]
+  );
+
+  const updateDestinationInfo = useCallback(
+    _em => {
+      const em = _em || emergency;
+
+      console.log('Emergency:', em);
+      console.log('Description:', description);
+    },
+    [emergency, description]
   );
 
   function distanceToString(distance) {
@@ -93,7 +106,12 @@ function RouteInfo({
           <Text style={styles.placeName} numberOfLines={1}>
             {location.name}
           </Text>
-          <TouchableWithoutFeedback onPress={onClose}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              descriptionRef.current && descriptionRef.current.blur();
+              // onClose();
+            }}
+          >
             <Image source={cross} style={styles.cross} />
           </TouchableWithoutFeedback>
         </View>
@@ -110,6 +128,7 @@ function RouteInfo({
         <Divider style={styles.divider} />
 
         <TextInput
+          ref={descriptionRef}
           mode='flat'
           dense={true}
           multiline={false}
@@ -120,7 +139,7 @@ function RouteInfo({
           placeholder={RouteInfoText.description}
           value={description}
           onChangeText={text => setDescription(text)}
-          onBlur={() => console.log('Blur from description')}
+          onBlur={() => updateDestinationInfo()}
         />
 
         <View style={styles.footer}>
