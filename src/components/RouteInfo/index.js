@@ -1,6 +1,9 @@
-import React from 'react';
-import { View, Image, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, TouchableNativeFeedback } from 'react-native';
 import PropTypes from 'prop-types';
+
+// packages
+import { Divider, TextInput } from 'react-native-paper';
 
 // components
 import Text from 'components/Text';
@@ -22,6 +25,7 @@ function RouteInfo({
   useButton
 }) {
   // useEffect(() => {}, []);
+  const [description, setDescription] = useState('');
 
   function distanceToString(distance) {
     if (distance >= 1000) {
@@ -85,6 +89,24 @@ function RouteInfo({
           {timeToString(route.properties.duration)} (
           {distanceToString(route.properties.distance)})
         </Text>
+
+        <Divider style={styles.divider} />
+
+        <TextInput
+          mode='flat'
+          dense={true}
+          multiline={false}
+          numberOfLine={1}
+          returnKeyType='done'
+          style={styles.description}
+          label="Patient's condition"
+          placeholder="Patient's condition"
+          value={description}
+          onChangeText={text => setDescription(text)}
+          onBlur={() => console.log('Blur from description')}
+        />
+
+        <View style={styles.footer}></View>
       </View>
     </AnimatedView>
   );

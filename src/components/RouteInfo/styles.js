@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import Colors from 'global/colors';
 import { RouteInfoIndex } from 'global/zIndex';
 
-export const ContainerHeight = 150;
+export const ContainerHeight = 170;
 
 export default StyleSheet.create({
   mainContainer: {
@@ -52,15 +52,32 @@ export default StyleSheet.create({
   routeText: {
     fontSize: 18.5,
     lineHeight: 18.5
+    // marginBottom: 5
   },
-  description: {},
+  divider: {
+    width: '100%',
+    height: 1,
+    marginVertical: 3
+  },
+  description: {
+    fontSize: 18,
+
+    paddingHorizontal: 0,
+    backgroundColor: 'transparent',
+
+    marginTop: -10,
+    marginBottom: 5
+  },
   footer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+
+    borderWidth: 1,
+    borderColor: 'red'
   },
-  ratings: {},
+  slider: {},
   useButton: {
     flexDirection: 'row',
     justifyContent: 'flex-start',

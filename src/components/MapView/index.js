@@ -110,7 +110,7 @@ function MapView(props) {
         />
 
         <AnimatedImageButton
-          in={mapViewStatus === EMapViewStatus.clear}
+          in={mapViewStatus !== EMapViewStatus.searching}
           image={avatar}
           timeout={0.25 * 1000}
           imageStyles={styles.avatar}

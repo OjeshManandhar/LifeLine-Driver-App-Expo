@@ -33,8 +33,7 @@ export default StyleSheet.create({
   },
   textBox: {
     width: 275,
-    fontSize: 18,
-    fontFamily: 'Roboto'
+    fontSize: 18
   },
   errorText: {
     fontSize: 15,
