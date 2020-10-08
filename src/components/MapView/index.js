@@ -64,6 +64,7 @@ function MapView(props) {
 
   function clearDestination() {
     setDestination(null);
+    setStartLocation(null);
     setRouteToDestination(null);
   }
 

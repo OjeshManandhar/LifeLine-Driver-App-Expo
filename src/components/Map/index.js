@@ -22,18 +22,14 @@ import { styles, layerStyles } from './styles';
 
 function Map({
   isPicking,
+  destination,
+  startLocation,
   pickedLocation,
+  routeToDestination,
   routesToPickedLocation,
   selectedRouteToPickedLocation,
   setSelectedRouteToPickedLocation
 }) {
-  // console.log('Map');
-  // console.log('isPicking:', isPicking);
-  // console.log('pickedLocation:', pickedLocation);
-  // console.log('routesToPickedLocation:', routesToPickedLocation);
-  // console.log('selectedRouteToPickedLocation:', selectedRouteToPickedLocation);
-  // console.log('------------------------------');
-
   const cameraRef = useRef(null);
 
   async function askGPSPermissions() {
@@ -200,8 +196,12 @@ function Map({
         animationMode={'easeTo'}
         animationDuration={1.5 * 1000}
         followUserLocation={!routesToPickedLocation}
-        followUserMode={MapboxGL.UserTrackingModes.FollowWithCourse}
-        followZoomLevel={14}
+        followUserMode={
+          destination && routeToDestination
+            ? MapboxGL.UserTrackingModes.FollowWithHeading
+            : MapboxGL.UserTrackingModes.FollowWithCourse
+        }
+        followZoomLevel={destination && routeToDestination ? 15 : 14}
       />
 
       <MapboxGL.Images
@@ -216,8 +216,11 @@ function Map({
       {cameraRef.current && updateCamera()}
 
       {pickedLocation && renderPickedLocation()}
-
       {routesToPickedLocation && renderRoutesToPickedLocation()}
+
+      {/* {startLocation && renderStartLocation()}
+      {destination && renderDestination()}
+      {routeToDestination && rendetRouteToDestination()} */}
     </MapboxGL.MapView>
   );
 }
