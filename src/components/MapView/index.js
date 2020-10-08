@@ -10,6 +10,7 @@ import AnimatedImageButton from 'components/AnimatedImageButton';
 
 // utils
 import getRoute from 'utils/getRoute';
+import UserLocation from 'utils/userLocation';
 
 // global
 import { EMapViewStatus } from 'global/enum';
@@ -17,16 +18,19 @@ import { EMapViewStatus } from 'global/enum';
 // assets
 import back from 'assets/images/back.png';
 import avatar from 'assets/images/dead.png';
-import use from 'assets/images/routeInfo/use.png';
-import finish from 'assets/images/routeInfo/finish.png';
 
 // styles
 import styles from './styles';
 
 function MapView(props) {
+  const [emergency, setEmergency] = useState(1);
   const [isPicking, setIsPicking] = useState(false);
+  const [description, setDescription] = useState('');
+  const [destination, setDestination] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [startLocation, setStartLocation] = useState(null);
   const [pickedLocation, setPickedLocation] = useState(null);
+  const [routeToDestination, setRouteToDestination] = useState(null);
   const [routesToPickedLocation, setRoutesToPickedLocation] = useState(null);
   const [
     selectedRouteToPickedLocation,
@@ -47,15 +51,21 @@ function MapView(props) {
     [mapViewStatus, _setMapViewStatus]
   );
 
-  const clearPickedLocation = useCallback(() => {
+  function clearRouteDescription() {
+    setEmergency(1);
+    setDescription('');
+  }
+
+  function clearPickedLocation() {
     setPickedLocation(null);
     setRoutesToPickedLocation(null);
     setSelectedRouteToPickedLocation(null);
-  }, [
-    setPickedLocation,
-    setRoutesToPickedLocation,
-    setSelectedRouteToPickedLocation
-  ]);
+  }
+
+  function clearDestination() {
+    setDestination(null);
+    setRouteToDestination(null);
+  }
 
   // Back handler
   const handleBackButton = useCallback(() => {
@@ -129,7 +139,10 @@ function MapView(props) {
 
       <Map
         isPicking={isPicking}
+        destination={destination}
+        startLocation={startLocation}
         pickedLocation={pickedLocation}
+        routeToDestination={routeToDestination}
         routesToPickedLocation={routesToPickedLocation}
         selectedRouteToPickedLocation={selectedRouteToPickedLocation}
         setSelectedRouteToPickedLocation={setSelectedRouteToPickedLocation}
@@ -152,6 +165,7 @@ function MapView(props) {
             })
             .catch(error => {
               console.log('No routes Found:', error);
+              setMapViewStatus(EMapViewStatus.clear);
             });
         }}
         switchToPicking={() => {
@@ -165,40 +179,70 @@ function MapView(props) {
       />
 
       <RouteInfo
-        show={mapViewStatus === EMapViewStatus.selectingRoute}
-        location={pickedLocation}
+        show={
+          mapViewStatus === EMapViewStatus.selectingRoute ||
+          mapViewStatus === EMapViewStatus.destinationInfo
+        }
+        location={
+          mapViewStatus === EMapViewStatus.selectingRoute
+            ? pickedLocation
+            : destination
+        }
         route={
           mapViewStatus === EMapViewStatus.selectingRoute
             ? routesToPickedLocation.find(
                 route => route.properties.id === selectedRouteToPickedLocation
               )
             : mapViewStatus === EMapViewStatus.destinationInfo
-            ? null
+            ? routeToDestination
             : null
         }
-        useButton={(() => {
-          if (mapViewStatus === EMapViewStatus.selectingRoute) {
-            return { image: use, text: 'use' };
-          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
-            return { image: finish, text: 'finish' };
-          }
-        })()}
+        description={[description, setDescription]}
+        emergency={[emergency, setEmergency]}
+        useButton={
+          mapViewStatus === EMapViewStatus.selectingRoute ? 'use' : 'finish'
+        }
         onClose={() => {
+          setMapViewStatus(EMapViewStatus.clear);
+          clearRouteDescription();
+
           if (mapViewStatus === EMapViewStatus.selectingRoute) {
             clearPickedLocation();
-          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
-            // clearDestination();
           }
-
-          setMapViewStatus(EMapViewStatus.clear);
         }}
         onUse={() => {
           if (mapViewStatus === EMapViewStatus.selectingRoute) {
-            // modify routeToDestination.properties
-            // set destination
+            /* Set Destinaion */
+            const startLocation = UserLocation.currentLocation;
+            const routeToDestination = routesToPickedLocation.find(
+              route => route.properties.id === selectedRouteToPickedLocation
+            );
+            routeToDestination.properties = {
+              ...routeToDestination.properties,
+              ...{
+                emergency: emergency,
+                description: description,
+                destination: pickedLocation,
+                startLocation: startLocation
+                // createdBy: user
+              }
+            };
+
+            setStartLocation(startLocation);
+            setDestination(pickedLocation);
+            setRouteToDestination(routeToDestination);
+
+            /* POST route to server */
+
+            clearPickedLocation();
             setMapViewStatus(EMapViewStatus.destinationInfo);
           } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
-            // close the route
+            /* Close route */
+
+            /* DELETE route to server */
+            clearRouteDescription();
+            clearDestination();
+
             setMapViewStatus(EMapViewStatus.clear);
           }
         }}

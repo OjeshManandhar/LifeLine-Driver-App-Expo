@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -16,6 +16,8 @@ import { RouteInfoText } from 'global/strings';
 
 // assets
 import cross from 'assets/images/cross.png';
+import use from 'assets/images/routeInfo/use.png';
+import finish from 'assets/images/routeInfo/finish.png';
 
 // styles
 import styles, { ContainerHeight } from './styles';
@@ -27,34 +29,26 @@ function RouteInfo({
   route,
   onClose,
   location,
-  useButton
+  useButton,
+  emergency,
+  description
 }) {
   // useEffect(() => {}, []);
   const descriptionRef = useRef(null);
 
-  const [emergency, _setEmergency] = useState(1);
-  const [description, setDescription] = useState('');
+  const [em, _setEm] = emergency;
+  const [des, setDes] = description;
+
   const [minimumTrackTintColor, _setMinimumTrackTintColor] = useState(
     Colors.minTint_1
   );
 
-  const setEmergency = useCallback(
+  const setEm = useCallback(
     emergency => {
-      _setEmergency(emergency);
-      updateDestinationInfo(emergency);
+      _setEm(emergency);
       _setMinimumTrackTintColor(Colors[`minTint_${emergency}`]);
     },
-    [_setEmergency, updateDestinationInfo, _setMinimumTrackTintColor]
-  );
-
-  const updateDestinationInfo = useCallback(
-    _em => {
-      const em = _em || emergency;
-
-      console.log('Emergency:', em);
-      console.log('Description:', description);
-    },
-    [emergency, description]
+    [_setEm, _setMinimumTrackTintColor]
   );
 
   function distanceToString(distance) {
@@ -106,12 +100,7 @@ function RouteInfo({
           <Text style={styles.placeName} numberOfLines={1}>
             {location.name}
           </Text>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              descriptionRef.current && descriptionRef.current.blur();
-              // onClose();
-            }}
-          >
+          <TouchableWithoutFeedback onPress={onClose}>
             <Image source={cross} style={styles.cross} />
           </TouchableWithoutFeedback>
         </View>
@@ -137,9 +126,9 @@ function RouteInfo({
           style={styles.description}
           label={RouteInfoText.description}
           placeholder={RouteInfoText.description}
-          value={description}
-          onChangeText={text => setDescription(text)}
-          onBlur={() => updateDestinationInfo()}
+          value={des || ''}
+          onChangeText={setDes}
+          onBlur={() => console.log('Blur')}
         />
 
         <View style={styles.footer}>
@@ -151,24 +140,21 @@ function RouteInfo({
               step={1}
               minimumValue={1}
               maximumValue={3}
-              onValueChange={setEmergency}
+              value={em || 1}
+              onValueChange={setEm}
               thumbTintColor={minimumTrackTintColor}
               maximumTrackTintColor={Colors.maxTint}
               minimumTrackTintColor={minimumTrackTintColor}
             />
           </View>
 
-          <TouchableWithoutFeedback
-            onPress={() => {
-              console.log('onUse');
-              // onUse();
-            }}
-          >
+          <TouchableWithoutFeedback onPress={onUse}>
             <View style={styles.useButton}>
-              <Image source={useButton.image} style={styles.useIcon} />
-              <Text style={styles.useText}>
-                {RouteInfoText[useButton.text]}
-              </Text>
+              <Image
+                source={useButton === 'use' ? use : finish}
+                style={styles.useIcon}
+              />
+              <Text style={styles.useText}>{RouteInfoText[useButton]}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
