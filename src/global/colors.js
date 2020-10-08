@@ -20,10 +20,10 @@ export default {
   useButtonText: 'white',
   useButtonBackground: '#1a73e8',
 
-  minTint_1: 'green',
-  minTint_2: 'yellow',
-  minTint_3: 'red',
-  maxTint: 'blue',
+  maxTint: 'black',
+  emergency_1: 'green',
+  emergency_2: 'yellow',
+  emergency_3: 'red',
 
   routeToDestination: '#669df6',
   routesToPickedLocation: '#bbbdbf',

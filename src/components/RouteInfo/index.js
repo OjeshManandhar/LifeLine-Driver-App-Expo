@@ -46,7 +46,7 @@ function RouteInfo({
   const setEm = useCallback(
     emergency => {
       _setEm(emergency);
-      _setMinimumTrackTintColor(Colors[`minTint_${emergency}`]);
+      _setMinimumTrackTintColor(Colors[`emergency_${emergency}`]);
     },
     [_setEm, _setMinimumTrackTintColor]
   );

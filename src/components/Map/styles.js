@@ -42,8 +42,7 @@ export const layerStyles = {
     lineWidth: 6,
     lineOpacity: 1,
     lineCap: MapboxGL.LineCap.Round,
-    lineJoin: MapboxGL.LineJoin.Round,
-    lineColor: Colors.routeToDestination
+    lineJoin: MapboxGL.LineJoin.Round
   },
   routesToPickedLocation: {
     lineWidth: 5,

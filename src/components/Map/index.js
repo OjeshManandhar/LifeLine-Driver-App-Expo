@@ -15,6 +15,7 @@ import obstructionMarker from 'assets/images/map/obstructionMarker.png';
 import pickedLocationMarker from 'assets/images/map/pickedLocationMarker.png';
 
 // global
+import Colors from 'global/colors';
 import { MapLayerIndex } from 'global/zIndex';
 
 // styles
@@ -133,6 +134,63 @@ function Map({
     return shape;
   }, [routesToPickedLocation, selectedRouteToPickedLocation]);
 
+  const renderStartLocation = useCallback(() => {
+    return (
+      <MapboxGL.ShapeSource
+        id='startLocationMarker-Source'
+        shape={point(startLocation)}
+        // onPress={toggleRouteInfo}
+      >
+        <MapboxGL.SymbolLayer
+          style={layerStyles.startLocationMarker}
+          id='startLocationMarker-Layer'
+          sourceID='startLocationMarker-Source'
+          layerIndex={MapLayerIndex.startLocationMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [startLocation]);
+
+  const renderDestination = useCallback(() => {
+    return (
+      <MapboxGL.ShapeSource
+        id='destinationMarker-Source'
+        shape={point(destination.coordinate)}
+        // onPress={toggleRouteInfo}
+      >
+        <MapboxGL.SymbolLayer
+          style={layerStyles.destinationMarker}
+          id='destinationMarker-Layer'
+          sourceID='destinationMarker-Source'
+          layerIndex={MapLayerIndex.destinationMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [destination]);
+
+  const renderRouteToDestination = useCallback(() => {
+    return (
+      <MapboxGL.ShapeSource
+        id='routeToDestination-Source'
+        shape={routeToDestination}
+        // onPress={toggleRouteInfo}
+      >
+        <MapboxGL.LineLayer
+          id='routeToDestination-Layer'
+          sourceID='routeToDestination-Source'
+          style={{
+            ...layerStyles.routeToDestination,
+            ...{
+              lineColor:
+                Colors[`emergency_${routeToDestination.properties.emergency}`]
+            }
+          }}
+          layerIndex={MapLayerIndex.routeToDestination}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [routeToDestination]);
+
   const getBounds = useCallback(() => {
     if (!routesToPickedLocation) return null;
 
@@ -218,9 +276,9 @@ function Map({
       {pickedLocation && renderPickedLocation()}
       {routesToPickedLocation && renderRoutesToPickedLocation()}
 
-      {/* {startLocation && renderStartLocation()}
+      {startLocation && renderStartLocation()}
       {destination && renderDestination()}
-      {routeToDestination && rendetRouteToDestination()} */}
+      {routeToDestination && renderRouteToDestination()}
     </MapboxGL.MapView>
   );
 }
