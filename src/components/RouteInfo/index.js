@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -31,10 +31,11 @@ function RouteInfo({
   location,
   useButton,
   emergency,
-  description
+  description,
+  descriptionRef,
+  updateDestinationInfo
 }) {
   // useEffect(() => {}, []);
-  const descriptionRef = useRef(null);
 
   const [em, _setEm] = emergency;
   const [des, setDes] = description;
@@ -47,8 +48,10 @@ function RouteInfo({
     emergency => {
       _setEm(emergency);
       _setMinimumTrackTintColor(Colors[`emergency_${emergency}`]);
+
+      updateDestinationInfo && updateDestinationInfo(emergency);
     },
-    [_setEm, _setMinimumTrackTintColor]
+    [_setEm, updateDestinationInfo, _setMinimumTrackTintColor]
   );
 
   function distanceToString(distance) {
@@ -100,7 +103,17 @@ function RouteInfo({
           <Text style={styles.placeName} numberOfLines={1}>
             {location.name}
           </Text>
-          <TouchableWithoutFeedback onPress={onClose}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              const des = descriptionRef.current;
+              if (des && des.isFocused()) {
+                console.log('Focused');
+                des.blur();
+                updateDestinationInfo && updateDestinationInfo();
+              }
+              onClose();
+            }}
+          >
             <Image source={cross} style={styles.cross} />
           </TouchableWithoutFeedback>
         </View>
@@ -126,9 +139,14 @@ function RouteInfo({
           style={styles.description}
           label={RouteInfoText.description}
           placeholder={RouteInfoText.description}
-          value={des || ''}
+          value={des}
           onChangeText={setDes}
-          onBlur={() => console.log('Blur')}
+          /**
+           * Cannot do onBlur={updateDestinationInfo}
+           * Because updateDestinationInfo will take the object argument from
+           * onBlur and use it as emergency
+           */
+          onBlur={() => updateDestinationInfo && updateDestinationInfo()}
         />
 
         <View style={styles.footer}>
@@ -140,7 +158,7 @@ function RouteInfo({
               step={1}
               minimumValue={1}
               maximumValue={3}
-              value={em || 1}
+              value={em}
               onValueChange={setEm}
               thumbTintColor={minimumTrackTintColor}
               maximumTrackTintColor={Colors.maxTint}

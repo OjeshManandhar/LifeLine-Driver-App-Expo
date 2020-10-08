@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
 
 // components
@@ -23,6 +23,8 @@ import avatar from 'assets/images/dead.png';
 import styles from './styles';
 
 function MapView(props) {
+  const descriptionRef = useRef(null);
+
   const [emergency, setEmergency] = useState(1);
   const [isPicking, setIsPicking] = useState(false);
   const [description, setDescription] = useState('');
@@ -180,6 +182,7 @@ function MapView(props) {
       />
 
       <RouteInfo
+        descriptionRef={descriptionRef}
         show={
           mapViewStatus === EMapViewStatus.selectingRoute ||
           mapViewStatus === EMapViewStatus.destinationInfo
@@ -200,6 +203,23 @@ function MapView(props) {
         }
         description={[description, setDescription]}
         emergency={[emergency, setEmergency]}
+        updateDestinationInfo={
+          mapViewStatus === EMapViewStatus.selectingRoute
+            ? null
+            : em => {
+                const route = { ...routeToDestination };
+                console.log('old route:', route.properties, em);
+
+                route.properties.emergency = em || emergency;
+                route.properties.description = description;
+
+                console.log('updated route:', route.properties);
+
+                setRouteToDestination(route);
+
+                /* PATCH route to server */
+              }
+        }
         useButton={
           mapViewStatus === EMapViewStatus.selectingRoute ? 'use' : 'finish'
         }
