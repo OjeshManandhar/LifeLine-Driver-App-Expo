@@ -229,8 +229,6 @@ function MapView(props) {
 
           getRoute(data.coordinate)
             .then(routes => {
-              // console.log('routes:', routes);
-
               setRoutesToPickedLocation(routes);
               setSelectedRouteToPickedLocation(routes[0].properties.id);
 
@@ -253,7 +251,24 @@ function MapView(props) {
           pickedCoordinate != null && mapViewStatus === EMapViewStatus.picking
         }
         pickedCoordinate={pickedCoordinate}
-        onUse={data => console.log('Picked Destination coordinate:', data)}
+        onUse={data => {
+          console.log('Picked Destination coordinate:', data);
+          setPickedLocation(data);
+
+          getRoute(data.coordinate)
+            .then(routes => {
+              setRoutesToPickedLocation(routes);
+              setSelectedRouteToPickedLocation(routes[0].properties.id);
+
+              setMapViewStatus(EMapViewStatus.selectingRoute);
+            })
+            .catch(error => {
+              console.log('No routes Found:', error);
+              setMapViewStatus(EMapViewStatus.clear);
+            });
+
+          setPickedCoordintate(null);
+        }}
       />
 
       <RouteInfo
