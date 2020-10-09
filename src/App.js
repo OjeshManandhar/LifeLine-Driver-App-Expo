@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Expo
-import { AppLoading } from 'expo';
 import * as Fonts from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 
 // packages
+import MapboxGL from '@react-native-mapbox-gl/maps';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 // navigator
-import Navigator from 'navigator/Navigator';
+import Navigator from 'navigator';
 
 // dummy_api
 import { checkToken } from 'dummy_api';
 
 // global
+import Colors from 'global/colors';
 import FontsList from 'global/fonts';
 
 // assets
@@ -23,14 +25,26 @@ import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
 
 // utils
 import UserToken from 'utils/userToken';
+import UserLocation from 'utils/userLocation';
+
+// env
+import { MAPBOX_API_KEY } from '@env';
 
 const theme = {
   ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Colors.primary,
+    accent: Colors.accent
+  },
   fonts: {
     ...DefaultTheme.fonts,
     regular: { fontFamily: FontsList.regular }
   }
 };
+
+UserLocation.init();
+MapboxGL.setAccessToken(MAPBOX_API_KEY);
 
 function App() {
   const [isReady, setIsReady] = useState(false);
@@ -54,16 +68,24 @@ function App() {
     }
   }
 
-  if (!isReady) {
-    return (
-      <AppLoading
-        startAsync={loadResources}
-        onFinish={() => setIsReady(true)}
-        onError={() => console.log('App Loading ERROR')}
-        autoHideSplash={true}
-      />
-    );
-  }
+  // Prevent Auto hide of Splash Screen
+  useEffect(() => {
+    (async function () {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (error) {
+        console.warn('Splash Screen Error:', error);
+      }
+
+      await loadResources();
+
+      setIsReady(true);
+
+      await SplashScreen.hideAsync();
+    })();
+  }, [setIsReady]);
+
+  if (!isReady) return null;
 
   return (
     <PaperProvider theme={theme}>

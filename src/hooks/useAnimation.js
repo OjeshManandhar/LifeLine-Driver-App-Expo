@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 // global
-import { AnimationState as AS } from 'global/enum';
+import { EAnimationState as AS } from 'global/enum';
 
 // hooks
 import useStateWithCallback from 'hooks/useStateWithCallback';
@@ -97,9 +97,11 @@ function useAnimation(props) {
         (props.in === true && currentState.current === AS.in) ||
         (props.in === false && currentState.current === AS.out)
       ) {
-        // Happens on development due to fast reload
-        // Don't execute ENTER/EXIT animation
-        // No change in animation state
+        /**
+         * Happens on development due to fast reload
+         * Don't execute ENTER/EXIT animation
+         * No change in animation state
+         */
       }
 
       if (props.in === true && currentState.current === AS.out) {

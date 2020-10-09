@@ -1,22 +1,22 @@
 // packages
 import { getDistance } from 'geolib';
+import { point } from '@turf/helpers';
 const mbxGeocoder = require('@mapbox/mapbox-sdk/services/geocoding');
 
 // utils
 import UserLocation from 'utils/userLocation';
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 const geocodingClient = mbxGeocoder({ accessToken: MAPBOX_API_KEY });
 
 function parseResponse(coordinate, feature) {
   const startLocation = UserLocation.currentLocation;
 
-  return {
+  return point(coordinate, {
     id: feature.id,
     name: feature.text,
-    coordinate: coordinate,
     type: feature.place_type[0],
     location: feature.place_name,
     distance: getDistance(
@@ -24,7 +24,7 @@ function parseResponse(coordinate, feature) {
       { latitude: feature.center[1], longitude: feature.center[0] },
       10
     )
-  };
+  });
 }
 
 function reverseGeocoder(coordinate) {

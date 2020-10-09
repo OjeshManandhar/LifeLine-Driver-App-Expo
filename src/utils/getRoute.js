@@ -4,7 +4,7 @@ import { lineString as makeLineString } from '@turf/helpers';
 const mbxDirection = require('@mapbox/mapbox-sdk/services/directions');
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 // utils
 import UserLocation from 'utils/userLocation';
@@ -14,17 +14,19 @@ const directionsClient = mbxDirection({ accessToken: MAPBOX_API_KEY });
 function makeRoutesList(routes) {
   let id = 1;
 
-  const routesList = routes.map(route => {
-    return {
+  const routeList = routes.map(route => {
+    return makeLineString(route.geometry.coordinates, {
       id: id++,
       weight: route.weight,
       distance: route.distance || null /* meters */,
-      duration: route.duration || null /* seconds */,
-      route: makeLineString(route.geometry.coordinates)
-    };
+      duration: route.duration || null /* seconds */
+    });
   });
 
-  routesList.sort((routeA, routeB) => {
+  routeList.sort((rA, rB) => {
+    const routeA = rA.properties;
+    const routeB = rB.properties;
+
     if (routeA.weight === routeB.weight) {
       if (routeA.duration === routeB.duration) {
         if (routeA.distance === routeB.distance) {
@@ -40,7 +42,7 @@ function makeRoutesList(routes) {
     }
   });
 
-  return routesList;
+  return routeList;
 }
 
 function getRoute(destination) {

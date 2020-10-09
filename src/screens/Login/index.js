@@ -1,14 +1,11 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  useCallback
-} from 'react';
-import { View, Alert, Animated, Keyboard } from 'react-native';
-
-// Expo
-import * as SecureStore from 'expo-secure-store';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import {
+  View,
+  Alert,
+  Animated,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native';
 
 // packages
 import { Button, TextInput } from 'react-native-paper';
@@ -16,27 +13,24 @@ import { Button, TextInput } from 'react-native-paper';
 // components
 import Text from 'components/Text';
 
-// dummy_api
-import { login } from 'dummy_api';
-
 // styles
 import styles from './styles';
 
+// dummy_api
+import { login } from 'dummy_api';
+
 // global
+import Routes from 'global/routes';
 import Colors from 'global/colors';
-import { Login as LoginText } from 'global/strings';
+import { LoginText } from 'global/strings';
 
 // assets
 import logo from 'assets/images/logo.png';
 import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // utils
 import UserToken from 'utils/userToken';
-
-// env
-import { USER_TOKEN_KEY } from '@env';
 
 function Login({ navigation }) {
   const LOGO_SIZE = 120;
@@ -72,7 +66,7 @@ function Login({ navigation }) {
         clearFields();
         setIsLoggingIn(false);
 
-        navigation.navigate('MapScreen');
+        navigation.navigate(Routes.map);
       })
       .catch(({ errorCode }) => {
         setIsLoggingIn(false);
@@ -156,7 +150,7 @@ function Login({ navigation }) {
   }, []);
 
   if (UserToken.get()) {
-    navigation.navigate('MapScreen');
+    navigation.navigate(Routes.map);
   }
 
   return (
@@ -198,12 +192,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label={LoginText.loginForm.phoneNumber}
+          label={LoginText.form.phoneNumber}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           keyboardType='phone-pad'
-          placeholder={LoginText.loginForm.phoneNumber}
+          placeholder={LoginText.form.phoneNumber}
           value={phoneNumber}
           onChangeText={setPhoneNumber}
         />
@@ -211,12 +205,12 @@ function Login({ navigation }) {
         <TextInput
           dense={true}
           mode='outlined'
-          label={LoginText.loginForm.password}
+          label={LoginText.form.password}
           style={styles.textBox}
           multiline={false}
           numberOfLines={1}
           autoCapitalize='none'
-          placeholder={LoginText.loginForm.password}
+          placeholder={LoginText.form.password}
           secureTextEntry={!showPassword}
           keyboardType={showPassword ? 'visible-password' : 'default'}
           value={password}
@@ -248,7 +242,7 @@ function Login({ navigation }) {
           contentStyle={styles.loginButtonContent}
           onPress={() => !isLoggingIn && handleLogin()}
         >
-          <Text style={styles.loginButtonContent}>Login</Text>
+          <Text style={styles.loginButtonContent}>{LoginText.button}</Text>
         </Button>
 
         <View style={styles.signUpContainer}>

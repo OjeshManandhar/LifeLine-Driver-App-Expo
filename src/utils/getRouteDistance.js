@@ -2,7 +2,7 @@
 const mbxDirection = require('@mapbox/mapbox-sdk/services/directions');
 
 // env
-import { MAPBOX_API_KEY } from 'react-native-dotenv';
+import { MAPBOX_API_KEY } from '@env';
 
 const directionsClient = mbxDirection({ accessToken: MAPBOX_API_KEY });
 
@@ -15,13 +15,14 @@ function getRouteDistance(startLocation, destination) {
           { coordinates: destination.center }
         ],
         geometries: 'geojson',
-        profile: 'driving-traffic',
+        profile: 'driving',
+        // profile: 'driving-traffic',
         annotations: ['distance']
       })
       .send()
       .then(
         response => {
-          resolve(response.body.routes[0].distance / 1000);
+          resolve(response.body.routes[0].distance / 1000 /* km */);
         },
         error => {
           console.log('Direction error:', error);
