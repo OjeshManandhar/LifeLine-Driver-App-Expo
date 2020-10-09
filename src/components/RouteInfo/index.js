@@ -107,7 +107,6 @@ function RouteInfo({
             onPress={() => {
               const des = descriptionRef.current;
               if (des && des.isFocused()) {
-                console.log('Focused');
                 des.blur();
                 updateDestinationInfo && updateDestinationInfo();
               }

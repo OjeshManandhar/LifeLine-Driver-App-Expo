@@ -70,6 +70,20 @@ function MapView(props) {
     setRouteToDestination(null);
   }
 
+  const updateDestinationInfo = useCallback(
+    em => {
+      const route = { ...routeToDestination };
+
+      route.properties.emergency = em || emergency;
+      route.properties.description = description;
+
+      setRouteToDestination(route);
+
+      /* PATCH route to server */
+    },
+    [emergency, description, routeToDestination]
+  );
+
   // Back handler
   const handleBackButton = useCallback(() => {
     switch (mapViewStatus) {
@@ -79,8 +93,23 @@ function MapView(props) {
       case EMapViewStatus.searching:
         setMapViewStatus(EMapViewStatus.clear);
         break;
+      case EMapViewStatus.selectingRoute:
+        setMapViewStatus(EMapViewStatus.clear);
+        clearRouteDescription();
+        clearPickedLocation();
+        break;
+      case EMapViewStatus.destinationInfo:
+        const des = descriptionRef.current;
+        if (des && des.isFocused()) {
+          des.blur();
+          updateDestinationInfo();
+        }
+
+        setMapViewStatus(EMapViewStatus.clear);
+        clearRouteDescription();
+        break;
     }
-  }, [mapViewStatus, setMapViewStatus]);
+  }, [mapViewStatus, setMapViewStatus, updateDestinationInfo]);
 
   props.setBackHandler(() => handleBackButton);
   // useEffect(() => props.setBackHandler(() => handleBackButton), [
@@ -216,16 +245,7 @@ function MapView(props) {
         updateDestinationInfo={
           mapViewStatus === EMapViewStatus.selectingRoute
             ? null
-            : em => {
-                const route = { ...routeToDestination };
-
-                route.properties.emergency = em || emergency;
-                route.properties.description = description;
-
-                setRouteToDestination(route);
-
-                /* PATCH route to server */
-              }
+            : updateDestinationInfo
         }
         useButton={
           mapViewStatus === EMapViewStatus.selectingRoute ? 'use' : 'finish'
