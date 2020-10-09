@@ -49,6 +49,15 @@ export default StyleSheet.create({
     height: 20,
     marginRight: 20
   },
+  topTextContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  topText: {
+    fontSize: 18
+  },
   avatar: {
     alignSelf: 'center',
     width: 20,

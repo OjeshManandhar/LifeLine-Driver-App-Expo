@@ -3,6 +3,7 @@ import { View, Keyboard, BackHandler } from 'react-native';
 
 // components
 import Map from 'components/Map';
+import Text from 'components/Text';
 import RouteInfo from 'components/RouteInfo';
 import SearchBox from 'components/SearchBox';
 import SearchList from 'components/SearchList';
@@ -32,6 +33,7 @@ function MapView(props) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startLocation, setStartLocation] = useState(null);
   const [pickedLocation, setPickedLocation] = useState(null);
+  const [pickedCoordinate, setPickedCoordintate] = useState(null);
   const [routeToDestination, setRouteToDestination] = useState(null);
   const [routesToPickedLocation, setRoutesToPickedLocation] = useState(null);
   const [
@@ -90,11 +92,16 @@ function MapView(props) {
       case EMapViewStatus.clear:
         BackHandler.exitApp();
         break;
-      case EMapViewStatus.searching:
-        setMapViewStatus(EMapViewStatus.clear);
+      // case EMapViewStatus.searching:
+      //   // setMapViewStatus(EMapViewStatus.clear);
+      //   break;
+      case EMapViewStatus.picking:
+        // setMapViewStatus(EMapViewStatus.clear);
+        setPickedCoordintate(null);
+        clearPickedLocation();
         break;
       case EMapViewStatus.selectingRoute:
-        setMapViewStatus(EMapViewStatus.clear);
+        // setMapViewStatus(EMapViewStatus.clear);
         clearRouteDescription();
         clearPickedLocation();
         break;
@@ -105,11 +112,18 @@ function MapView(props) {
           updateDestinationInfo();
         }
 
-        setMapViewStatus(EMapViewStatus.clear);
+        // setMapViewStatus(EMapViewStatus.clear);
         clearRouteDescription();
         break;
     }
-  }, [mapViewStatus, setMapViewStatus, updateDestinationInfo]);
+
+    setMapViewStatus(EMapViewStatus.clear);
+  }, [
+    mapViewStatus,
+    setMapViewStatus,
+    setPickedCoordintate,
+    updateDestinationInfo
+  ]);
 
   props.setBackHandler(() => handleBackButton);
   // useEffect(() => props.setBackHandler(() => handleBackButton), [
@@ -139,16 +153,25 @@ function MapView(props) {
             }
           }}
           onPress={() => {
+            if (pickedCoordinate) {
+              setPickedCoordintate(null);
+              clearPickedLocation();
+            }
             setMapViewStatus(EMapViewStatus.clear);
           }}
         />
 
-        <SearchBox
-          toAccount={props.toAccount}
-          searchKeyword={searchKeyword}
-          setSearchKeyword={setSearchKeyword}
-          onFocus={() => setMapViewStatus(EMapViewStatus.searching)}
-        />
+        {mapViewStatus === EMapViewStatus.picking ? (
+          <View style={styles.topTextContainer}>
+            <Text style={styles.topText}>Tap to pick a location</Text>
+          </View>
+        ) : (
+          <SearchBox
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
+            onFocus={() => setMapViewStatus(EMapViewStatus.searching)}
+          />
+        )}
 
         <AnimatedImageButton
           in={mapViewStatus !== EMapViewStatus.searching}
@@ -213,12 +236,9 @@ function MapView(props) {
             });
         }}
         switchToPicking={() => {
-          console.log('Switch to Picking');
-
-          // setIsPickingLocation(true);
-
-          // setPickedCoordintate(null);
-          // setMapScreenStatus(MapScreenStatus.pickingDestinaion);
+          setIsPicking(true);
+          setPickedCoordintate(null);
+          setMapViewStatus(EMapViewStatus.picking);
         }}
       />
 
