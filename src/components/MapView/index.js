@@ -61,6 +61,11 @@ function MapView(props) {
     setDescription('');
   }
 
+  function clearPickedCoordinate() {
+    setIsPicking(false);
+    setPickedCoordintate(null);
+  }
+
   function clearPickedLocation() {
     setPickedLocation(null);
     setRoutesToPickedLocation(null);
@@ -72,14 +77,6 @@ function MapView(props) {
     setStartLocation(null);
     setRouteToDestination(null);
   }
-
-  const clearPickedCoordinate = useCallback(() => {
-    if (pickedCoordinate) {
-      clearPickedLocation();
-    }
-    setIsPicking(false);
-    setPickedCoordintate(null);
-  }, [setIsPicking, pickedCoordinate, setPickedCoordintate]);
 
   const updateDestinationInfo = useCallback(
     em => {
@@ -101,15 +98,23 @@ function MapView(props) {
       case EMapViewStatus.clear:
         BackHandler.exitApp();
         break;
-      // case EMapViewStatus.searching:
-      //   // setMapViewStatus(EMapViewStatus.clear);
-      //   break;
+      case EMapViewStatus.searching:
+        if (pickedLocation) {
+          setMapViewStatus(EMapViewStatus.selectingRoute);
+        } else {
+          setMapViewStatus(EMapViewStatus.clear);
+        }
+        break;
       case EMapViewStatus.picking:
-        // setMapViewStatus(EMapViewStatus.clear);
+        if (pickedLocation) {
+          setMapViewStatus(EMapViewStatus.selectingRoute);
+        } else {
+          setMapViewStatus(EMapViewStatus.clear);
+        }
         clearPickedCoordinate();
         break;
       case EMapViewStatus.selectingRoute:
-        // setMapViewStatus(EMapViewStatus.clear);
+        setMapViewStatus(EMapViewStatus.clear);
         clearRouteDescription();
         clearPickedLocation();
         break;
@@ -120,18 +125,11 @@ function MapView(props) {
           updateDestinationInfo();
         }
 
-        // setMapViewStatus(EMapViewStatus.clear);
+        setMapViewStatus(EMapViewStatus.clear);
         clearRouteDescription();
         break;
     }
-
-    setMapViewStatus(EMapViewStatus.clear);
-  }, [
-    mapViewStatus,
-    setMapViewStatus,
-    clearPickedCoordinate,
-    updateDestinationInfo
-  ]);
+  }, [mapViewStatus, pickedLocation, setMapViewStatus, updateDestinationInfo]);
 
   props.setBackHandler(() => handleBackButton);
   // useEffect(() => props.setBackHandler(() => handleBackButton), [
@@ -161,8 +159,15 @@ function MapView(props) {
             }
           }}
           onPress={() => {
-            clearPickedCoordinate();
-            setMapViewStatus(EMapViewStatus.clear);
+            if (mapViewStatus === EMapViewStatus.picking) {
+              clearPickedCoordinate();
+            }
+
+            if (pickedLocation) {
+              setMapViewStatus(EMapViewStatus.selectingRoute);
+            } else {
+              setMapViewStatus(EMapViewStatus.clear);
+            }
           }}
         />
 
@@ -243,7 +248,6 @@ function MapView(props) {
         }}
         switchToPicking={() => {
           setIsPicking(true);
-          clearPickedLocation();
           setPickedCoordintate(null);
           setMapViewStatus(EMapViewStatus.picking);
         }}
