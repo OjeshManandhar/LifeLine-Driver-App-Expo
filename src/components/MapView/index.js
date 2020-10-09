@@ -8,6 +8,7 @@ import RouteInfo from 'components/RouteInfo';
 import SearchBox from 'components/SearchBox';
 import SearchList from 'components/SearchList';
 import AnimatedImageButton from 'components/AnimatedImageButton';
+import PickedCoordinateInfo from 'components/PickedCoordinateInfo';
 
 // utils
 import getRoute from 'utils/getRoute';
@@ -97,8 +98,10 @@ function MapView(props) {
       //   break;
       case EMapViewStatus.picking:
         // setMapViewStatus(EMapViewStatus.clear);
-        setPickedCoordintate(null);
-        clearPickedLocation();
+        if (pickedCoordinate) {
+          setPickedCoordintate(null);
+          clearPickedLocation();
+        }
         break;
       case EMapViewStatus.selectingRoute:
         // setMapViewStatus(EMapViewStatus.clear);
@@ -120,6 +123,7 @@ function MapView(props) {
     setMapViewStatus(EMapViewStatus.clear);
   }, [
     mapViewStatus,
+    pickedCoordinate,
     setMapViewStatus,
     setPickedCoordintate,
     updateDestinationInfo
@@ -242,6 +246,14 @@ function MapView(props) {
           setPickedCoordintate(null);
           setMapViewStatus(EMapViewStatus.picking);
         }}
+      />
+
+      <PickedCoordinateInfo
+        show={
+          pickedCoordinate != null && mapViewStatus === EMapViewStatus.picking
+        }
+        pickedCoordinate={pickedCoordinate}
+        onUse={data => console.log('Picked Destination coordinate:', data)}
       />
 
       <RouteInfo

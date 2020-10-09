@@ -25,6 +25,10 @@ export const AccountViewIndex = {
   base: MapScreenIndex.account
 };
 
+export const PickedCoordinateInfoIndex = {
+  base: MapViewIndex.bottomInfoBox
+};
+
 export const RouteInfoIndex = {
   base: MapViewIndex.bottomInfoBox
 };

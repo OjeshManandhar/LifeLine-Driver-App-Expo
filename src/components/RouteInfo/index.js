@@ -15,9 +15,9 @@ import Colors from 'global/colors';
 import { RouteInfoText } from 'global/strings';
 
 // assets
+import use from 'assets/images/use.png';
 import cross from 'assets/images/cross.png';
-import use from 'assets/images/routeInfo/use.png';
-import finish from 'assets/images/routeInfo/finish.png';
+import finish from 'assets/images/finish.png';
 
 // styles
 import styles, { ContainerHeight } from './styles';

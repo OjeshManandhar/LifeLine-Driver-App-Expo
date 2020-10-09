@@ -41,6 +41,11 @@ export const SearchListText = {
   pickOnMap: 'Pick a location on map'
 };
 
+export const PickedCoordinateInfoText = {
+  loading: 'Loading ...',
+  pickText: 'Pick'
+};
+
 export const RouteInfoText = {
   use: 'Use this route',
   finish: 'Close this route',
