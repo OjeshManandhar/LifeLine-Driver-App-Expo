@@ -66,10 +66,10 @@ function PickedCoordinateInfo({ show, onUse, pickedCoordinate }) {
         <View style={styles.container}>
           <View style={styles.placeInfo}>
             <Text style={styles.placeName} numberOfLines={1}>
-              {pickedLocation.name}
+              {pickedLocation.properties.name}
             </Text>
             <Text style={styles.placeLocation} numberOfLines={1}>
-              {pickedLocation.location}
+              {pickedLocation.properties.location}
             </Text>
           </View>
           <TouchableNativeFeedback onPress={() => onUse(pickedLocation)}>
