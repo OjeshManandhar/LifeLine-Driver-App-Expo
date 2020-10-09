@@ -27,7 +27,9 @@ function Map({
   startLocation,
   pickedLocation,
   toggleRouteInfo,
+  pickedCoordinate,
   routeToDestination,
+  setPickedCoordintate,
   routesToPickedLocation,
   selectedRouteToPickedLocation,
   setSelectedRouteToPickedLocation
@@ -134,6 +136,16 @@ function Map({
 
     return shape;
   }, [routesToPickedLocation, selectedRouteToPickedLocation]);
+
+  const renderPickedCoordinate = useCallback(() => {
+    return (
+      <MapboxGL.PointAnnotation
+        id='user-picked-location'
+        title='Picked DEstination'
+        coordinate={pickedCoordinate}
+      />
+    );
+  }, [pickedCoordinate]);
 
   const renderStartLocation = useCallback(() => {
     return (
@@ -247,6 +259,11 @@ function Map({
       style={styles.container}
       styleURL={MapboxGL.StyleURL.Outdoors}
       compassViewMargins={{ x: 10, y: 90 }}
+      onPress={
+        isPicking
+          ? data => setPickedCoordintate(data.geometry.coordinates)
+          : undefined
+      }
     >
       <MapboxGL.UserLocation visible animated showsUserHeadingIndicator />
 
@@ -276,6 +293,8 @@ function Map({
 
       {pickedLocation && renderPickedLocation()}
       {routesToPickedLocation && renderRoutesToPickedLocation()}
+
+      {isPicking && pickedCoordinate && renderPickedCoordinate()}
 
       {startLocation && renderStartLocation()}
       {destination && renderDestination()}

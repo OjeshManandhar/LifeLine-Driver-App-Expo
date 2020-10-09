@@ -197,7 +197,9 @@ function MapView(props) {
         destination={destination}
         startLocation={startLocation}
         pickedLocation={pickedLocation}
+        pickedCoordinate={pickedCoordinate}
         routeToDestination={routeToDestination}
+        setPickedCoordintate={setPickedCoordintate}
         routesToPickedLocation={routesToPickedLocation}
         selectedRouteToPickedLocation={selectedRouteToPickedLocation}
         setSelectedRouteToPickedLocation={setSelectedRouteToPickedLocation}
