@@ -1,5 +1,6 @@
 // packages
 import { getDistance } from 'geolib';
+import { point } from '@turf/helpers';
 const mbxGeocoder = require('@mapbox/mapbox-sdk/services/geocoding');
 
 // utils
@@ -21,18 +22,19 @@ function parseResponse(match) {
     const startLocation = UserLocation.currentLocation;
 
     for (let key in features) {
-      const data = {
+      const data = point(features[key].center, {
         id: features[key].id,
         name: features[key].text,
-        coordinate: features[key].center,
         type: features[key].place_type[0],
         location: features[key].place_name
-        // distance: (await getRouteDistance(startLocation, features[key])).distance
-      };
+      });
 
       const distance = getDistance(
         { latitude: startLocation[1], longitude: startLocation[0] },
-        { latitude: data.coordinate[1], longitude: data.coordinate[0] },
+        {
+          latitude: data.geometry.coordinates[1],
+          longitude: data.geometry.coordinates[0]
+        },
         10
       );
 
@@ -45,7 +47,7 @@ function parseResponse(match) {
           distancePromiseList.push(
             getRouteDistance(startLocation, features[key])
           );
-          distancePromiseListId.push(data.id);
+          distancePromiseListId.push(data.properties.id);
         }
       }
     }
@@ -53,15 +55,15 @@ function parseResponse(match) {
     Promise.all(distancePromiseList).then(values => {
       for (let i = 0; i < values.length; i++) {
         for (let j = 0; j < locations.length; j++) {
-          if (locations[j].id === distancePromiseListId[i]) {
-            locations[j].distance = parseFloat(values[i]).toFixed(2);
+          if (locations[j].properties.id === distancePromiseListId[i]) {
+            locations[j].properties.distance = parseFloat(values[i]).toFixed(2);
           }
         }
       }
 
       locations.sort((locationA, locationB) => {
-        const locA = locationA.distance;
-        const locB = locationB.distance;
+        const locA = locationA.properties.distance;
+        const locB = locationB.properties.distance;
 
         if (!locA && !locB) {
           return 0;
@@ -75,6 +77,8 @@ function parseResponse(match) {
           return locA - locB;
         }
       });
+
+      // console.log('Locations:', locations);
 
       resolve(locations);
     });

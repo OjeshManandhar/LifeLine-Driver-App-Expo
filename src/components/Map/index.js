@@ -74,7 +74,7 @@ function Map({
     return (
       <MapboxGL.ShapeSource
         id='PickedLocationMarker-Source'
-        shape={point(pickedLocation.coordinate)}
+        shape={pickedLocation}
       >
         <MapboxGL.SymbolLayer
           id='PickedLocationMarker-Layer'
@@ -168,7 +168,7 @@ function Map({
     return (
       <MapboxGL.ShapeSource
         id='destinationMarker-Source'
-        shape={point(destination.coordinate)}
+        shape={destination}
         onPress={toggleRouteInfo}
       >
         <MapboxGL.SymbolLayer

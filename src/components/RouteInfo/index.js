@@ -35,8 +35,6 @@ function RouteInfo({
   descriptionRef,
   updateDestinationInfo
 }) {
-  // useEffect(() => {}, []);
-
   const [em, _setEm] = emergency;
   const [des, setDes] = description;
 
@@ -101,7 +99,7 @@ function RouteInfo({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.placeName} numberOfLines={1}>
-            {location.name}
+            {location.properties.name}
           </Text>
           <TouchableWithoutFeedback
             onPress={() => {
@@ -118,7 +116,7 @@ function RouteInfo({
         </View>
 
         <Text style={styles.placeLocation} numberOfLines={1}>
-          {location.location}
+          {location.properties.location}
         </Text>
 
         <Text style={styles.routeText}>

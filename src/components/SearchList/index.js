@@ -41,7 +41,7 @@ function SearchList(props) {
     }
 
     const responseList = response.map((item, index) => (
-      <View key={item.id} style={styles.blockContainer}>
+      <View key={item.properties.id} style={styles.blockContainer}>
         <SearchResult
           data={item}
           last={index === response.length - 1}
@@ -58,7 +58,6 @@ function SearchList(props) {
       forwardGeocoder(props.searchKeyword)
         .then(result => {
           setResponse(result);
-          // console.log('SUCESS ', props.searchKeyword + ':', result);
         })
         .catch(error => {
           console.log('SearchList error ', props.searchKeyword + ':', error);

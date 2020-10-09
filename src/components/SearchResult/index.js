@@ -16,16 +16,18 @@ function SearchResult({ data, last, setPickedLocation }) {
       <View style={styles.container}>
         <View style={styles.distance}>
           <Image source={pin} style={styles.distanceMarker} />
-          {data.distance && (
-            <Text style={styles.distanceText}>{data.distance} km</Text>
+          {data.properties.distance && (
+            <Text style={styles.distanceText}>
+              {data.properties.distance} km
+            </Text>
           )}
         </View>
         <View style={[styles.description, { borderBottomWidth: last ? 0 : 1 }]}>
           <Text style={styles.placeName} numberOfLines={1}>
-            {data.name}
+            {data.properties.name}
           </Text>
           <Text style={styles.placeLocation} numberOfLines={1}>
-            {data.location}
+            {data.properties.location}
           </Text>
         </View>
       </View>

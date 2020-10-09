@@ -233,7 +233,7 @@ function MapView(props) {
         setPickedLocation={data => {
           setPickedLocation(data);
 
-          getRoute(data.coordinate)
+          getRoute(data.geometry.coordinates)
             .then(routes => {
               clearRouteDescription();
               setRoutesToPickedLocation(routes);
