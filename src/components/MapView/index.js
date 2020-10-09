@@ -33,9 +33,11 @@ function MapView(props) {
   const [destination, setDestination] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startLocation, setStartLocation] = useState(null);
+  const [obstructionList, setObstructionList] = useState([]);
   const [pickedLocation, setPickedLocation] = useState(null);
   const [pickedCoordinate, setPickedCoordintate] = useState(null);
   const [routeToDestination, setRouteToDestination] = useState(null);
+  const [selectedObstruction, setSelectedObstruction] = useState(null);
   const [routesToPickedLocation, setRoutesToPickedLocation] = useState(null);
   const [
     selectedRouteToPickedLocation,
@@ -207,9 +209,11 @@ function MapView(props) {
         destination={destination}
         startLocation={startLocation}
         pickedLocation={pickedLocation}
+        obstructionList={obstructionList}
         pickedCoordinate={pickedCoordinate}
         routeToDestination={routeToDestination}
         setPickedCoordintate={setPickedCoordintate}
+        setSelectedObstruction={setSelectedObstruction}
         routesToPickedLocation={routesToPickedLocation}
         selectedRouteToPickedLocation={selectedRouteToPickedLocation}
         setSelectedRouteToPickedLocation={setSelectedRouteToPickedLocation}
@@ -223,6 +227,14 @@ function MapView(props) {
             setMapViewStatus(EMapViewStatus.clear);
 
             clearRouteDescription();
+          }
+        }}
+        toggleObstructionInfo={() => {
+          if (mapViewStatus === EMapViewStatus.clear) {
+            setMapViewStatus(EMapViewStatus.obstructionInfo);
+          } else if (mapViewStatus === EMapViewStatus.obstructionInfo) {
+            setMapViewStatus(EMapViewStatus.clear);
+            setSelectedObstruction(null);
           }
         }}
       />

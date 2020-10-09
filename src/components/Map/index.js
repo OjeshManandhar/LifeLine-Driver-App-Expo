@@ -26,10 +26,13 @@ function Map({
   destination,
   startLocation,
   pickedLocation,
+  obstructionList,
   toggleRouteInfo,
   pickedCoordinate,
   routeToDestination,
   setPickedCoordintate,
+  toggleObstructionInfo,
+  setSelectedObstruction,
   routesToPickedLocation,
   selectedRouteToPickedLocation,
   setSelectedRouteToPickedLocation
@@ -237,6 +240,39 @@ function Map({
     return [[north, east], [south, west], 0, 1.5 * 1000];
   }, [routesToPickedLocation]);
 
+  const renderObstruction = useCallback(() => {
+    const featureCollection = {
+      type: 'FeatureCollection',
+      features: obstructionList
+    };
+
+    return (
+      <MapboxGL.ShapeSource
+        id='obstructionMarkers-Source'
+        shape={featureCollection}
+        onPress={data =>
+          setSelectedObstruction(currentObstruction => {
+            if (
+              !currentObstruction ||
+              currentObstruction.id === data.features[0].properties.id
+            ) {
+              toggleObstructionInfo();
+            }
+
+            return data.features[0].properties;
+          })
+        }
+      >
+        <MapboxGL.SymbolLayer
+          style={layerStyles.obstructionMarker}
+          id='obstructionMarker-Layer'
+          sourceID='obstructionMarkers-Source'
+          layerIndex={LayerIndex.obstructionMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [obstructionList, toggleObstructionInfo, setSelectedObstruction]);
+
   const updateCamera = useCallback(() => {
     const cam = cameraRef.current;
 
@@ -299,6 +335,8 @@ function Map({
       {startLocation && renderStartLocation()}
       {destination && renderDestination()}
       {routeToDestination && renderRouteToDestination()}
+
+      {obstructionList.length !== 0 && renderObstruction()}
     </MapboxGL.MapView>
   );
 }
