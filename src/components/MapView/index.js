@@ -73,6 +73,14 @@ function MapView(props) {
     setRouteToDestination(null);
   }
 
+  const clearPickedCoordinate = useCallback(() => {
+    if (pickedCoordinate) {
+      clearPickedLocation();
+    }
+    setIsPicking(false);
+    setPickedCoordintate(null);
+  }, [setIsPicking, pickedCoordinate, setPickedCoordintate]);
+
   const updateDestinationInfo = useCallback(
     em => {
       const route = { ...routeToDestination };
@@ -98,10 +106,7 @@ function MapView(props) {
       //   break;
       case EMapViewStatus.picking:
         // setMapViewStatus(EMapViewStatus.clear);
-        if (pickedCoordinate) {
-          setPickedCoordintate(null);
-          clearPickedLocation();
-        }
+        clearPickedCoordinate();
         break;
       case EMapViewStatus.selectingRoute:
         // setMapViewStatus(EMapViewStatus.clear);
@@ -123,9 +128,8 @@ function MapView(props) {
     setMapViewStatus(EMapViewStatus.clear);
   }, [
     mapViewStatus,
-    pickedCoordinate,
     setMapViewStatus,
-    setPickedCoordintate,
+    clearPickedCoordinate,
     updateDestinationInfo
   ]);
 
@@ -157,10 +161,7 @@ function MapView(props) {
             }
           }}
           onPress={() => {
-            if (pickedCoordinate) {
-              setPickedCoordintate(null);
-              clearPickedLocation();
-            }
+            clearPickedCoordinate();
             setMapViewStatus(EMapViewStatus.clear);
           }}
         />
@@ -229,6 +230,7 @@ function MapView(props) {
 
           getRoute(data.coordinate)
             .then(routes => {
+              clearRouteDescription();
               setRoutesToPickedLocation(routes);
               setSelectedRouteToPickedLocation(routes[0].properties.id);
 
@@ -241,6 +243,7 @@ function MapView(props) {
         }}
         switchToPicking={() => {
           setIsPicking(true);
+          clearPickedLocation();
           setPickedCoordintate(null);
           setMapViewStatus(EMapViewStatus.picking);
         }}
@@ -252,11 +255,11 @@ function MapView(props) {
         }
         pickedCoordinate={pickedCoordinate}
         onUse={data => {
-          console.log('Picked Destination coordinate:', data);
           setPickedLocation(data);
 
           getRoute(data.coordinate)
             .then(routes => {
+              clearRouteDescription();
               setRoutesToPickedLocation(routes);
               setSelectedRouteToPickedLocation(routes[0].properties.id);
 
@@ -268,6 +271,7 @@ function MapView(props) {
             });
 
           setPickedCoordintate(null);
+          setIsPicking(false);
         }}
       />
 
