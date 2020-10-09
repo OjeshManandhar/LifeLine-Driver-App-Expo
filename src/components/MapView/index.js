@@ -149,6 +149,18 @@ function MapView(props) {
         routesToPickedLocation={routesToPickedLocation}
         selectedRouteToPickedLocation={selectedRouteToPickedLocation}
         setSelectedRouteToPickedLocation={setSelectedRouteToPickedLocation}
+        toggleRouteInfo={() => {
+          if (mapViewStatus === EMapViewStatus.clear) {
+            setEmergency(routeToDestination.properties.emergency);
+            setDescription(routeToDestination.properties.description);
+
+            setMapViewStatus(EMapViewStatus.destinationInfo);
+          } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
+            setMapViewStatus(EMapViewStatus.clear);
+
+            clearRouteDescription();
+          }
+        }}
       />
 
       <SearchList
@@ -197,9 +209,7 @@ function MapView(props) {
             ? routesToPickedLocation.find(
                 route => route.properties.id === selectedRouteToPickedLocation
               )
-            : mapViewStatus === EMapViewStatus.destinationInfo
-            ? routeToDestination
-            : null
+            : routeToDestination
         }
         description={[description, setDescription]}
         emergency={[emergency, setEmergency]}
@@ -208,12 +218,9 @@ function MapView(props) {
             ? null
             : em => {
                 const route = { ...routeToDestination };
-                console.log('old route:', route.properties, em);
 
                 route.properties.emergency = em || emergency;
                 route.properties.description = description;
-
-                console.log('updated route:', route.properties);
 
                 setRouteToDestination(route);
 
@@ -225,6 +232,7 @@ function MapView(props) {
         }
         onClose={() => {
           setMapViewStatus(EMapViewStatus.clear);
+
           clearRouteDescription();
 
           if (mapViewStatus === EMapViewStatus.selectingRoute) {

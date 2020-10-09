@@ -26,6 +26,7 @@ function Map({
   destination,
   startLocation,
   pickedLocation,
+  toggleRouteInfo,
   routeToDestination,
   routesToPickedLocation,
   selectedRouteToPickedLocation,
@@ -139,7 +140,7 @@ function Map({
       <MapboxGL.ShapeSource
         id='startLocationMarker-Source'
         shape={point(startLocation)}
-        // onPress={toggleRouteInfo}
+        onPress={toggleRouteInfo}
       >
         <MapboxGL.SymbolLayer
           style={layerStyles.startLocationMarker}
@@ -149,14 +150,14 @@ function Map({
         />
       </MapboxGL.ShapeSource>
     );
-  }, [startLocation]);
+  }, [startLocation, toggleRouteInfo]);
 
   const renderDestination = useCallback(() => {
     return (
       <MapboxGL.ShapeSource
         id='destinationMarker-Source'
         shape={point(destination.coordinate)}
-        // onPress={toggleRouteInfo}
+        onPress={toggleRouteInfo}
       >
         <MapboxGL.SymbolLayer
           style={layerStyles.destinationMarker}
@@ -166,14 +167,14 @@ function Map({
         />
       </MapboxGL.ShapeSource>
     );
-  }, [destination]);
+  }, [destination, toggleRouteInfo]);
 
   const renderRouteToDestination = useCallback(() => {
     return (
       <MapboxGL.ShapeSource
         id='routeToDestination-Source'
         shape={routeToDestination}
-        // onPress={toggleRouteInfo}
+        onPress={toggleRouteInfo}
       >
         <MapboxGL.LineLayer
           id='routeToDestination-Layer'
@@ -189,7 +190,7 @@ function Map({
         />
       </MapboxGL.ShapeSource>
     );
-  }, [routeToDestination]);
+  }, [toggleRouteInfo, routeToDestination]);
 
   const getBounds = useCallback(() => {
     if (!routesToPickedLocation) return null;
