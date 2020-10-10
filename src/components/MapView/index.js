@@ -7,6 +7,7 @@ import Text from 'components/Text';
 import RouteInfo from 'components/RouteInfo';
 import SearchBox from 'components/SearchBox';
 import SearchList from 'components/SearchList';
+import ObstructionInfo from 'components/ObstructionInfo';
 import AnimatedImageButton from 'components/AnimatedImageButton';
 import PickedCoordinateInfo from 'components/PickedCoordinateInfo';
 
@@ -24,6 +25,37 @@ import avatar from 'assets/images/dead.png';
 // styles
 import styles from './styles';
 
+const dummyObstruction = [
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [85.3182293, 27.6945427]
+    },
+    properties: {
+      id: 1,
+      // createdBy: ,
+      name: 'Maitighar',
+      location: 'Maitighar, Kathmandu, Bagmati, Nepal',
+      description: 'normal day jam'
+    }
+  },
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [85.3165243, 27.6834457]
+    },
+    properties: {
+      id: 2,
+      // createdBy: ,
+      name: 'Hotel Himalaya',
+      location: 'Hotel Himalaya, Lalitpur, Bagmati, Nepal',
+      description: 'Accident'
+    }
+  }
+];
+
 function MapView(props) {
   const descriptionRef = useRef(null);
 
@@ -33,7 +65,7 @@ function MapView(props) {
   const [destination, setDestination] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startLocation, setStartLocation] = useState(null);
-  const [obstructionList, setObstructionList] = useState([]);
+  const [obstructionList, setObstructionList] = useState(dummyObstruction);
   const [pickedLocation, setPickedLocation] = useState(null);
   const [pickedCoordinate, setPickedCoordintate] = useState(null);
   const [routeToDestination, setRouteToDestination] = useState(null);
@@ -129,6 +161,10 @@ function MapView(props) {
 
         setMapViewStatus(EMapViewStatus.clear);
         clearRouteDescription();
+        break;
+      case EMapViewStatus.obstructionInfo:
+        setMapViewStatus(EMapViewStatus.clear);
+        setSelectedObstruction(null);
         break;
     }
   }, [mapViewStatus, pickedLocation, setMapViewStatus, updateDestinationInfo]);
@@ -364,6 +400,12 @@ function MapView(props) {
             setMapViewStatus(EMapViewStatus.clear);
           }
         }}
+      />
+
+      <ObstructionInfo
+        show={mapViewStatus === EMapViewStatus.obstructionInfo}
+        selectedObstruction={selectedObstruction}
+        onClose={() => setMapViewStatus(EMapViewStatus.clear)}
       />
     </View>
   );

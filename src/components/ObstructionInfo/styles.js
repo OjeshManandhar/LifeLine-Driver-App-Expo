@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 // global
+import Colors from 'global/colors';
 import { ObstructionInfoIndex } from 'global/zIndex';
 
-const containerHeight = 100;
+export const containerHeight = 85;
 
 export default StyleSheet.create({
   mainContainer: {
@@ -20,11 +21,10 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch'
   },
-
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -48,11 +48,15 @@ export default StyleSheet.create({
     marginBottom: 5,
     color: Colors.secondaryText
   },
+  descriptionContainer: {
+    flex: 1
+  },
   description: {
-    flex: 1,
-
-    fontSize: 15,
-    lineHeight: 15,
+    fontSize: 18,
+    lineHeight: 20,
     color: Colors.mainText
+
+    // borderWidth: 2,
+    // borderColor: 'red'
   }
 });

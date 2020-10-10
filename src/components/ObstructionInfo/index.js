@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Image, TouchableWithoutFeedback } from 'react-native';
+import {
+  View,
+  Image,
+  ScrollView,
+  TouchableWithoutFeedback
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 // components
@@ -7,10 +12,10 @@ import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 
 // assets
-import cross from 'asstes/images/cross.png';
+import cross from 'assets/images/cross.png';
 
 // styles
-import styles from './styles';
+import styles, { containerHeight } from './styles';
 
 function ObstructionInfo({ show, onClose, selectedObstruction }) {
   return (
@@ -33,24 +38,38 @@ function ObstructionInfo({ show, onClose, selectedObstruction }) {
         }
       }}
     >
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.placeName} numberOfLines={1}>
-            {selectedObstruction.properties.name}
+      {selectedObstruction ? (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.placeName} numberOfLines={1}>
+              {selectedObstruction.properties.name}
+            </Text>
+            <TouchableWithoutFeedback onPress={onClose}>
+              <Image source={cross} style={styles.cross} />
+            </TouchableWithoutFeedback>
+          </View>
+
+          <Text style={styles.placeLocation} numberOfLines={1}>
+            {selectedObstruction.properties.location}
           </Text>
-          <TouchableWithoutFeedback onPress={onClose}>
-            <Image source={cross} style={styles.cross} />
-          </TouchableWithoutFeedback>
+
+          <ScrollView
+            horizontal={true}
+            style={styles.descriptionContainer}
+            showsHorizontalScrollIndicator={false}
+          >
+            <Text style={styles.description} numberOfLines={1}>
+              {selectedObstruction.properties.description}
+            </Text>
+          </ScrollView>
         </View>
-
-        <Text style={styles.placeLocation} numberOfLines={1}>
-          {selectedObstruction.properties.location}
-        </Text>
-
-        <Text style={styles.description} numberOfLines={1}>
-          {selectedObstruction.properties.description}
-        </Text>
-      </View>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.placeName} numberOfLines={1}>
+            Select an obstruction
+          </Text>
+        </View>
+      )}
     </AnimatedView>
   );
 }
