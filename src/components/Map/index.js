@@ -26,10 +26,13 @@ function Map({
   destination,
   startLocation,
   pickedLocation,
+  obstructionList,
   toggleRouteInfo,
   pickedCoordinate,
   routeToDestination,
   setPickedCoordintate,
+  toggleObstructionInfo,
+  setSelectedObstruction,
   routesToPickedLocation,
   selectedRouteToPickedLocation,
   setSelectedRouteToPickedLocation
@@ -204,6 +207,43 @@ function Map({
     );
   }, [toggleRouteInfo, routeToDestination]);
 
+  const renderObstruction = useCallback(() => {
+    const featureCollection = {
+      type: 'FeatureCollection',
+      features: obstructionList
+    };
+
+    return (
+      <MapboxGL.ShapeSource
+        id='obstructionMarkers-Source'
+        shape={featureCollection}
+        onPress={data =>
+          setSelectedObstruction(currentObstruction => {
+            console.log('cur obs:', currentObstruction);
+            console.log('press obs:', data.features[0]);
+
+            if (
+              !currentObstruction ||
+              currentObstruction.properties.id ===
+                data.features[0].properties.id
+            ) {
+              toggleObstructionInfo();
+            }
+
+            return data.features[0];
+          })
+        }
+      >
+        <MapboxGL.SymbolLayer
+          style={layerStyles.obstructionMarker}
+          id='obstructionMarker-Layer'
+          sourceID='obstructionMarkers-Source'
+          layerIndex={MapLayerIndex.obstructionMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [obstructionList, toggleObstructionInfo, setSelectedObstruction]);
+
   const getBounds = useCallback(() => {
     if (!routesToPickedLocation) return null;
 
@@ -299,6 +339,8 @@ function Map({
       {startLocation && renderStartLocation()}
       {destination && renderDestination()}
       {routeToDestination && renderRouteToDestination()}
+
+      {obstructionList.length !== 0 && renderObstruction()}
     </MapboxGL.MapView>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Image, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
