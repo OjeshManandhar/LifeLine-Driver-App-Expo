@@ -56,6 +56,29 @@ const dummyObstruction = [
   }
 ];
 
+const dummyTraffic = [
+  {
+    type: 'Feature',
+    geomotry: {
+      type: 'Point',
+      coordinates: [85.3187843, 27.6949837]
+    },
+    properties: {
+      id: 1
+    }
+  },
+  {
+    type: 'Feature',
+    geomotry: {
+      type: 'Point',
+      coordinates: [85.3341016, 27.6883948]
+    },
+    properties: {
+      id: 2
+    }
+  }
+];
+
 function MapView(props) {
   const descriptionRef = useRef(null);
 
@@ -63,6 +86,7 @@ function MapView(props) {
   const [isPicking, setIsPicking] = useState(false);
   const [description, setDescription] = useState('');
   const [destination, setDestination] = useState(null);
+  const [trafficList, setTrafficList] = useState(dummyTraffic);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startLocation, setStartLocation] = useState(null);
   const [obstructionList, setObstructionList] = useState(dummyObstruction);
@@ -243,6 +267,7 @@ function MapView(props) {
       <Map
         isPicking={isPicking}
         destination={destination}
+        trafficList={trafficList}
         startLocation={startLocation}
         pickedLocation={pickedLocation}
         obstructionList={obstructionList}
