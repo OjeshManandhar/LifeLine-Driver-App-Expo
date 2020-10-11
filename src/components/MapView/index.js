@@ -59,7 +59,7 @@ const dummyObstruction = [
 const dummyTraffic = [
   {
     type: 'Feature',
-    geomotry: {
+    geometry: {
       type: 'Point',
       coordinates: [85.3187843, 27.6949837]
     },
@@ -69,7 +69,7 @@ const dummyTraffic = [
   },
   {
     type: 'Feature',
-    geomotry: {
+    geometry: {
       type: 'Point',
       coordinates: [85.3341016, 27.6883948]
     },

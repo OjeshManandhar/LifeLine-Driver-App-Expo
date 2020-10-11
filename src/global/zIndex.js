@@ -44,6 +44,7 @@ export const MapLayerIndex = {
   routesToPickedLocation: 100,
   selectedRouteToPickedLocation: 105,
   pickedLocationMarker: 110,
+  trafficMarker: 114,
   obstructionMarker: 115,
   routeToDestination: 120,
   startLocationMarker: 124,
