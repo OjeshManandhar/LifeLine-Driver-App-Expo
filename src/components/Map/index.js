@@ -24,6 +24,7 @@ import { styles, layerStyles } from './styles';
 
 function Map({
   isPicking,
+  toAccount,
   destination,
   trafficList,
   startLocation,
@@ -256,7 +257,7 @@ function Map({
       <MapboxGL.ShapeSource
         id='trafficMarkers-Source'
         shape={featureCollection}
-        onPress={data => console.log('traffic:', data.features[0].properties)}
+        onPress={data => toAccount(data.features[0].properties.id)}
       >
         <MapboxGL.SymbolLayer
           style={layerStyles.trafficMarker}

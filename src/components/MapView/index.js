@@ -298,6 +298,11 @@ function MapView(props) {
             setSelectedObstruction(null);
           }
         }}
+        toAccount={id => {
+          if (mapViewStatus === EMapViewStatus.clear) {
+            props.toAccount(id);
+          }
+        }}
       />
 
       <SearchList
