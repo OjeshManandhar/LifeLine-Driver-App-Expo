@@ -62,3 +62,4 @@ and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
 ## Attribution
 
 - [dead.png](src/assets/images/account/dead.png) - Icons made by [xnimrodx](https://www.flaticon.com/free-icon/dead_3538317?term=avatar&page=1&position=75) from [www.flaticon.com](https://www.flaticon.com/)
+- _traffic_ used in [trafficMarker.png](src/assets/images/map/trafficMarker.png) - Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)

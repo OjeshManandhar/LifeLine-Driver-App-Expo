@@ -17,6 +17,8 @@ import { EMapScreenStatus } from 'global/enum';
 import { MapScreenText } from 'global/strings';
 
 function MapScreen({ navigation }) {
+  const [accountId, setAccountId] = useState(null);
+
   // To flag whether MapView can handle BackButton or not
   const [mapViewBackHandler, setMapViewBackHandler] = useState();
 
@@ -78,13 +80,20 @@ function MapScreen({ navigation }) {
     <View style={styles.container}>
       <MapView
         setBackHandler={setMapViewBackHandler}
-        toAccount={() => setMapScreenStatus(EMapScreenStatus.accountView)}
+        toAccount={id => {
+          setAccountId(id);
+          setMapScreenStatus(EMapScreenStatus.accountView);
+        }}
       />
 
       <AccountView
         in={mapScreenStatus === EMapScreenStatus.accountView}
+        accountId={accountId}
         logout={() => navigation.navigate(Routes.login)}
-        mapView={() => setMapScreenStatus(EMapScreenStatus.mapView)}
+        mapView={() => {
+          setMapScreenStatus(EMapScreenStatus.mapView);
+          setAccountId(null);
+        }}
       />
     </View>
   );

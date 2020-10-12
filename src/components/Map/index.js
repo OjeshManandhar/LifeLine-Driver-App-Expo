@@ -10,6 +10,7 @@ import UserLocation from 'utils/userLocation';
 
 // assets
 import startMarker from 'assets/images/map/startMarker.png';
+import trafficMarker from 'assets/images/map/trafficMarker.png';
 import destinationMarker from 'assets/images/map/destinationMarker.png';
 import obstructionMarker from 'assets/images/map/obstructionMarker.png';
 import pickedLocationMarker from 'assets/images/map/pickedLocationMarker.png';
@@ -23,7 +24,9 @@ import { styles, layerStyles } from './styles';
 
 function Map({
   isPicking,
+  toAccount,
   destination,
+  trafficList,
   startLocation,
   pickedLocation,
   obstructionList,
@@ -244,6 +247,28 @@ function Map({
     );
   }, [obstructionList, toggleObstructionInfo, setSelectedObstruction]);
 
+  const renderTrafficMarker = useCallback(() => {
+    const featureCollection = {
+      type: 'FeatureCollection',
+      features: trafficList
+    };
+
+    return (
+      <MapboxGL.ShapeSource
+        id='trafficMarkers-Source'
+        shape={featureCollection}
+        onPress={data => toAccount(data.features[0].properties.id)}
+      >
+        <MapboxGL.SymbolLayer
+          style={layerStyles.trafficMarker}
+          id='trafficMarker-Layer'
+          sourceID='trafficMarkers-Source'
+          layerIndex={MapLayerIndex.trafficMarker}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  }, [trafficList]);
+
   const getBounds = useCallback(() => {
     if (!routesToPickedLocation) return null;
 
@@ -323,6 +348,7 @@ function Map({
       <MapboxGL.Images
         images={{
           startMarker: startMarker,
+          trafficMarker: trafficMarker,
           destinationMarker: destinationMarker,
           obstructionMarker: obstructionMarker,
           pickedLocationMarker: pickedLocationMarker
@@ -340,7 +366,9 @@ function Map({
       {destination && renderDestination()}
       {routeToDestination && renderRouteToDestination()}
 
-      {obstructionList.length !== 0 && renderObstruction()}
+      {obstructionList && obstructionList.length !== 0 && renderObstruction()}
+
+      {trafficList && trafficList.length !== 0 && renderTrafficMarker()}
     </MapboxGL.MapView>
   );
 }

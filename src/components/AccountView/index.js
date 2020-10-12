@@ -25,6 +25,8 @@ import { AccountViewText } from 'global/strings';
 import styles from './styles';
 
 function AccountView(props) {
+  console.log('props:', props);
+
   return (
     <AnimatedView
       in={props.in}

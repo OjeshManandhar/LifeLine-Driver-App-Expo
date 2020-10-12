@@ -38,6 +38,12 @@ export const layerStyles = {
     iconAllowOverlap: true,
     iconImage: 'obstructionMarker'
   },
+  trafficMarker: {
+    iconSize: 0.08,
+    iconOffset: [0, -256],
+    iconAllowOverlap: true,
+    iconImage: 'trafficMarker'
+  },
   routeToDestination: {
     lineWidth: 6,
     lineOpacity: 1,
