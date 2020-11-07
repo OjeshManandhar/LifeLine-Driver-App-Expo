@@ -1,3 +1,16 @@
+export const SocketText = {
+  operations: {
+    create: 'create',
+    delete: 'delete',
+    update: 'update'
+  },
+  events: {
+    obstructions: 'obstructions',
+    driverRoutes: 'driver-routes',
+    trafficLocations: 'traffic-locations'
+  }
+};
+
 export const LoginText = {
   button: 'Log In',
   form: {
