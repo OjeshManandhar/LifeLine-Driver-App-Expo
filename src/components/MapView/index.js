@@ -1,5 +1,8 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
+
+// packages
+import io from 'socket.io-client';
 
 // components
 import Map from 'components/Map';
@@ -16,6 +19,7 @@ import getRoute from 'utils/getRoute';
 import UserLocation from 'utils/userLocation';
 
 // global
+import { SocketText } from 'global/strings';
 import { EMapViewStatus } from 'global/enum';
 
 // assets
@@ -24,6 +28,17 @@ import avatar from 'assets/images/dead.png';
 
 // styles
 import styles from './styles';
+
+// env
+import { SOCKET_ENDPOINT } from '@env';
+
+const socket = io(SOCKET_ENDPOINT, {
+  transports: ['websocket'] /* Needed for RN */,
+  reconnection: false /* Remove this while using while with server */,
+  // reconnection: true, /* Un-comment this while using with server */
+  reconnectionDelay: 500,
+  reconnectionAttempts: Infinity
+});
 
 const dummyObstruction = [
   {
@@ -114,6 +129,13 @@ function MapView(props) {
     [mapViewStatus, _setMapViewStatus]
   );
 
+  // Socket
+  useEffect(() => {
+    socket.on(SocketText.events.obstructions, data => setObstructionList(data));
+
+    socket.on(SocketText.events.trafficLocations, data => setTrafficList(data));
+  }, [setTrafficList, setObstructionList]);
+
   function clearRouteDescription() {
     setEmergency(1);
     setDescription('');
@@ -143,9 +165,13 @@ function MapView(props) {
       route.properties.emergency = em || emergency;
       route.properties.description = description;
 
-      setRouteToDestination(route);
-
       /* PATCH route to server */
+      socket.emit(SocketText.events.driverRoutes, {
+        data: route,
+        operation: SocketText.operations.update
+      });
+
+      setRouteToDestination(route);
     },
     [emergency, description, routeToDestination]
   );
@@ -407,8 +433,8 @@ function MapView(props) {
                 emergency: emergency,
                 description: description,
                 destination: pickedLocation,
-                startLocation: startLocation
-                // createdBy: user
+                startLocation: startLocation,
+                createdBy: 'DeadSkull'
               }
             };
 
@@ -417,13 +443,20 @@ function MapView(props) {
             setRouteToDestination(routeToDestination);
 
             /* POST route to server */
+            socket.emit(SocketText.events.driverRoutes, {
+              data: routeToDestination,
+              operation: SocketText.operations.create
+            });
 
             clearPickedLocation();
             setMapViewStatus(EMapViewStatus.destinationInfo);
           } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
-            /* Close route */
-
             /* DELETE route to server */
+            socket.emit(SocketText.events.driverRoutes, {
+              data: routeToDestination,
+              operation: SocketText.operations.delete
+            });
+
             clearRouteDescription();
             clearDestination();
 
