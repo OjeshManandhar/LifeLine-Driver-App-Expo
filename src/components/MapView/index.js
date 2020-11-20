@@ -1,9 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
 
-// packages
-import io from 'socket.io-client';
-
 // components
 import Map from 'components/Map';
 import Text from 'components/Text';
@@ -26,19 +23,11 @@ import { EMapViewStatus } from 'global/enum';
 import back from 'assets/images/back.png';
 import avatar from 'assets/images/dead.png';
 
+// utils
+import socket from 'utils/socket';
+
 // styles
 import styles from './styles';
-
-// env
-import { SOCKET_ENDPOINT } from '@env';
-
-const socket = io(SOCKET_ENDPOINT, {
-  transports: ['websocket'] /* Needed for RN */,
-  reconnection: false /* Remove this while using while with server */,
-  // reconnection: true, /* Un-comment this while using with server */
-  reconnectionDelay: 500,
-  reconnectionAttempts: Infinity
-});
 
 const dummyObstruction = [
   {
