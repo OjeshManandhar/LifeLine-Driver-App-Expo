@@ -18,6 +18,7 @@ import pickedLocationMarker from 'assets/images/map/pickedLocationMarker.png';
 // global
 import Colors from 'global/colors';
 import { MapLayerIndex } from 'global/zIndex';
+import { GPSPermission } from 'global/strings';
 
 // styles
 import { styles, layerStyles } from './styles';
@@ -47,12 +48,10 @@ function Map({
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: 'App GPS Permission',
-          message:
-            'App needs access to your location (GPS & Internet) ' +
-            'so we can pin-point your exact location.',
-          buttonNegative: 'No, thanks',
-          buttonPositive: 'OK'
+          title: GPSPermission.title,
+          message: GPSPermission.message,
+          buttonNegative: GPSPermission.buttonNegative,
+          buttonPositive: GPSPermission.buttonPosition
         }
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
