@@ -167,7 +167,7 @@ function MapView(props) {
 
       /* PATCH route to server */
       socket.emit(SocketText.events.driverRoutes, {
-        data: route,
+        route: route,
         operation: SocketText.operations.update
       });
 
@@ -444,7 +444,7 @@ function MapView(props) {
 
             /* POST route to server */
             socket.emit(SocketText.events.driverRoutes, {
-              data: routeToDestination,
+              route: routeToDestination,
               operation: SocketText.operations.create
             });
 
@@ -453,7 +453,7 @@ function MapView(props) {
           } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
             /* DELETE route to server */
             socket.emit(SocketText.events.driverRoutes, {
-              data: routeToDestination,
+              route: routeToDestination,
               operation: SocketText.operations.delete
             });
 
