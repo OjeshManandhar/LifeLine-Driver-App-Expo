@@ -18,7 +18,7 @@ class UserLocation {
       sucess => {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        socket.emit(SocketText.events.trafficLocation, {
+        socket.emit(SocketText.events.driverLocation, {
           gps: {
             userId: 'DeadSkull',
             location: this.#userLocation
@@ -41,7 +41,7 @@ class UserLocation {
         console.log('Geolocation.watchPosition() sucess:', sucess);
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        socket.emit(SocketText.events.trafficLocation, {
+        socket.emit(SocketText.events.driverLocation, {
           gps: {
             userId: 'DeadSkull',
             location: this.#userLocation
@@ -70,7 +70,7 @@ class UserLocation {
     Geolocation.clearWatch(this.#watchId);
     Geolocation.stopObserving();
 
-    socket.emit(SocketText.events.trafficLocation, {
+    socket.emit(SocketText.events.driverLocation, {
       gps: {
         userId: 'DeadSkull',
         location: this.#userLocation
