@@ -13,13 +13,13 @@ module.exports = function (api) {
         'module-resolver',
         {
           alias: {
+            api: './src/api',
             utils: './src/utils',
             hooks: './src/hooks',
             global: './src/global',
             assets: './src/assets',
             context: './src/context',
             screens: './src/screens',
-            dummy_api: './src/dummy_api',
             navigator: './src/navigator',
             components: './src/components'
           }
