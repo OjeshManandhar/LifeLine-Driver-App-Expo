@@ -16,8 +16,8 @@ import Text from 'components/Text';
 // styles
 import styles from './styles';
 
-// dummy_api
-import { login } from 'dummy_api';
+// api
+import { login } from 'api';
 
 // global
 import Routes from 'global/routes';

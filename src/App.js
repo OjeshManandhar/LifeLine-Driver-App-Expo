@@ -12,8 +12,8 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 // navigator
 import Navigator from 'navigator';
 
-// dummy_api
-import { checkToken } from 'dummy_api';
+// api
+import { checkToken } from 'api';
 
 // global
 import Colors from 'global/colors';
