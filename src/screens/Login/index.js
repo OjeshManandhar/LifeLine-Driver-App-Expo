@@ -59,8 +59,12 @@ function Login({ navigation }) {
   const handleLogin = useCallback(async () => {
     setIsLoggingIn(true);
 
-    login(phoneNumber, password, true)
-      .then(async ({ userToken }) => {
+    login(phoneNumber, password)
+      .then(async function (response) {
+        console.log('login response:', response);
+
+        const userToken = response.data.token;
+
         await UserToken.set(userToken);
 
         clearFields();
@@ -68,9 +72,15 @@ function Login({ navigation }) {
 
         navigation.navigate(Routes.map);
       })
-      .catch(({ errorCode }) => {
+      .catch(function (error) {
+        if (error.response) {
+          setErrorText(error.response.data);
+        } else {
+          setErrorText(LoginText.errorText.noNetwork);
+        }
+
+        clearFields();
         setIsLoggingIn(false);
-        setErrorText(LoginText.errorText[errorCode]);
       });
   }, [password, phoneNumber, clearFields, setErrorText, setIsLoggingIn]);
 

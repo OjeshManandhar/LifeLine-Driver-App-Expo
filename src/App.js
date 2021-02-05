@@ -61,10 +61,18 @@ function App() {
     const userToken = await UserToken.get();
 
     if (userToken) {
-      const { valid } = await checkToken(userToken, true);
-      if (!valid) {
-        await UserToken.delete();
-      }
+      checkToken(userToken)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      // const { valid } = await checkToken(userToken);
+      // if (!valid) {
+      //   await UserToken.delete();
+      // }
     }
   }
 
