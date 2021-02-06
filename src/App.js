@@ -24,7 +24,7 @@ import WorkSansItalic from 'assets/fonts/WorkSans-Italic-Variable.ttf';
 import WorkSansRegular from 'assets/fonts/WorkSans-Regular-Variable.ttf';
 
 // utils
-import UserToken from 'utils/userToken';
+import UserInfo from 'utils/userInfo';
 
 // env
 import { MAPBOX_API_KEY } from '@env';
@@ -52,11 +52,11 @@ function App() {
   customFonts[FontsList.regular] = WorkSansRegular;
 
   async function loadResources() {
-    await UserToken.init();
+    await UserInfo.init();
 
     await Fonts.loadAsync(customFonts);
 
-    const userToken = await UserToken.get();
+    const userToken = await UserInfo.getToken();
 
     if (userToken) {
       // checkToken(userToken)
@@ -68,7 +68,7 @@ function App() {
       //   });
       // const { valid } = await checkToken(userToken);
       // if (!valid) {
-      //   await UserToken.delete();
+      //   await UserInfo.delete();
       // }
     }
   }

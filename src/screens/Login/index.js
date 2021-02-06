@@ -30,7 +30,7 @@ import topCurve from 'assets/images/login/top_curve.png';
 import bottomCurve from 'assets/images/login/bottom_curve.png';
 
 // utils
-import UserToken from 'utils/userToken';
+import UserInfo from 'utils/userInfo';
 
 function Login({ navigation }) {
   const LOGO_SIZE = 120;
@@ -61,16 +61,16 @@ function Login({ navigation }) {
 
     login(phoneNumber, password)
       .then(async function (response) {
-        console.log('login response:', response);
+        console.log('login response:', response.data);
 
-        const userToken = response.data.token;
+        const info = response.data;
 
-        await UserToken.set(userToken);
+        await UserInfo.set(info);
 
         clearFields();
         setIsLoggingIn(false);
 
-        navigation.navigate(Routes.map);
+        // navigation.navigate(Routes.map);
       })
       .catch(function (error) {
         if (error.response) {
@@ -159,7 +159,7 @@ function Login({ navigation }) {
     };
   }, []);
 
-  if (UserToken.get()) {
+  if (UserInfo.getToken()) {
     navigation.navigate(Routes.map);
   }
 
