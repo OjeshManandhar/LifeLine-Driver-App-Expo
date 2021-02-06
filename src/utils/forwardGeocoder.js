@@ -112,7 +112,7 @@ function forwardGeocoder(keyword) {
           resolve(await parseResponse(match));
         },
         error => {
-          console.log('error:', error);
+          console.log('forwardGeocoder error:', error);
           // if (err.type === 'RequestAbortedError') {
           //   console.log('Request Aborted');
           //   return;

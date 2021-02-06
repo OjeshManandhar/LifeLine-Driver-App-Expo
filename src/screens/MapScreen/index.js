@@ -16,6 +16,11 @@ import Routes from 'global/routes';
 import { EMapScreenStatus } from 'global/enum';
 import { MapScreenText } from 'global/strings';
 
+// util
+import UserLocation from 'utils/userLocation';
+
+UserLocation.init();
+
 function MapScreen({ navigation }) {
   const [accountId, setAccountId] = useState(null);
 
