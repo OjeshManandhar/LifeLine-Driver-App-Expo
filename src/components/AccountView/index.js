@@ -15,7 +15,7 @@ import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 
 // assets
-import avatar from 'assets/images/dead.png';
+import avatar from 'assets/images/avatar.jpg';
 
 // global
 import Colors from 'global/colors';

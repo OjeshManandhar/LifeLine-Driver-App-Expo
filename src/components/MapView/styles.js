@@ -60,12 +60,10 @@ export default StyleSheet.create({
   },
   avatar: {
     alignSelf: 'center',
-    width: 20,
-    height: 20,
+    width: 35,
+    height: 35,
     marginLeft: 15,
 
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: Colors.primary
+    borderRadius: 50
   }
 });

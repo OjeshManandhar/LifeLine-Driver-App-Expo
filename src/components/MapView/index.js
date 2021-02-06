@@ -1,6 +1,9 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
 
+// packages
+import axios from 'axios';
+
 // components
 import Map from 'components/Map';
 import Text from 'components/Text';
@@ -12,6 +15,7 @@ import AnimatedImageButton from 'components/AnimatedImageButton';
 import PickedCoordinateInfo from 'components/PickedCoordinateInfo';
 
 // utils
+import UserInfo from 'utils/userInfo';
 import getRoute from 'utils/getRoute';
 import UserLocation from 'utils/userLocation';
 
@@ -21,7 +25,6 @@ import { EMapViewStatus } from 'global/enum';
 
 // assets
 import back from 'assets/images/back.png';
-import avatar from 'assets/images/dead.png';
 
 // utils
 import socket from 'utils/socket';
@@ -29,71 +32,21 @@ import socket from 'utils/socket';
 // styles
 import styles from './styles';
 
-const dummyObstruction = [
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [85.3182293, 27.6945427]
-    },
-    properties: {
-      id: 1,
-      // createdBy: ,
-      name: 'Maitighar',
-      location: 'Maitighar, Kathmandu, Bagmati, Nepal',
-      description: 'normal day jam'
-    }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [85.3165243, 27.6834457]
-    },
-    properties: {
-      id: 2,
-      // createdBy: ,
-      name: 'Hotel Himalaya',
-      location: 'Hotel Himalaya, Lalitpur, Bagmati, Nepal',
-      description: 'Accident'
-    }
-  }
-];
-
-const dummyTraffic = [
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [85.3187843, 27.6949837]
-    },
-    properties: {
-      id: 1
-    }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [85.3341016, 27.6883948]
-    },
-    properties: {
-      id: 2
-    }
-  }
-];
+// env
+import { API_URL, SMALL_IMAGE_ENDPOINT } from '@env';
 
 function MapView(props) {
   const descriptionRef = useRef(null);
 
+  const [avatar, setAvatar] = useState(null);
   const [emergency, setEmergency] = useState(1);
   const [isPicking, setIsPicking] = useState(false);
   const [description, setDescription] = useState('');
   const [destination, setDestination] = useState(null);
-  const [trafficList, setTrafficList] = useState(dummyTraffic);
+  const [trafficList, setTrafficList] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [startLocation, setStartLocation] = useState(null);
-  const [obstructionList, setObstructionList] = useState(dummyObstruction);
+  const [obstructionList, setObstructionList] = useState(null);
   const [pickedLocation, setPickedLocation] = useState(null);
   const [pickedCoordinate, setPickedCoordintate] = useState(null);
   const [routeToDestination, setRouteToDestination] = useState(null);
@@ -124,6 +77,18 @@ function MapView(props) {
 
     socket.on(SocketText.events.trafficLocations, data => setTrafficList(data));
   }, [setTrafficList, setObstructionList]);
+
+  // avatar
+  useEffect(() => {
+    async function getImage() {
+      axios
+        .get(`${API_URL}${SMALL_IMAGE_ENDPOINT}/${UserInfo.getContact()}`)
+        .then(res => setAvatar(res.data))
+        .catch(err => console.log('Fetch image error:', err));
+    }
+
+    getImage();
+  }, [setAvatar]);
 
   function clearRouteDescription() {
     setEmergency(1);
@@ -262,7 +227,9 @@ function MapView(props) {
 
         <AnimatedImageButton
           in={mapViewStatus !== EMapViewStatus.searching}
-          image={avatar}
+          image={{
+            uri: avatar
+          }}
           timeout={0.25 * 1000}
           imageStyles={styles.avatar}
           animationStyles={{

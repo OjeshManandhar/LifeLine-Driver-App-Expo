@@ -17,12 +17,13 @@ class UserInfo {
 
     if (data) {
       this.#token = data.token;
-      this.info = {
+      this.#info = {
         name: data.name,
         role: data.role,
         contact: data.contact
       };
     }
+    console.log('userInfo init:', data, this.#token, this.#info);
   }
 
   async set(info) {
