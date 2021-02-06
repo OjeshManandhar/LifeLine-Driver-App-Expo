@@ -25,7 +25,6 @@ export default StyleSheet.create({
   container: {
     position: 'relative',
     width: '95%',
-    height: '80%',
 
     borderRadius: 10,
     backgroundColor: 'white',
@@ -92,7 +91,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
 
-    marginTop: 'auto',
+    marginTop: 15,
     marginBottom: 38
   },
   callButton: {
