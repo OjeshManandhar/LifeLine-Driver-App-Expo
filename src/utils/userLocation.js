@@ -18,8 +18,9 @@ class UserLocation {
       sucess => {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        socket.emit(SocketText.events.driverLocation, {
-          gps: {
+        console.log('Emit create:');
+        socket.emit('driver_gps', {
+          driver_gps: {
             userId: 'DeadSkull',
             location: this.#userLocation
           },
@@ -39,8 +40,9 @@ class UserLocation {
         // console.log('Geolocation.watchPosition() sucess:', sucess);
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
+        console.log('Emit update:');
         socket.emit(SocketText.events.driverLocation, {
-          gps: {
+          driver_gps: {
             userId: 'DeadSkull',
             location: this.#userLocation
           },
