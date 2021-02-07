@@ -9,7 +9,7 @@ class UserInfo {
   #info = {
     name: null,
     contact: null,
-    role: 'Driver'
+    role: 'driver'
   };
 
   async init() {

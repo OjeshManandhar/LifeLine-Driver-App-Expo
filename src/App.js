@@ -12,9 +12,6 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 // navigator
 import Navigator from 'navigator';
 
-// api
-import { checkToken } from 'api';
-
 // global
 import Colors from 'global/colors';
 import FontsList from 'global/fonts';
@@ -55,22 +52,6 @@ function App() {
     await UserInfo.init();
 
     await Fonts.loadAsync(customFonts);
-
-    const userToken = await UserInfo.getToken();
-
-    if (userToken) {
-      // checkToken(userToken)
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-      // const { valid } = await checkToken(userToken);
-      // if (!valid) {
-      //   await UserInfo.delete();
-      // }
-    }
   }
 
   // Prevent Auto hide of Splash Screen
