@@ -110,7 +110,7 @@ function AccountView(props) {
         }
       }}
     >
-      {loading && accInfo ? (
+      {loading && !accInfo ? (
         <View style={styles.loading}>
           {error ? (
             <Text style={styles.errorText}>An error occured</Text>

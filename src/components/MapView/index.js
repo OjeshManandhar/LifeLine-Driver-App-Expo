@@ -119,13 +119,13 @@ function MapView(props) {
 
       /* PATCH route to server */
       socket.emit(SocketText.events.driverRoutes, {
-        route: route,
+        driver_route: route,
         operation: SocketText.operations.update
       });
 
       setRouteToDestination(route);
     },
-    [emergency, description, routeToDestination]
+    [emergency, description, mapViewStatus, routeToDestination]
   );
 
   // Back handler
@@ -362,9 +362,9 @@ function MapView(props) {
         description={[description, setDescription]}
         emergency={[emergency, setEmergency]}
         updateDestinationInfo={
-          mapViewStatus === EMapViewStatus.selectingRoute
-            ? null
-            : updateDestinationInfo
+          mapViewStatus === EMapViewStatus.destinationInfo
+            ? updateDestinationInfo
+            : null
         }
         useButton={
           mapViewStatus === EMapViewStatus.selectingRoute ? 'use' : 'finish'
@@ -402,8 +402,8 @@ function MapView(props) {
 
             /* POST route to server */
             socket.emit(SocketText.events.driverRoutes, {
-              route: routeToDestination,
-              operation: SocketText.operations.create
+              driver_route: routeToDestination,
+              operation: SocketText.operations.update
             });
 
             clearPickedLocation();
@@ -411,7 +411,7 @@ function MapView(props) {
           } else if (mapViewStatus === EMapViewStatus.destinationInfo) {
             /* DELETE route to server */
             socket.emit(SocketText.events.driverRoutes, {
-              route: routeToDestination,
+              driver_route: routeToDestination,
               operation: SocketText.operations.delete
             });
 
