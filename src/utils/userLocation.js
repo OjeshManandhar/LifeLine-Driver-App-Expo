@@ -14,9 +14,15 @@ function emitLocation(location, operation) {
   socket.emit(SocketText.events.driverLocation, {
     operation,
     driver_gps: {
-      role: info.role,
-      contact: info.contact,
-      location
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: location
+      },
+      properties: {
+        role: info.role,
+        contact: info.contact
+      }
     }
   });
 }
@@ -32,7 +38,6 @@ class UserLocation {
       sucess => {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        console.log('Emit create:');
         emitLocation(this.#userLocation, SocketText.operations.create);
       },
       error => {
@@ -48,7 +53,6 @@ class UserLocation {
         // console.log('Geolocation.watchPosition() sucess:', sucess);
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        console.log('Emit update:');
         emitLocation(this.#userLocation, SocketText.operations.update);
       },
       error => {

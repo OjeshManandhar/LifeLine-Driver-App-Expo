@@ -46,8 +46,6 @@ const dummyAcc = {
 };
 
 function AccountView(props) {
-  console.log('props:', props);
-
   const [error, setError] = useState(false);
   const [accInfo, setAccInfo] = useState(dummyAcc);
   const [loading, setLoading] = useState(true);

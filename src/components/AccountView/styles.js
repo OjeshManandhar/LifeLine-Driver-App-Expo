@@ -25,6 +25,7 @@ export default StyleSheet.create({
   loading: {
     position: 'relative',
     width: '95%',
+    height: '50%',
 
     borderRadius: 10,
     backgroundColor: 'white',
