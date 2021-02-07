@@ -11,6 +11,8 @@ import { SocketText } from 'global/strings';
 function emitLocation(location, operation) {
   const info = UserInfo.getInfo();
 
+  console.log('emit contact:', operation, info.contact);
+
   socket.emit(SocketText.events.driverLocation, {
     operation,
     driver_gps: {
@@ -28,17 +30,22 @@ function emitLocation(location, operation) {
 }
 
 class UserLocation {
+  #alreadyInit = false;
   #userLocation = null;
   #watchId = null;
 
   init() {
+    if (this.#alreadyInit) {
+      return;
+    }
+
     console.log('UserLocation.init()');
 
     Geolocation.getCurrentPosition(
       sucess => {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
-        emitLocation(this.#userLocation, SocketText.operations.create);
+        emitLocation(this.#userLocation, SocketText.operations.update);
       },
       error => {
         console.log('getCurrentPosition error:', error);
@@ -65,6 +72,12 @@ class UserLocation {
         enableHighAccuracy: true
       }
     );
+
+    this.#alreadyInit = true;
+  }
+
+  sendLocation() {
+    emitLocation(this.#userLocation, SocketText.operations.update);
   }
 
   get currentLocation() {

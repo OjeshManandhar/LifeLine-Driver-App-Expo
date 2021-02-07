@@ -13,7 +13,11 @@ class UserInfo {
   };
 
   async init() {
-    const data = JSON.parse(await SecureStore.getItemAsync(USER_INFO_KEY));
+    console.log('UserInfo init()');
+
+    const data = await JSON.parse(
+      await SecureStore.getItemAsync(USER_INFO_KEY)
+    );
 
     if (data) {
       this.#token = data.token;
