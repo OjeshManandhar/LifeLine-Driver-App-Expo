@@ -14,7 +14,7 @@ function emitLocation(location, operation) {
   socket.emit(SocketText.events.driverLocation, {
     operation,
     driver_gps: {
-      role: contact.role,
+      role: info.role,
       contact: info.contact,
       location
     }

@@ -23,7 +23,6 @@ class UserInfo {
         contact: data.contact
       };
     }
-    console.log('userInfo init:', data, this.#token, this.#info);
   }
 
   async set(info) {
