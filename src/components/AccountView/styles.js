@@ -33,6 +33,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  errorText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: Colors.errorText,
+    marginTop: 10
+  },
   container: {
     position: 'relative',
     width: '95%',

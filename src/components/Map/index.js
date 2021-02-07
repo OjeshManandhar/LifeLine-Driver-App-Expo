@@ -256,7 +256,12 @@ function Map({
       <MapboxGL.ShapeSource
         id='trafficMarkers-Source'
         shape={featureCollection}
-        onPress={data => toAccount(data.features[0].properties.id)}
+        onPress={data =>
+          toAccount({
+            contact: data.features[0].properties.contact,
+            role: data.features[0].properties.role
+          })
+        }
       >
         <MapboxGL.SymbolLayer
           style={layerStyles.trafficMarker}

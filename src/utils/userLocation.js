@@ -3,9 +3,23 @@ import Geolocation from '@react-native-community/geolocation';
 
 // utils
 import socket from 'utils/socket';
+import UserInfo from 'utils/userInfo';
 
 // global
 import { SocketText } from 'global/strings';
+
+function emitLocation(location, operation) {
+  const info = UserInfo.getInfo();
+
+  socket.emit(SocketText.events.driverLocation, {
+    operation,
+    driver_gps: {
+      role: contact.role,
+      contact: info.contact,
+      location
+    }
+  });
+}
 
 class UserLocation {
   #userLocation = null;
@@ -19,13 +33,7 @@ class UserLocation {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
         console.log('Emit create:');
-        socket.emit('driver_gps', {
-          driver_gps: {
-            userId: 'DeadSkull',
-            location: this.#userLocation
-          },
-          operation: SocketText.operations.create
-        });
+        emitLocation(this.#userLocation, SocketText.operations.create);
       },
       error => {
         console.log('getCurrentPosition error:', error);
@@ -41,21 +49,15 @@ class UserLocation {
         this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
 
         console.log('Emit update:');
-        socket.emit(SocketText.events.driverLocation, {
-          driver_gps: {
-            userId: 'DeadSkull',
-            location: this.#userLocation
-          },
-          operation: SocketText.operations.update
-        });
+        emitLocation(this.#userLocation, SocketText.operations.update);
       },
       error => {
         console.log('watchPosition error:', error);
       },
       {
-        distanceFilter: 10, // 10 meters
-        timeout: 10 * 60 * 1000, // 10 mins
-        maximumAge: 20 * 60 * 1000, // 20 mins
+        distanceFilter: 5, // 5 meters
+        timeout: 2.5 * 60 * 1000, // 2.5 mins
+        maximumAge: 5 * 60 * 1000, // 5 mins
         enableHighAccuracy: true
       }
     );
@@ -70,13 +72,7 @@ class UserLocation {
     Geolocation.clearWatch(this.#watchId);
     Geolocation.stopObserving();
 
-    socket.emit(SocketText.events.driverLocation, {
-      gps: {
-        userId: 'DeadSkull',
-        location: this.#userLocation
-      },
-      operation: SocketText.operations.delete
-    });
+    emitLocation(this.#userLocation, SocketText.operations.delete);
   }
 }
 

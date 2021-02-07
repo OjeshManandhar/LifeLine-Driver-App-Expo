@@ -30,7 +30,13 @@ import { AccountViewText } from 'global/strings';
 import styles from './styles';
 
 // env
-import { API_URL, DRIVER_IMAGE_ENDPOINT } from '@env';
+import {
+  API_URL,
+  DRIVER_INFO,
+  TRAFFIC_INFO,
+  DRIVER_IMAGE_ENDPOINT,
+  TRAFFIC_IMAGE_ENDPOINT
+} from '@env';
 
 const dummyAcc = {
   name: 'DeadSkull',
@@ -41,15 +47,40 @@ const dummyAcc = {
 function AccountView(props) {
   console.log('props:', props);
 
+  const [error, setError] = useState(false);
+  const [accInfo, setAccInfo] = useState(dummyAcc);
   const [loading, setLoading] = useState(true);
   const [accImage, setAccImage] = useState(null);
-  const [accInfo, setAccInfo] = useState(dummyAcc);
 
   // Account Info
   useEffect(() => {
     async function getInfo() {
-      if (accountId) {
-        // perform acios request for image and image
+      if (accountInfo) {
+        const driverAcc = accountInfo.role === 'driver';
+
+        Axios.get(
+          `{API_URL}${driverAcc ? DRIVER_INFO : TRAFFIC_INFO}/${
+            accountInfo.contact
+          }`
+        )
+          .then(response => {
+            console.log('Account View res:', response);
+
+            setError(false);
+            setLoading(false);
+          })
+          .catch(err => {
+            console.log('Account View err:', err);
+
+            setError(true);
+            setLoading(false);
+          });
+
+        setAccImage(
+          `${API_URL}${
+            driverAcc ? DRIVER_IMAGE_ENDPOINT : TRAFFIC_IMAGE_ENDPOINT
+          }/${accountInfo.contact}`
+        );
       } else {
         const info = UserInfo.getInfo();
 
@@ -58,10 +89,11 @@ function AccountView(props) {
       }
     }
 
+    setError(false);
     setLoading(true);
 
     getInfo();
-  }, [setAccInfo, setLoading, setAccImage, props.accountId]);
+  }, [setError, setAccInfo, setLoading, setAccImage, props.accountInfo]);
 
   return (
     <AnimatedView
@@ -84,7 +116,11 @@ function AccountView(props) {
     >
       {loading ? (
         <View style={styles.loading}>
-          <ActivityIndicator size='large' color={Colors.primary} />
+          {error ? (
+            <Text style={styles.errorText}>An error occured</Text>
+          ) : (
+            <ActivityIndicator size='large' color={Colors.primary} />
+          )}
         </View>
       ) : (
         <View style={styles.container}>
@@ -127,7 +163,7 @@ function AccountView(props) {
           </View>
 
           <View style={styles.buttonContainer}>
-            {props.accountId ? (
+            {props.accountInfo ? (
               <Button
                 icon='logout'
                 mode='outlined'
@@ -145,7 +181,7 @@ function AccountView(props) {
                 icon='phone'
                 size={25}
                 color={Colors.primary}
-                onPress={() => console.log('call')}
+                onPress={() => console.log('call:', accInfo.contact)}
                 style={styles.callButton}
               />
             )}
