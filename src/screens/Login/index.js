@@ -61,8 +61,6 @@ function Login({ navigation }) {
 
     login(phoneNumber, password)
       .then(async function (response) {
-        console.log('login response:', response.data);
-
         const info = response.data;
 
         await UserInfo.set(info);

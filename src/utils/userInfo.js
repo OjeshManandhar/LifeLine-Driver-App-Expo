@@ -52,7 +52,7 @@ class UserInfo {
     this.#info = {
       name: null,
       contact: null,
-      role: 'Driver'
+      role: 'driver'
     };
     this.#token = null;
   }

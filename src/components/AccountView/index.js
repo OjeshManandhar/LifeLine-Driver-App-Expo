@@ -39,15 +39,9 @@ import {
   TRAFFIC_IMAGE_ENDPOINT
 } from '@env';
 
-const dummyAcc = {
-  name: 'DeadSkull',
-  contact: '9863198269',
-  role: 'driver'
-};
-
 function AccountView(props) {
   const [error, setError] = useState(false);
-  const [accInfo, setAccInfo] = useState(dummyAcc);
+  const [accInfo, setAccInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [accImage, setAccImage] = useState(null);
 

@@ -7,6 +7,7 @@ import AccountView from 'components/AccountView';
 
 // utils
 import UserInfo from 'utils/userInfo';
+import UserLocation from 'utils/userLocation';
 
 // styles
 import styles from './styles';
@@ -15,9 +16,6 @@ import styles from './styles';
 import Routes from 'global/routes';
 import { EMapScreenStatus } from 'global/enum';
 import { MapScreenText } from 'global/strings';
-
-// util
-import UserLocation from 'utils/userLocation';
 
 UserLocation.init();
 
