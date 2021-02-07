@@ -97,7 +97,7 @@ function MapScreen({ navigation }) {
         logout={() => navigation.navigate(Routes.login)}
         mapView={() => {
           setMapScreenStatus(EMapScreenStatus.mapView);
-          setAccountId(null);
+          setAccountInfo(null);
         }}
       />
     </View>

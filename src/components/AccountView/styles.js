@@ -105,17 +105,15 @@ export default StyleSheet.create({
     width: '70%',
 
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
 
     marginTop: 15,
     marginBottom: 38
   },
   callButton: {
-    marginTop: 'auto',
-    marginLeft: 'auto',
-
-    backgroundColor: Colors.callButtonBG
+    backgroundColor: Colors.callButtonBG,
+    margin: 0
   },
   logOutButton: {
     width: 150,
