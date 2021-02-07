@@ -74,7 +74,7 @@ function MapView(props) {
   useEffect(() => {
     socket.on(SocketText.events.obstructions, data => setObstructionList(data));
 
-    socket.on(SocketText.events.trafficLocations, data => setTrafficList(data));
+    socket.on(SocketText.events.trafficLocation, data => setTrafficList(data));
   }, [setTrafficList, setObstructionList]);
 
   // avatar
