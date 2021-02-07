@@ -244,7 +244,7 @@ function MapView(props) {
               marginRight: [0, -20]
             }
           }}
-          onPress={props.toAccount}
+          onPress={() => props.toAccount(null)}
         />
       </View>
 

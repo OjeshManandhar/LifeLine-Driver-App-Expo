@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
+  Linking,
   ActivityIndicator,
   useWindowDimensions,
   TouchableWithoutFeedback
@@ -55,7 +56,7 @@ function AccountView(props) {
   // Account Info
   useEffect(() => {
     async function getInfo() {
-      if (accountInfo) {
+      if (props.accountInfo) {
         const driverAcc = accountInfo.role === 'driver';
 
         Axios.get(
@@ -86,6 +87,9 @@ function AccountView(props) {
 
         setAccInfo(info);
         setAccImage(`${API_URL}${DRIVER_IMAGE_ENDPOINT}/${info.contact}`);
+
+        setError(false);
+        setLoading(false);
       }
     }
 
@@ -114,7 +118,7 @@ function AccountView(props) {
         }
       }}
     >
-      {loading ? (
+      {loading && accInfo ? (
         <View style={styles.loading}>
           {error ? (
             <Text style={styles.errorText}>An error occured</Text>
@@ -164,6 +168,24 @@ function AccountView(props) {
 
           <View style={styles.buttonContainer}>
             {props.accountInfo ? (
+              <IconButton
+                icon='phone'
+                size={25}
+                color={Colors.primary}
+                onPress={() => {
+                  let phoneNumber = '';
+
+                  if (Platform.OS === 'android') {
+                    phoneNumber = 'tel:${' + accInfo.contact + '}';
+                  } else {
+                    phoneNumber = 'telprompt:${' + accInfo.contact + '}';
+                  }
+
+                  Linking.openURL(phoneNumber);
+                }}
+                style={styles.callButton}
+              />
+            ) : (
               <Button
                 icon='logout'
                 mode='outlined'
@@ -176,14 +198,6 @@ function AccountView(props) {
                   {AccountViewText.button}
                 </Text>
               </Button>
-            ) : (
-              <IconButton
-                icon='phone'
-                size={25}
-                color={Colors.primary}
-                onPress={() => console.log('call:', accInfo.contact)}
-                style={styles.callButton}
-              />
             )}
           </View>
         </View>
