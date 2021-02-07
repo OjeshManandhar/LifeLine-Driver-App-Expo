@@ -15,6 +15,7 @@ import AnimatedImageButton from 'components/AnimatedImageButton';
 import PickedCoordinateInfo from 'components/PickedCoordinateInfo';
 
 // utils
+import socket from 'utils/socket';
 import UserInfo from 'utils/userInfo';
 import getRoute from 'utils/getRoute';
 import UserLocation from 'utils/userLocation';
@@ -27,10 +28,7 @@ import { EMapViewStatus } from 'global/enum';
 import back from 'assets/images/back.png';
 import noImage from 'assets/images/noImage.jpg';
 
-// utils
-import socket from 'utils/socket';
-
-// styles
+// style
 import styles from './styles';
 
 // env
@@ -284,9 +282,9 @@ function MapView(props) {
             setSelectedObstruction(null);
           }
         }}
-        toAccount={id => {
+        toAccount={info => {
           if (mapViewStatus === EMapViewStatus.clear) {
-            props.toAccount(id);
+            props.toAccount(info);
           }
         }}
       />
@@ -394,7 +392,7 @@ function MapView(props) {
                 description: description,
                 destination: pickedLocation,
                 startLocation: startLocation,
-                createdBy: 'DeadSkull'
+                contact: UserInfo.getContact()
               }
             };
 
