@@ -64,6 +64,10 @@ export default StyleSheet.create({
     height: 35,
     marginLeft: 15,
 
-    borderRadius: 50
+    backgroundColor: 'white',
+
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: Colors.greyBorder
   }
 });

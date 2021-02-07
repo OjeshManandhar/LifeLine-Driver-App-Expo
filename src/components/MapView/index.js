@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { View, Keyboard, BackHandler } from 'react-native';
 
 // packages
-import axios from 'axios';
+import Axios from 'axios';
 
 // components
 import Map from 'components/Map';
@@ -25,6 +25,7 @@ import { EMapViewStatus } from 'global/enum';
 
 // assets
 import back from 'assets/images/back.png';
+import noImage from 'assets/images/noImage.jpg';
 
 // utils
 import socket from 'utils/socket';
@@ -81,8 +82,7 @@ function MapView(props) {
   // avatar
   useEffect(() => {
     async function getImage() {
-      axios
-        .get(`${API_URL}${SMALL_IMAGE_ENDPOINT}/${UserInfo.getContact()}`)
+      Axios.get(`${API_URL}${SMALL_IMAGE_ENDPOINT}/${UserInfo.getContact()}`)
         .then(res => setAvatar(res.data))
         .catch(err => console.log('Fetch image error:', err));
     }
@@ -227,9 +227,13 @@ function MapView(props) {
 
         <AnimatedImageButton
           in={mapViewStatus !== EMapViewStatus.searching}
-          image={{
-            uri: avatar
-          }}
+          image={
+            avatar
+              ? {
+                  uri: avatar
+                }
+              : noImage
+          }
           timeout={0.25 * 1000}
           imageStyles={styles.avatar}
           animationStyles={{

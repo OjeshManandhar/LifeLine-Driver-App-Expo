@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
+  ActivityIndicator,
   useWindowDimensions,
   TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 // packages
+import Axios from 'axios';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Avatar, Button, Divider, IconButton } from 'react-native-paper';
 
@@ -15,7 +17,10 @@ import Text from 'components/Text';
 import AnimatedView from 'components/AnimatedView';
 
 // assets
-import avatar from 'assets/images/avatar.jpg';
+import noImage from 'assets/images/noImage.jpg';
+
+// utils
+import UserInfo from 'utils/userInfo';
 
 // global
 import Colors from 'global/colors';
@@ -24,8 +29,39 @@ import { AccountViewText } from 'global/strings';
 // styles
 import styles from './styles';
 
+// env
+import { API_URL, DRIVER_IMAGE_ENDPOINT } from '@env';
+
+const dummyAcc = {
+  name: 'DeadSkull',
+  contact: '9863198269',
+  role: 'driver'
+};
+
 function AccountView(props) {
   console.log('props:', props);
+
+  const [loading, setLoading] = useState(true);
+  const [accImage, setAccImage] = useState(null);
+  const [accInfo, setAccInfo] = useState(dummyAcc);
+
+  // Account Info
+  useEffect(() => {
+    async function getInfo() {
+      if (accountId) {
+        // perform acios request for image and image
+      } else {
+        const info = UserInfo.getInfo();
+
+        setAccInfo(info);
+        setAccImage(`${API_URL}${DRIVER_IMAGE_ENDPOINT}/${info.contact}`);
+      }
+    }
+
+    setLoading(true);
+
+    getInfo();
+  }, [setAccInfo, setLoading, setAccImage, props.accountId]);
 
   return (
     <AnimatedView
@@ -46,58 +82,76 @@ function AccountView(props) {
         }
       }}
     >
-      <View style={styles.container}>
-        <Avatar.Image style={styles.avatar} source={avatar} size={130} />
-
-        <Divider style={styles.divider} />
-
-        <TouchableWithoutFeedback onPress={props.mapView}>
-          <Icon
-            name='close'
-            size={35}
-            color={Colors.greyBorder}
-            style={styles.backIcon}
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size='large' color={Colors.primary} />
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <Avatar.Image
+            style={styles.avatar}
+            source={
+              accImage
+                ? {
+                    uri: accImage
+                  }
+                : noImage
+            }
+            size={130}
           />
-        </TouchableWithoutFeedback>
 
-        <View style={styles.userInfoContainer}>
-          <View style={styles.rowContainer}>
-            <Text style={styles.label}>User Name</Text>
-            <Text>ABC Dummy</Text>
+          <Divider style={styles.divider} />
+
+          <TouchableWithoutFeedback onPress={props.mapView}>
+            <Icon
+              name='close'
+              size={35}
+              color={Colors.greyBorder}
+              style={styles.backIcon}
+            />
+          </TouchableWithoutFeedback>
+
+          <View style={styles.userInfoContainer}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.label}>{AccountViewText.label.name}</Text>
+              <Text>{accInfo.name}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.label}>{AccountViewText.label.contact}</Text>
+              <Text>{accInfo.contact}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.label}>{AccountViewText.label.role}</Text>
+              <Text>{AccountViewText.accountType[accInfo.role]}</Text>
+            </View>
           </View>
-          <View style={styles.rowContainer}>
-            <Text style={styles.label}>Contact Number</Text>
-            <Text>9808000111</Text>
-          </View>
-          <View style={styles.rowContainer}>
-            <Text style={styles.label}>Account Type</Text>
-            <Text>{AccountViewText.accountType.driver}</Text>
+
+          <View style={styles.buttonContainer}>
+            {props.accountId ? (
+              <Button
+                icon='logout'
+                mode='outlined'
+                color={Colors.primary}
+                style={styles.logOutButton}
+                contentStyle={styles.logOutButtonContent}
+                onPress={props.logout}
+              >
+                <Text style={styles.logOutButtonContent}>
+                  {AccountViewText.button}
+                </Text>
+              </Button>
+            ) : (
+              <IconButton
+                icon='phone'
+                size={25}
+                color={Colors.primary}
+                onPress={() => console.log('call')}
+                style={styles.callButton}
+              />
+            )}
           </View>
         </View>
-
-        <View style={styles.buttonContainer}>
-          <Button
-            icon='logout'
-            mode='outlined'
-            color={Colors.primary}
-            style={styles.logOutButton}
-            contentStyle={styles.logOutButtonContent}
-            onPress={props.logout}
-          >
-            <Text style={styles.logOutButtonContent}>
-              {AccountViewText.button}
-            </Text>
-          </Button>
-
-          <IconButton
-            icon='phone'
-            size={25}
-            color={Colors.primary}
-            onPress={() => console.log('call')}
-            style={styles.callButton}
-          />
-        </View>
-      </View>
+      )}
     </AnimatedView>
   );
 }

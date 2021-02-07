@@ -22,6 +22,17 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.modalBG
   },
+  loading: {
+    position: 'relative',
+    width: '95%',
+
+    borderRadius: 10,
+    backgroundColor: 'white',
+
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   container: {
     position: 'relative',
     width: '95%',
