@@ -66,8 +66,6 @@ function App() {
       await loadResources();
 
       setIsReady(true);
-
-      await SplashScreen.hideAsync();
     })();
   }, [setIsReady]);
 
@@ -76,7 +74,7 @@ function App() {
   return (
     <PaperProvider theme={theme}>
       <Navigator />
-      <StatusBar translucent={false} />
+      <StatusBar translucent={false} backgroundColor='#000000' />
     </PaperProvider>
   );
 }

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 // packages
+import * as SplashScreen from 'expo-splash-screen';
 import { Button, TextInput } from 'react-native-paper';
 
 // components
@@ -157,9 +158,13 @@ function Login({ navigation }) {
     };
   }, []);
 
-  if (UserInfo.getToken()) {
-    navigation.navigate(Routes.map);
-  }
+  useEffect(() => {
+    if (UserInfo.getToken()) {
+      navigation.navigate(Routes.map);
+    } else {
+      SplashScreen.hideAsync();
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
