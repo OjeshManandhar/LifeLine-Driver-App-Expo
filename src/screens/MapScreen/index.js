@@ -29,9 +29,9 @@ function MapScreen({ navigation }) {
 
   const handleAppStateChange = useCallback(appState => {
     if (appState === 'active') {
-      UserLocation.sendLocation();
+      UserLocation.startSendLocation();
     } else {
-      UserLocation.clearWatch();
+      UserLocation.stopSendLocation();
     }
   }, []);
 

@@ -125,7 +125,7 @@ function MapView(props) {
 
       setRouteToDestination(route);
     },
-    [emergency, description, mapViewStatus, routeToDestination]
+    [emergency, description, routeToDestination]
   );
 
   // Back handler
