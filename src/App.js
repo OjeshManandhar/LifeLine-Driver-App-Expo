@@ -9,6 +9,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
+// apis
+// import { tokenCheck } from 'api';
+
 // navigator
 import Navigator from 'navigator';
 
@@ -52,6 +55,28 @@ function App() {
     await UserInfo.init();
 
     await Fonts.loadAsync(customFonts);
+
+    const userToken = UserInfo.getToken();
+
+    // try {
+    //   if (userToken) {
+    //     tokenCheck(userToken)
+    //       .then(async response => {
+    //         console.log('Token check response:', response);
+
+    //         const newToken = response.data;
+
+    //         await UserInfo.setNewToken(newToken);
+    //       })
+    //       .catch(async err => {
+    //         console.log('Token check error:', error);
+
+    //         await UserInfo.delete();
+    //       });
+    //   }
+    // } catch {
+    //   console.log('Token check catch');
+    // }
   }
 
   // Prevent Auto hide of Splash Screen

@@ -1,3 +1,4 @@
 import login from './login';
+import tokenCheck from './tokenCheck';
 
-export { login };
+export { login, tokenCheck };

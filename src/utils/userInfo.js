@@ -29,14 +29,20 @@ class UserInfo {
     }
   }
 
-  async set(info) {
-    await SecureStore.setItemAsync(USER_INFO_KEY, JSON.stringify(info));
+  async set(data) {
+    await SecureStore.setItemAsync(USER_INFO_KEY, JSON.stringify(data));
     this.#info = {
       name: info.name,
       contact: info.contact,
       role: info.role
     };
     this.#token = info.token;
+  }
+
+  async setNewToken(token) {
+    const data = { ...this.#info, token };
+
+    await SecureStore.setItemAsync(USER_INFO_KEY, JSON.stringify(data));
   }
 
   getToken() {
