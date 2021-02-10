@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { View, Keyboard, BackHandler } from 'react-native';
+import { View, AppState, Keyboard, BackHandler } from 'react-native';
 
 // packages
 import Axios from 'axios';
@@ -73,15 +73,12 @@ function MapView(props) {
   // Socket
   useEffect(() => {
     socket.on(SocketText.events.message, data => {
-      console.log('socket message:', data);
-
-      setObstructionList(data.obstructions);
       setTrafficList(data['traffic_gps']);
+      setObstructionList(data['obstructions']);
     });
 
-    socket.on(SocketText.events.obstructions, data => setObstructionList(data));
-
     socket.on(SocketText.events.trafficLocation, data => setTrafficList(data));
+    socket.on(SocketText.events.obstructions, data => setObstructionList(data));
   }, [setTrafficList, setObstructionList]);
 
   // avatar
@@ -94,6 +91,34 @@ function MapView(props) {
 
     getImage();
   }, [setAvatar]);
+
+  const handleAppStateChange = useCallback(
+    appState => {
+      if (routeToDestination) {
+        if (appState === 'active') {
+          socket.emit(SocketText.events.driverRoutes, {
+            driver_route: routeToDestination,
+            operation: SocketText.operations.update
+          });
+        } else {
+          socket.emit(SocketText.events.driverRoutes, {
+            driver_route: routeToDestination,
+            operation: SocketText.operations.delete
+          });
+        }
+      }
+    },
+    [routeToDestination]
+  );
+
+  // init and clear Userlocation
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  }, [handleAppStateChange]);
 
   function clearRouteDescription() {
     setEmergency(1);
