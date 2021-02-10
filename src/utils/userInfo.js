@@ -43,6 +43,8 @@ class UserInfo {
     const data = { ...this.#info, token };
 
     await SecureStore.setItemAsync(USER_INFO_KEY, JSON.stringify(data));
+
+    this.#token = token;
   }
 
   getToken() {

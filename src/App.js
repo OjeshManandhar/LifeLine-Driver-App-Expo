@@ -56,7 +56,7 @@ function App() {
 
     await Fonts.loadAsync(customFonts);
 
-    const userToken = UserInfo.getToken();
+    // const userToken = UserInfo.getToken();
 
     // try {
     //   if (userToken) {
