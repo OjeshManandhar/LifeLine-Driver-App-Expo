@@ -69,7 +69,7 @@ function Login({ navigation }) {
         clearFields();
         setIsLoggingIn(false);
 
-        // navigation.navigate(Routes.map);
+        navigation.navigate(Routes.map);
       })
       .catch(function (error) {
         if (error.response) {

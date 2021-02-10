@@ -72,6 +72,13 @@ function MapView(props) {
 
   // Socket
   useEffect(() => {
+    socket.on(SocketText.events.message, data => {
+      console.log('socket message:', data);
+
+      setObstructionList(data.obstructions);
+      setTrafficList(data['traffic_gps']);
+    });
+
     socket.on(SocketText.events.obstructions, data => setObstructionList(data));
 
     socket.on(SocketText.events.trafficLocation, data => setTrafficList(data));
