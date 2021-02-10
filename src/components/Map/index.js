@@ -221,13 +221,12 @@ function Map({
         shape={featureCollection}
         onPress={data =>
           setSelectedObstruction(currentObstruction => {
-            console.log('cur obs:', currentObstruction);
-            console.log('press obs:', data.features[0]);
-
             if (
               !currentObstruction ||
-              currentObstruction.properties.id ===
-                data.features[0].properties.id
+              (currentObstruction.properties.id ===
+                data.features[0].properties.id &&
+                currentObstruction.properties.contact ===
+                  data.features[0].properties.contact)
             ) {
               toggleObstructionInfo();
             }
