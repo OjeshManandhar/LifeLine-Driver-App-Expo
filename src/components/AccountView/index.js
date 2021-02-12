@@ -45,19 +45,23 @@ function AccountView(props) {
   const [loading, setLoading] = useState(true);
   const [accImage, setAccImage] = useState(null);
 
+  console.log('accountInfo:', props);
+
   // Account Info
   useEffect(() => {
     async function getInfo() {
       if (props.accountInfo) {
-        const driverAcc = accountInfo.role === 'driver';
+        const driverAcc = props.accountInfo.role === 'driver';
 
         Axios.get(
-          `{API_URL}${driverAcc ? DRIVER_INFO : TRAFFIC_INFO}/${
-            accountInfo.contact
+          `${API_URL}${driverAcc ? DRIVER_INFO : TRAFFIC_INFO}/${
+            props.accountInfo.contact
           }`
         )
           .then(response => {
             console.log('Account View res:', response);
+
+            setAccInfo(response.data);
 
             setError(false);
             setLoading(false);
@@ -72,7 +76,7 @@ function AccountView(props) {
         setAccImage(
           `${API_URL}${
             driverAcc ? DRIVER_IMAGE_ENDPOINT : TRAFFIC_IMAGE_ENDPOINT
-          }/${accountInfo.contact}`
+          }/${props.accountInfo.contact}`
         );
       } else {
         const info = UserInfo.getInfo();
@@ -110,13 +114,22 @@ function AccountView(props) {
         }
       }}
     >
-      {loading && !accInfo ? (
+      {loading ? (
         <View style={styles.loading}>
-          {error ? (
-            <Text style={styles.errorText}>An error occured</Text>
-          ) : (
-            <ActivityIndicator size='large' color={Colors.primary} />
-          )}
+          <ActivityIndicator size='large' color={Colors.primary} />
+        </View>
+      ) : error ? (
+        <View style={styles.loading}>
+          <TouchableWithoutFeedback onPress={props.mapView}>
+            <Icon
+              name='close'
+              size={35}
+              color={Colors.greyBorder}
+              style={styles.backIcon}
+            />
+          </TouchableWithoutFeedback>
+
+          <Text style={styles.errorText}>An error occured</Text>
         </View>
       ) : (
         <View style={styles.container}>
