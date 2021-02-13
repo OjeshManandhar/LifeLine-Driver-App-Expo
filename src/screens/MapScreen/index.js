@@ -9,6 +9,7 @@ import MapView from 'components/MapView';
 import AccountView from 'components/AccountView';
 
 // utils
+import socket from 'utils/socket';
 import UserInfo from 'utils/userInfo';
 import UserLocation from 'utils/userLocation';
 
@@ -17,11 +18,14 @@ import styles from './styles';
 
 // global
 import Routes from 'global/routes';
+import { SocketText } from 'global/strings';
 import { EMapScreenStatus } from 'global/enum';
 import { MapScreenText } from 'global/strings';
 
 function MapScreen({ navigation }) {
   const [accountInfo, setAccountInfo] = useState(null);
+
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   // To flag whether MapView can handle BackButton or not
   const [mapViewBackHandler, setMapViewBackHandler] = useState();
@@ -67,6 +71,15 @@ function MapScreen({ navigation }) {
             // If the user confirmed, then we dispatch the action we blocked earlier
             // This will continue the action that had triggered the removal of the screen
             onPress: async () => {
+              UserLocation.clearWatch();
+              console.log('Logout ko selectedRoute:', selectedRoute);
+              if (selectedRoute) {
+                socket.emit(SocketText.events.driverRoutes, {
+                  driver_route: selectedRoute,
+                  operation: SocketText.operations.delete
+                });
+              }
+
               await UserInfo.delete();
               navigation.dispatch(e.data.action);
             }
@@ -74,7 +87,7 @@ function MapScreen({ navigation }) {
         ]
       );
     });
-  }, [navigation]);
+  }, [navigation, selectedRoute]);
 
   const handleBackButton = useCallback(() => {
     switch (mapScreenStatus) {
@@ -106,6 +119,7 @@ function MapScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <MapView
+        setSelectedRoute={setSelectedRoute}
         setBackHandler={setMapViewBackHandler}
         toAccount={info => {
           setAccountInfo(info);
@@ -119,7 +133,7 @@ function MapScreen({ navigation }) {
         logout={() => navigation.navigate(Routes.login)}
         mapView={() => {
           setMapScreenStatus(EMapScreenStatus.mapView);
-          setAccountInfo(null);
+          // setAccountInfo(null);
         }}
       />
     </View>

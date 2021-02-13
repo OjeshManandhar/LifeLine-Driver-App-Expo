@@ -120,6 +120,12 @@ function MapView(props) {
     };
   }, [handleAppStateChange]);
 
+  // Update selected route to MapScreen
+  useEffect(() => props.setSelectedRoute(routeToDestination), [
+    props.setSelectedRoute,
+    routeToDestination
+  ]);
+
   function clearRouteDescription() {
     setEmergency(1);
     setDescription('');
