@@ -67,6 +67,7 @@ function Login({ navigation }) {
         await UserInfo.set(info);
 
         clearFields();
+        setErrorText(null);
         setIsLoggingIn(false);
 
         navigation.navigate(Routes.map);
