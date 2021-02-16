@@ -1,6 +1,3 @@
-// packages
-import Geolocation from '@react-native-community/geolocation';
-
 // utils
 import socket from 'utils/socket';
 import UserInfo from 'utils/userInfo';
@@ -29,51 +26,14 @@ function emitLocation(location, operation) {
 
 class UserLocation {
   #sendLocation = true;
-  #alreadyInit = false;
   #userLocation = null;
-  #watchId = null;
 
-  init() {
-    if (this.#alreadyInit) {
-      return;
+  updateLocation(coords) {
+    this.#userLocation = coords;
+
+    if (this.#sendLocation) {
+      emitLocation(this.#userLocation, SocketText.operations.update);
     }
-
-    console.log('UserLocation.init()');
-
-    Geolocation.getCurrentPosition(
-      sucess => {
-        this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
-
-        emitLocation(this.#userLocation, SocketText.operations.update);
-      },
-      error => {
-        console.log('getCurrentPosition error:', error);
-      },
-      {
-        enableHighAccuracy: true
-      }
-    );
-
-    this.#watchId = Geolocation.watchPosition(
-      sucess => {
-        // console.log('Geolocation.watchPosition() sucess:', sucess);
-        this.#userLocation = [sucess.coords.longitude, sucess.coords.latitude];
-
-        this.#sendLocation &&
-          emitLocation(this.#userLocation, SocketText.operations.update);
-      },
-      error => {
-        console.log('watchPosition error:', error);
-      },
-      {
-        distanceFilter: 5, // 5 meters
-        timeout: 2.5 * 60 * 1000, // 2.5 mins
-        maximumAge: 5 * 60 * 1000, // 5 mins
-        enableHighAccuracy: true
-      }
-    );
-
-    this.#alreadyInit = true;
   }
 
   startSendLocation() {
@@ -88,14 +48,6 @@ class UserLocation {
 
   get currentLocation() {
     return this.#userLocation;
-  }
-
-  clearWatch() {
-    console.log('watchId:', this.#watchId);
-    Geolocation.clearWatch(this.#watchId);
-    Geolocation.stopObserving();
-
-    emitLocation(this.#userLocation, SocketText.operations.delete);
   }
 }
 

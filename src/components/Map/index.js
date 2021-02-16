@@ -333,8 +333,16 @@ function Map({
           : undefined
       }
     >
-      <MapboxGL.UserLocation visible animated showsUserHeadingIndicator />
-
+      <MapboxGL.UserLocation
+        visible
+        animated
+        showsUserHeadingIndicator
+        minDisplacement={5}
+        onUpdate={data => {
+          const coords = [data.coords.longitude, data.coords.latitude];
+          UserLocation.updateLocation(coords);
+        }}
+      />
       <MapboxGL.Camera
         ref={cameraRef}
         animationMode={'easeTo'}

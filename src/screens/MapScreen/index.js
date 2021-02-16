@@ -110,8 +110,6 @@ function MapScreen({ navigation }) {
     };
   }, [handleBackButton]);
 
-  UserLocation.init();
-
   useEffect(() => {
     SplashScreen.hideAsync();
   }, []);
