@@ -1,5 +1,7 @@
 # LifeLine-Driver-App
 
+**NOT WORKING** any nore, don't know why. Removed node_modules/ to reinstall and it stopped working.
+
 Driver app (LifeLine Driver App) for RATS (major project). Most of the codes are copy-pasted from **[LifeLine-App-Test](https://github.com/OjeshManandhar/LifeLine-App-Test)**
 and **[LifeLine-App](https://github.com/OjeshManandhar/LifeLine-App)**.
 
